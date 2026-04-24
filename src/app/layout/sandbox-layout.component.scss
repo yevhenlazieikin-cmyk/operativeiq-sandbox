@@ -1,0 +1,114 @@
+@use 'variables' as *;
+
+:host {
+  display: block;
+  height: 100vh;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  grid-template-rows: 48px 1fr 28px;
+  grid-template-areas:
+    'header header'
+    'nav    body'
+    'footer footer';
+  height: 100%;
+  background: $snow-white;
+  color: $charcoal;
+
+  &__header {
+    grid-area: header;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 16px;
+    background: $primary-blue;
+    color: $white;
+  }
+
+  &__brand {
+    font-weight: $font-semibold;
+    font-size: $font-base3;
+  }
+
+  &__subtitle {
+    font-size: $font-base1;
+    opacity: 0.8;
+  }
+
+  &__spacer { flex: 1 1 auto; }
+
+  &__env {
+    font-family: 'Cascadia Mono', 'Consolas', monospace;
+    font-size: 11px;
+    padding: 2px 8px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 3px;
+  }
+
+  &__nav {
+    grid-area: nav;
+    background: $white;
+    border-right: 1px solid $cool-gray;
+    padding: 12px 0;
+    overflow-y: auto;
+  }
+
+  &__nav-heading {
+    font-size: 11px;
+    font-weight: $font-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: $slate-gray;
+    padding: 0 16px 6px;
+  }
+
+  &__nav nav ul { list-style: none; margin: 0; padding: 0; }
+
+  &__nav nav li a {
+    display: block;
+    padding: 8px 16px;
+    color: $charcoal;
+    text-decoration: none;
+    font-size: $font-base2;
+    border-left: 3px solid transparent;
+
+    &:hover { background: $snow-white; }
+
+    &.is-active {
+      border-left-color: $primary-blue;
+      background: $panel-gray;
+      color: $primary-blue;
+      font-weight: $font-semibold;
+    }
+  }
+
+  &__body {
+    grid-area: body;
+    overflow: auto;
+    padding: 0;
+  }
+
+  &__footer {
+    grid-area: footer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 16px;
+    background: $panel-gray;
+    border-top: 1px solid $cool-gray;
+    color: $slate-gray;
+    font-size: 11px;
+
+    code {
+      font-family: 'Cascadia Mono', 'Consolas', monospace;
+      padding: 1px 5px;
+      border-radius: 3px;
+      background: $white;
+      color: $charcoal;
+    }
+  }
+
+  &__footer-spacer { flex: 1 1 auto; }
+}
