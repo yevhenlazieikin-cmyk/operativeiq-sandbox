@@ -17,8 +17,6 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    // Hash-location keeps deep-link navigation robust inside the preview iframe
-    // (no need to serve index.html for every path during dev).
     provideRouter(routes, withHashLocation()),
     provideAnimationsAsync(),
     provideHttpClient(withInterceptorsFromDi()),
