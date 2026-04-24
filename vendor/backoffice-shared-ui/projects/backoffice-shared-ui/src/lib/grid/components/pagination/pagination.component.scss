@@ -1,0 +1,210 @@
+@use 'variables' as *;
+
+.pagination-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: $white;
+  font-family: $font-source-sans-pro;
+}
+
+.controls-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.element-count {
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  width: 85px;
+  padding-bottom: 6px;
+  color: $charcoal;
+  font-size: $font-base2;
+  line-height: $font-base3;
+
+  span {
+    margin-left: 2px;
+  }
+}
+
+.control-buttons-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.pagination-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.nav-button {
+  width: 50px;
+  height: 24px;
+  margin: 0 3px;
+  padding: 0.25rem 0.75rem;
+  border: none;
+  border-radius: 0.375rem;
+  background-color: $charcoal;
+  color: $white;
+  font-size: $font-base3;
+  cursor: pointer;
+
+  &:not(&.disabled) {
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+}
+
+.dropdown-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-right: 15px;
+  text-align: left;
+
+  mat-select {
+    margin-right: 10px;
+    padding: 2px;
+    border: none;
+    border-radius: 2px;
+    font-weight: $font-regular;
+    font-size: $font-base2;
+    font-family: $font-source-sans-pro;
+
+    &:hover,
+    &:focus {
+      background: linear-gradient(#f1f7ff, #e2efff);
+      outline: 1px solid #a4bed4;
+    }
+
+    mat-option {
+      border: none;
+      background: linear-gradient(#f1f7ff, #e2efff);
+      outline: 1px solid #a4bed4;
+    }
+  }
+}
+
+:host ::ng-deep {
+  .dropdown-wrapper .mat-mdc-select-arrow svg {
+    left: 0;
+    width: 18px !important;
+  }
+
+  .dropdown-wrapper mat-select.mat-select-open .mat-mdc-select-arrow svg {
+    transform: translate(0, -50%);
+  }
+}
+
+.selected-option {
+  display: flex;
+  align-items: center;
+  width: 90px;
+  font-size: 14px;
+  font-family: $font-source-sans-pro;
+
+  img {
+    margin-right: 5px;
+  }
+}
+
+.dropdown-select {
+  display: block;
+  width: 100%;
+  padding: 2px 15px 2px 5px;
+  border: none;
+  background-color: $white;
+  color: $charcoal;
+  outline: none;
+  font-size: $font-base3;
+  transition:
+    border-color 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  &:focus,
+  &:hover {
+    border-color: #3b82f6;
+    background: linear-gradient(#d2e7fe, #d3e7ff);
+    outline: 1px solid #3b82f6;
+  }
+}
+
+.dropdown-select:disabled {
+  background-color: #e5e7eb;
+  cursor: not-allowed;
+}
+
+::ng-deep .pagination-dropdown {
+  &.mat-mdc-select-panel {
+    width: 95px !important;
+    min-width: 95px !important;
+    margin-top: 5px;
+    margin-left: -1px;
+    padding: 0 !important;
+    outline: 1px solid #a4bed4 !important;
+  }
+
+  .input-filter-container {
+    background-color: $white !important;
+  }
+
+  .mat-mdc-option {
+    height: 25px !important;
+    min-height: unset !important;
+    padding: 0 !important;
+    background: #f1f7ff !important;
+    white-space: nowrap;
+
+    .mdc-list-item__end,
+    .mat-pseudo-checkbox,
+    mat-icon {
+      display: none !important;
+    }
+
+    &.mdc-list-item--selected,
+    &.mat-mdc-option-selected {
+      background-color: #f8d697 !important;
+    }
+
+    &:hover,
+    &:focus,
+    &.mdc-list-item--with-leading-icon:hover,
+    &.mdc-list-item--with-leading-icon:focus,
+    &.mdc-list-item--selected:hover,
+    &.mdc-list-item--selected:focus,
+    &.mat-mdc-option-selected:hover,
+    &.mat-mdc-option-selected:focus {
+      background-color: #f8d697 !important;
+    }
+
+    &.mat-mdc-option-active,
+    &.mdc-list-item--selected.mat-mdc-option-active,
+    &.mat-mdc-option-selected.mat-mdc-option-active {
+      background-color: #f8d697 !important;
+    }
+  }
+
+  &.dropdown-panel-administration {
+    .mat-mdc-option:hover,
+    .mat-mdc-option:focus,
+    .mat-mdc-option.mat-mdc-option-active {
+      background-color: #f8d697 !important;
+    }
+  }
+
+  &.dropdown-panel-operation {
+    .mat-mdc-option:hover,
+    .mat-mdc-option:focus,
+    .mat-mdc-option.mat-mdc-option-active {
+      background-color: #f8d697 !important;
+    }
+  }
+}

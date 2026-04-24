@@ -1,0 +1,17 @@
+<input
+  id="0fc4b32b01"
+  type="file"
+  class="file-input"
+  [accept]="accept()"
+  [disabled]="disabled()"
+  [attr.multiple]="multiple()"
+  (change)="onFileSelected($event)"
+  #fileUpload
+/>
+@if (customTemplate()) {
+  <ng-container [ngTemplateOutlet]="customTemplate()"></ng-container>
+} @else {
+  <button id="4a30259a41" type="button" (click)="fileUpload.click()" mat-icon-button matTooltip="Upload file">
+    <bo-svg-icon name="iconAttach" class="icon-pin" />
+  </button>
+}

@@ -1,0 +1,123 @@
+<div [ngClass]="data.classList" class="base-select-modal dialog-content size-1 full-width" appDialogClose>
+  <div class="dialog-header">
+    <bo-svg-icon name="iconClose" class="icon-close" mat-dialog-close />
+    <h2 class="dialog-title">{{ data.title }}</h2>
+
+    <section
+      class="header-action"
+      [ngClass]="{
+        'administration': data.menuTypeButtons === menuTypeEnum.administration,
+        'operation':  data.menuTypeButtons === menuTypeEnum.operation}"
+    >
+      @for (btn of data.buttons; track btn.label) {
+      <button id="c44335d2ee" [class]="btn.cssClass" (click)="onCustomButtonClick(btn)">{{ btn.label }}</button>
+      } @if (!data.hideSaveButton) {
+      <button id="b810a52806" (click)="itemsSelected()">Save</button>
+      } @if (!data.hideClearButton) {
+      <button id="e0c360ee03" (click)="onCancel()">Clear</button>
+      }
+    </section>
+  </div>
+
+  <!--  <app-header
+    class="mobile-only"
+    [title]="data.title"
+    [info]="data.subTitle"
+    [isDialog]="true"
+    [goBackCustom]="data.customBackPathCB"
+    (customBackEmit)="data.customBackPathCB()"
+  ></app-header>-->
+
+  <div class="table-wrapper pd-big mb-0">
+    <div class="dialog-table" [ngClass]="{ 'has-overlay': data.gridOptions.infiniteScroll }">
+      <bo-dialog-messages
+        [message]="validationMessage ? validationMessage : ''"
+        [class]="validationMessageClass"
+        [maxLength]="maxMessageLength"
+      />
+      @if (data.detailsPanel) {
+      <bo-details-panel
+        id="dedcd42bf6"
+        class="multi-select-details-panel"
+        [form]="data.detailsPanel.form"
+        [fields]="data.detailsPanel.fields"
+        [title]="data.detailsPanel.title"
+        [userMenu]="data.detailsPanel.userMenu ?? menuTypeEnum.administration"
+        [insideDialog]="true"
+      />
+      }
+      <bo-grid
+        id="7b65822a5a"
+        class="grid"
+        [(sortedDataStore)]="items"
+        [outerService]="!!data.gridOptions.items"
+        [orderEvent]="data.gridOptions.orderEvent?.asObservable()!"
+        [customQueryInitial]="data.gridOptions.customQueryInitial!"
+        [serviceTitle]="data.gridOptions.serviceTitle"
+        [serviceMethod]="data.gridOptions.serviceMethod"
+        [serviceSort]="data.gridOptions.serviceSort"
+        [itemsPerLoad]="data.gridOptions.itemsPerLoad!"
+        [filtersIncluded]="true"
+        [filterData]="data.gridOptions.filterData"
+        [scrollWindow]="data.gridOptions.scrollWindow!"
+        [infiniteScroll]="data.gridOptions.infiniteScroll!"
+        [mobileQueryTempKeys]="data.gridOptions.mobileQueryTempKeys!"
+        [mobileQueryTemplate]="data.gridOptions.mobileQueryTemplate!"
+        [mobileSortingCondition]="mobileSortingCondition"
+        [filtersCondition]="filtersCondition"
+        [mobileFilterCondition]="mobileFilterCondition"
+        [searchEnum]="data.gridOptions.searchEnum"
+        [proceedInitQueryOnInit]="proceedInitQuery"
+        [clientGridPagination]="data.clientGridPagination"
+        [generalView]="true"
+        (sortedDataStoreChange)="onDataChanged($event)"
+        (filterQueryChange)="onFilterQueryChange($event)"
+        [gridType]="data.gridType"
+        [allowFlexRow]="data?.allowFlexRow"
+      >
+        <!--        @if (data.hasMasterCheckbox) {
+          <div class="checkbox-container mobile-only">
+            <mat-checkbox
+              class="header-check-box-mobile"
+              [disabled]="masterCheckboxInProcess"
+              (change)="checkAll()"
+              [(ngModel)]="checkedAll">
+            </mat-checkbox>
+            Select All
+          </div>
+        }-->
+        @for(item of items; track item; let i = $index; let odd = $odd) {
+        <div class="tr" [id]="item[customUniqId]">
+          <bo-grid-cell
+            [ngClass]="{'even-row': odd}"
+            class="grid-cell"
+            [row]="item"
+            [index]="i"
+            [cellSchema]="data.gridOptions.cellSchema!"
+            [filterData]="data.gridOptions.filterData!"
+          ></bo-grid-cell>
+        </div>
+        }
+      </bo-grid>
+    </div>
+  </div>
+  <!--  <app-footer-dialog
+    [primaryButtonTitle]="data.selectButtonTitle || 'Save'"
+    secondaryButtonTitle="Cancel"
+    (primaryButtonEvent)="itemsSelected()"
+    (secondaryButtonEvent)="onCancel()"
+    [primaryButtonDisabled]="disableSubmit"
+    buttonsLocation="right"
+  ></app-footer-dialog>-->
+</div>
+
+<ng-template #checkAllRef>
+  <bo-svg-icon [name]="checkedAll ? 'itemCheck' : 'itemUnchecked'" class="item-check"></bo-svg-icon>
+  <mat-checkbox
+    class="header-check-box"
+    [disabled]="masterCheckboxInProcess || accessLockActive"
+    [aria-label]="false"
+    (change)="checkAll()"
+    [(ngModel)]="checkedAll"
+  ></mat-checkbox>
+</ng-template>

@@ -1,0 +1,20 @@
+<div class="dialog">
+  <section class="dialog-header">
+    <bo-svg-icon name="iconClose" class="icon-close" (click)="closeNotLoaded()" />
+    <h2 class="dialog-title">Attaching files</h2>
+  </section>
+  <div class="content-wrapper">
+    <overlay-scrollbars class="scroll-container" [options]="{ showNativeOverlaidScrollbars: false }">
+      @for (wrappedFile of wrappedFiles; track wrappedFile; let i = $index) {
+        <bo-upload-file-progress-bar
+          @slideInOut
+          [wrappedFile]="wrappedFile"
+          [method]="method"
+          (successUploadEvent)="onFileUploaded(i, $event)"
+          (cancelUploadEvent)="onCancelUpload()"
+          (failedUploadEvent)="onFailedUpload()"
+        />
+      }
+    </overlay-scrollbars>
+  </div>
+</div>

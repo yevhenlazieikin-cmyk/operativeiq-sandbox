@@ -1,0 +1,2 @@
+node projects/backoffice-shared-ui/src/lib/shared/utils/unique-id.node.js --config ./unique-id.config.json --changed
+npx lint-staged

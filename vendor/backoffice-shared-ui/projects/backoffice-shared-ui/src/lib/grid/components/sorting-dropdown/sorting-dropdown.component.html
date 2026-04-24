@@ -1,0 +1,44 @@
+@if (data.sortOptions) {
+  <div class="inputs-container" [ngClass]="className">
+    <div class="input-field">
+      <div class="form-group short">
+        <label class="field-label">Sort by</label>
+        <div class="field-wrapper filter-flex-container">
+          <div class="sorting">
+            <bo-search-dropdown
+              id="41440315f3"
+              placeholder="Select"
+              [(selectValue)]="data.sortOptions.value"
+              (selectValueChange)="onValueChange($event)"
+              [options]="options"
+              [hasSearch]="false"
+              valueProperty="id"
+              displayProperty="value"
+              [hasClear]="false"
+            ></bo-search-dropdown>
+          </div>
+          @if (
+            data.sortOptions.value &&
+            !(
+              data.sortOptions.value === 'sortOrder' ||
+              (data.sortOptions.hideDirChangeSortKey && data.sortOptions.value === data.sortOptions.hideDirChangeSortKey)
+            )
+          ) {
+            <div id="48b9aa8dba" (click)="changeOrder()">
+              @if (orderDirection === 'desc') {
+                <span>
+                  <!--               TODO add icon  <bo-svg-icon name="iconDown"></bo-svg-icon>-->
+                </span>
+              }
+              @if (orderDirection === 'asc') {
+                <span>
+                  <!--              TODO add icon    <bo-svg-icon name="iconUp"></bo-svg-icon>-->
+                </span>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+}

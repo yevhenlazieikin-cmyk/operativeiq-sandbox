@@ -1,0 +1,58 @@
+<div class="base-select-modal dialog-content size-1 full-width">
+  <section class="dialog-header">
+    @if (!data.disableClose) {
+      <bo-svg-icon name="iconClose" class="icon-close" mat-dialog-close />
+    }
+    <h2 class="dialog-title">{{ data.title }}</h2>
+
+    <section class="header-action">
+      @if (data.customHeaderTemplate) {
+        <ng-container [ngTemplateOutlet]="data.customHeaderTemplate" [ngTemplateOutletContext]="{ $implicit: data }" />
+      }
+    </section>
+  </section>
+
+  @if (!data.customTemplate) {
+    <div class="table-wrapper pd-big">
+      <bo-dialog-messages
+        [message]="validationMessage ? validationMessage : ''"
+        [class]="validationMessageClass"
+        [maxLength]="maxMessageLength"
+      />
+      @if (tableDescription) {
+        <h3 class="table-description">{{ tableDescription }}</h3>
+      }
+      <div class="dialog-table" [ngClass]="{ 'has-overlay': data.gridOptions.infiniteScroll }">
+        <bo-grid
+          id="2ee5512b1b"
+          #gridRef
+          [(sortedDataStore)]="filteredItems"
+          [outerService]="data.gridOptions.outerService"
+          [filtersIncluded]="data.gridOptions.filtersIncluded"
+          [filterData]="data.gridOptions.filterData"
+          [mobileSortingCondition]="data.gridOptions.mobileSortingCondition"
+          [generalView]="data.gridOptions.generalView"
+          [gridType]="data.gridOptions.gridType"
+          [clientGridPagination]="data.gridOptions.clientGridPagination"
+          [infiniteScroll]="data.gridOptions.infiniteScroll"
+          [scrollWindow]="data.gridOptions.scrollWindow"
+        >
+          @for (item of filteredItems; track item; let i = $index) {
+            <div class="tr">
+              <bo-grid-cell
+                class="grid-cell"
+                [ngClass]="{ 'even-row': $odd }"
+                [row]="item"
+                [index]="i"
+                [cellSchema]="data.gridOptions.cellSchema"
+                [filterData]="data.gridOptions.filterData"
+              ></bo-grid-cell>
+            </div>
+          }
+        </bo-grid>
+      </div>
+    </div>
+  } @else {
+    <ng-container [ngTemplateOutlet]="data.customTemplate" [ngTemplateOutletContext]="{ $implicit: data }" />
+  }
+</div>

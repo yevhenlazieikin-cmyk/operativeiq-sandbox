@@ -1,0 +1,21 @@
+export const svgs = {
+  frontLineMainLogo: 'front-line-main-logo.svg',
+  menuIconAdministration: 'menu-icon-administration.svg',
+  menuIconOperations: 'menu-icon-operations.svg',
+  iconClose: 'icon-close.svg',
+  iconCloseSmall: 'icon-close-small.svg',
+  calendar: 'calendar.svg',
+  arrowDown: 'arrow-down.svg',
+  arrowUp: 'arrow-up.svg',
+  iconDelete: 'icon-delete.svg',
+  iconAttach: 'icon-attach.svg',
+  sortAsc: 'sort_asc.svg',
+  sortDesc: 'sort_desc.svg',
+  iconTime: 'icon-time.svg',
+  iconCloseSmallHover: 'icon-close-small-hover.svg',
+  radioCheckedGreen: 'radio-checked-green.svg',
+  radioCheckedBlue: 'radio-checked-blue.svg',
+  radioUnchecked: 'radio-unchecked.svg',
+  itemCheck: 'item_check.svg',
+  itemUnchecked: 'item_unchecked'
+};

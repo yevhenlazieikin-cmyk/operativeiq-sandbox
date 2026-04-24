@@ -1,0 +1,93 @@
+<!-- TODO grid set up for testing
+     without infinite scroll-->
+<div class="container" appStickyHeaderGroup>
+  <div class="table-wrapper pd-big tbl-shadow mb-0">
+    <div class="table">
+      <bo-grid
+        #gridComponent
+        class="grid"
+        [(sortedDataStore)]="sortedData"
+        [orderEvent]="customQueryEvent.asObservable()"
+        [serviceTitle]="logService"
+        [serviceMethod]="'get'"
+        [customQueryInitial]="customQuerySingle"
+        [customQueryFilter]="customQueryFilter"
+        [serviceSort]="true"
+        [itemsPerLoad]="15"
+        [filterOptions]="filterOptions"
+        [mobileFilterQuery]="mobileFilterQuery"
+        [customQueryEvent]="customQueryEvent.asObservable()"
+        [filtersIncluded]="true"
+        [filterData]="filterData$ | async"
+        [mobileQueryTempKeys]="mobileQueryTempKeys"
+        [generalView]="true"
+        (sortedDataChange)="newData($event)"
+        [gridType]="'SERVER'"
+        [clientGridPagination]="true"
+        [allowFlexRow]="false"
+      >
+        <div>
+          @for (row of sortedData; track row?.id ; let odd = $odd) {
+          <div class="tr">
+            <bo-grid-cell
+              class="grid-cell"
+              [ngClass]="{'even-row': odd}"
+              [row]="row"
+              [cellSchema]="cellSchema"
+              [filterData]="filterData$ | async"
+              [datePipe]="customDateUtc"
+            ></bo-grid-cell>
+          </div>
+          }
+        </div>
+      </bo-grid>
+    </div>
+  </div>
+</div>
+
+<ng-template #timeTempl let-row>
+  <div class="cell-value">{{ row.entryDate | customDateUtc : 'h:mm:ss a' }} {{ timeZone.abr }}</div>
+</ng-template>
+
+<!-- example without pagination and with infinite scroll-->
+<!--<div class="container">
+  <div class="table-wrapper pd-big tbl-shadow mb-0">
+    <div class="table">
+      <bo-grid
+        #gridComponent
+        class="grid"
+        [(sortedDataStore)]="sortedData"
+        [orderEvent]="customQueryEvent.asObservable()"
+        [serviceTitle]="logService"
+        [serviceMethod]="'get'"
+        [customQueryInitial]="customQuerySingle"
+        [customQueryFilter]="customQueryFilter"
+        [serviceSort]="true"
+        [itemsPerLoad]="15"
+        [filterOptions]="filterOptions"
+        [mobileFilterQuery]="mobileFilterQuery"
+        [customQueryEvent]="customQueryEvent.asObservable()"
+        [infiniteScroll]="true"
+        [filtersIncluded]="true"
+        [filterData]="filterData$ | async"
+        [mobileQueryTempKeys]="mobileQueryTempKeys"
+        [generalView]="true"
+      >
+        <div>
+          @for (row of sortedData; track $index; let odd = $odd) {
+            <div class="tr">
+              <bo-grid-cell
+                class="grid-cell"
+                [ngClass]="{'even-row': odd}"
+                [row]="row"
+                [cellSchema]="cellSchema"
+                [filterData]="filterData$ | async"
+                [datePipe]="customDateUtc"
+              ></bo-grid-cell>
+            </div>
+          }
+        </div>
+      </bo-grid>
+    </div>
+  </div>
+</div>-->

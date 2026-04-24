@@ -1,0 +1,16 @@
+@if (scrollWindow) {
+  <ng-container [ngTemplateOutlet]="templRef"></ng-container>
+} @else {
+  <overlay-scrollbars #overlayScroll class="scroll-container">
+    <ng-container [ngTemplateOutlet]="templRef"></ng-container>
+  </overlay-scrollbars>
+}
+<ng-template #templRef>
+  <ng-content></ng-content>
+  @if (loading) {
+    <div class="infinite-spinner">
+      <mat-spinner></mat-spinner>
+    </div>
+  }
+  <div class="anchor" #anchor></div>
+</ng-template>

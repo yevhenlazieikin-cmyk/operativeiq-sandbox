@@ -1,0 +1,34 @@
+<div class="comments-panel">
+  @if (title()) {
+    <header class="comments-panel__header">
+      {{ title() }}
+    </header>
+  }
+  @if (isExpandable() && items()?.length > 0) {
+    <bo-expand-collapse-toggle id="8440710fcc" class="expand-collapse-toggle" [storageName]="storageName()" />
+  }
+  <overlay-scrollbars [options]="options()" class="scroll-container" [ngStyle]="{ maxHeight: `${maxCommentsHeight()}px` }">
+    @if (items()) {
+      <ng-container [ngTemplateOutlet]="customTemplate()" [ngTemplateOutletContext]="{ $implicit: items() }"></ng-container>
+    }
+    <div #Anchor class="anchor"></div>
+  </overlay-scrollbars>
+
+  @if (showSubmissionPanel()) {
+    <footer class="comments-panel__footer">
+      <bo-submission-panel
+        id="31caea350d"
+        [userMenu]="userMenu()"
+        [textControlName]="textControlName()"
+        [label]="label()"
+        [buttonLabel]="buttonLabel()"
+        [textAreaPlaceholder]="textAreaPlaceholder()"
+        [form]="form()"
+        [attachmentControl]="attachmentControl()"
+        [fileAttachmentControl]="fileAttachmentControl()"
+        (submitComment)="onSubmitComment()"
+        (removeAttachment)="removeAttachment.emit($event)"
+      />
+    </footer>
+  }
+</div>

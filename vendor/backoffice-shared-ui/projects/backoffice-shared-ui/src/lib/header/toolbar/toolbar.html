@@ -1,0 +1,57 @@
+<section class="toolbar-container">
+  <div class="toolbar" [ngClass]="{'settings-toolbar': administrationMenu(), 'assignment-toolbar': operationMenu() }">
+    <button id="84b38d54ae" class="logo" (click)="switchToolbar(selectedPageCode || '', selectedIndex || 0)">
+      @if (operationMenu()) {
+      <bo-svg-icon name="menuIconOperations" />
+      } @if (administrationMenu()) {
+      <bo-svg-icon name="menuIconAdministration" />
+      }
+    </button>
+
+    @for (item of toolbarList(); track $index; let i = $index) {
+    <button
+      [id]="item.PageCode"
+      #toolbarButton
+      (click)="onSelect(item.PageCode, i)"
+      (dblclick)="switchToolbar(item.PageCode, i)"
+      [class.selected]="i === selectedIndex"
+      [ngClass]="{'settings-element': administrationMenu(), 'assignment-element': operationMenu() }"
+      [innerHTML]="item.PageName"
+    ></button>
+    }
+  </div>
+
+  @if (selectedIndex !== null && displayedChildren().length) {
+  <ul class="sub-elements-bar" [ngStyle]="{ left: childPosition.left + 'px' }">
+    @for (child of displayedChildren(); track child.PageCode) {
+    <li
+      class="sub-element"
+      [ngClass]="{
+        'sub-element-settings': administrationMenu(),
+        'sub-element-assignment': operationMenu(),
+        'active': isChildActive(child.PageUrl) }"
+    >
+      @if (isAngularRoute(child.PageUrl)) {
+      <a
+        [id]="child.PageCode"
+        class="child"
+        [routerLink]="toRouterLink(child.PageUrl)"
+        [ngClass]="{'settings': administrationMenu(), 'assignment': operationMenu(), 'active': isChildActive(child.PageUrl) }"
+      >
+        <span [innerHTML]="child.PageName"></span>
+      </a>
+      } @else {
+      <a
+        [id]="child.PageCode"
+        class="child"
+        [href]="extendUrl(child.PageUrl)"
+        [ngClass]="{'settings': administrationMenu(), 'assignment': operationMenu(), 'active': isChildActive(child.PageUrl) }"
+      >
+        <span [innerHTML]="child.PageName"></span>
+      </a>
+      }
+    </li>
+    }
+  </ul>
+  }
+</section>

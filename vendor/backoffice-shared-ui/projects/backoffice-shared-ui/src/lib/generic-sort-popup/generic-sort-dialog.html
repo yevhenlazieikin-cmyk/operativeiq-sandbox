@@ -1,0 +1,84 @@
+<div [ngClass]="data.classList" class="base-select-modal dialog-content size-1 full-width">
+  <section class="dialog-header">
+    <bo-svg-icon name="iconClose" class="icon-close" mat-dialog-close />
+    <h2 class="dialog-title">{{ data.title }}</h2>
+
+    <section
+      class="header-action"
+      [ngClass]="{
+        'administration': data.menuTypeButtons === menuTypeEnum.administration,
+         'operation': data.menuTypeButtons === menuTypeEnum.operation}"
+    >
+      <button id="aa48df70c1" mat-dialog-close>Back</button>
+      <button id="cc1a5a1bb1" (click)="save()">Save</button>
+      @if (!data.applyButtonHidden) {
+      <button id="6faa4384a0" (click)="apply()">Apply</button>
+      } @if (!data.sortButtonHidden && data.columnNameSortAZ?.length && data.columnDirectionSortAZ?.length) {
+      <button id="a95d29799d" (click)="sort()">A-Z</button>
+      }
+    </section>
+  </section>
+
+  <div class="table-wrapper pd-big">
+    <bo-dialog-messages
+      [message]="validationMessage ? validationMessage : ''"
+      [class]="validationMessageClass"
+      [maxLength]="maxMessageLength"
+    />
+    @if (tableDescription) {
+    <h3 class="table-description">{{ tableDescription }}</h3>
+    }
+    <div class="dialog-table" [ngClass]="{ 'has-overlay': data.gridOptions.infiniteScroll }">
+      <bo-grid
+        id="8afd509cd8"
+        #gridRef
+        [(sortedDataStore)]="items"
+        [outerService]="!!data.gridOptions.items"
+        [orderEvent]="orderEvent"
+        [customQueryInitial]="data.gridOptions.customQueryInitial!"
+        [serviceTitle]="data.gridOptions.serviceTitle"
+        [serviceMethod]="data.gridOptions.serviceMethod"
+        [serviceSort]="data.gridOptions.serviceSort"
+        [itemsPerLoad]="data.gridOptions.itemsPerLoad!"
+        [filtersIncluded]="true"
+        [filterData]="data.gridOptions.filterData"
+        [scrollWindow]="data.gridOptions.scrollWindow!"
+        [infiniteScroll]="data.gridOptions.infiniteScroll!"
+        [mobileQueryTempKeys]="data.gridOptions.mobileQueryTempKeys!"
+        [mobileQueryTemplate]="data.gridOptions.mobileQueryTemplate!"
+        [mobileSortingCondition]="mobileSortingCondition"
+        [filtersCondition]="filtersCondition"
+        [mobileFilterCondition]="mobileFilterCondition"
+        [scrollSettingsEvent]="scrollSettingsEvent"
+        [searchEnum]="data.gridOptions.searchEnum"
+        [generalView]="true"
+        [proceedInitQueryOnInit]="proceedInitQuery"
+        (sortedDataStoreChange)="onDataChanged($event)"
+        (filtersChanged)="onFilterChanged($event)"
+        [gridType]="data.gridType"
+      >
+        <!--        @if (!desktop) {
+        <ng-container [ngTemplateOutlet]="data.gridOptions.mobileExtraHeaderRef"></ng-container>
+        }-->
+        <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+          @for (item of items; track item[customUniqId]; let odd = $odd) {
+          <div cdkDrag class="tr" [id]="item[customUniqId]">
+            <bo-grid-cell
+              [ngClass]="{'even-row': odd}"
+              class="grid-cell"
+              [row]="item"
+              [index]="$index"
+              [cellSchema]="data.gridOptions.cellSchema!"
+              [filterData]="data.gridOptions.filterData!"
+            ></bo-grid-cell>
+          </div>
+          }
+        </div>
+      </bo-grid>
+    </div>
+  </div>
+</div>
+
+<ng-template #indexTempl let-row>
+  <div id="6249a87285" class="sort-order" (click)="openDialog(row)">{{ getDisplayIndex(row) }}</div>
+</ng-template>

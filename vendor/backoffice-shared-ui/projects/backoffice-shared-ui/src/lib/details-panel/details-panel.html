@@ -1,0 +1,380 @@
+<form [formGroup]="form()" [id]="formId()">
+  <table
+    class="details-panel"
+    [ngClass]="{'administration': userMenu() === menuType.administration, 'operation':  userMenu() === menuType.operation }"
+    boExpandCollapse
+    [isExpandable]="isExpandable()"
+    [storageName]="expandCollapseStorageName()"
+  >
+    @if (title()) {
+    <thead class="title section-header">
+      <tr>
+        <th colspan="2" class="section-title" static-content>
+          <div>
+            <span>{{ title() }}</span>
+            @if (actionButtons().length) {
+            <span class="header-action">
+              @for (button of actionButtons(); track button.action) {
+              <button
+                [id]="'details_panel_action_btn_' + button.label.toLowerCase().replaceAll(' ', '_')"
+                [ngClass]="{
+              'administration-action': userMenu() === menuType.administration,
+               'operation-action':  userMenu() === menuType.operation }"
+                [disabled]="button.state"
+                (click)="onButtonClick(button)"
+                type="button"
+              >
+                {{ button.label }}
+              </button>
+              }
+            </span>
+            }
+          </div>
+        </th>
+      </tr>
+    </thead>
+    }
+
+    <tbody class="section-content" collapsable-content>
+      @for (field of fields(); track field.formControlName) { @let validationMessage =
+      form().get(field.formControlName)?.errors?.['required'] ? (field.customRequiredValidationMessage ||
+      messages.REQUIRED_FIELD_VALIDATION) : form().get(field.formControlName)?.errors?.['duplicated'] ?
+      ((field.customDuplicatedValidationMessage || messages.DUPLICATED_FIELD_VALIDATION) | resolveErrorMessage:
+      form().get(field.formControlName)?.errors?.['duplicated']) : (form().get(field.formControlName)?.errors?.['minlength'] ||
+      form().get(field.formControlName)?.errors?.['maxlength'] || form().get(field.formControlName)?.errors?.['min'] ||
+      form().get(field.formControlName)?.errors?.['max']) ? (field.customRangeValidationMessage || messages.RANGE_FIELD_VALIDATION) :
+      form().get(field.formControlName)?.errors?.['pattern'] ? (field.customPatternValidationMessage || messages.PATTERN_FIELD_VALIDATION) :
+      form().get(field.formControlName)?.errors?.['passwordComplexity'] ?
+      (form().get(field.formControlName)?.errors?.['passwordComplexity']) : form().get(field.formControlName)?.errors?.['pinFormat'] ?
+      (form().get(field.formControlName)?.errors?.['pinFormat']) : form().get(field.formControlName)?.errors?.['email'] ?
+      (field.customPatternValidationMessage || messages.PATTERN_FIELD_VALIDATION) : '';
+      <tr class="form-row">
+        @if (field.type === fieldTypes.CustomTemplate && field.fullWidth) {
+        <td colspan="2" [id]="field.formControlName" class="form-control full-width-template">
+          <ng-container *ngTemplateOutlet="field.customTemplate; context: { $implicit: form, field: field }"></ng-container>
+        </td>
+        } @else {
+        <td class="form-label">
+          {{ field.label }} @if (field.required) {
+          <span class="label-required">*</span>
+          }
+        </td>
+        <td class="form-control">
+          @switch (field.type) { @case (fieldTypes.ReadOnly) { @if (field.typeOfData === 'date') {
+          <span [id]="field.formControlName" class="readonly-value">{{ form().get(field.formControlName)?.value | date: dateFormat }}</span>
+          } @else {
+          <span
+            [id]="field.formControlName"
+            class="readonly-value"
+            [matTooltip]="form().get(field.formControlName)?.value"
+            matTooltipPosition="below"
+            [matTooltipDisabled]="(form().get(field.formControlName)?.value?.length || 0) <= 50"
+          >
+            {{ form().get(field.formControlName)?.value | truncate: 50 }}
+          </span>
+          } } @case (fieldTypes.TextField) {
+          <mat-form-field
+            appearance="outline"
+            class="full-width text-field"
+            subscriptSizing="dynamic"
+            appAbsoluteDivPopout
+            #errorPopout="boPopout"
+            [popoutContent]="validationMessage"
+            [insideDialog]="insideDialog()"
+            [control]="form().get(field.formControlName)"
+            [strategy]="field.validationStrategy!"
+          >
+            <input
+              matInput
+              [id]="field.formControlName"
+              [errorStateMatcher]="errorPopout"
+              [formControlName]="field.formControlName"
+              [attr.maxLength]="field.maxLength ?? null"
+              (blur)="form().get(field.formControlName)?.markAsTouched()"
+            />
+          </mat-form-field>
+          } @case (fieldTypes.Password) {
+          <mat-form-field
+            appearance="outline"
+            class="full-width text-field"
+            subscriptSizing="dynamic"
+            appAbsoluteDivPopout
+            #errorPopout="boPopout"
+            [popoutContent]="validationMessage"
+            [insideDialog]="insideDialog()"
+            [control]="form().get(field.formControlName)"
+            [strategy]="field.validationStrategy!"
+          >
+            <input
+              matInput
+              type="password"
+              [id]="field.formControlName"
+              [formControlName]="field.formControlName"
+              [attr.maxLength]="field.maxLength ?? null"
+              (blur)="form().get(field.formControlName)?.markAsTouched()"
+            />
+          </mat-form-field>
+          } @case (fieldTypes.NumberField) {
+          <mat-form-field
+            appearance="outline"
+            class="full-width text-field"
+            subscriptSizing="dynamic"
+            appAbsoluteDivPopout
+            #errorPopout="boPopout"
+            [popoutContent]="validationMessage"
+            [insideDialog]="insideDialog()"
+            [control]="form().get(field.formControlName)"
+            [strategy]="field.validationStrategy!"
+          >
+            <input
+              matInput
+              type="number"
+              [min]="field?.minLength"
+              [max]="field?.maxLength"
+              [id]="field.formControlName"
+              [errorStateMatcher]="errorPopout"
+              [formControlName]="field.formControlName"
+              (blur)="form().get(field.formControlName)?.markAsTouched()"
+            />
+          </mat-form-field>
+          } @case (fieldTypes.Checkbox) {
+          <div class="checkbox-container">
+            <bo-slide-toggle
+              [id]="field.formControlName"
+              [formControlName]="field.formControlName"
+              class="custom-checkbox"
+            ></bo-slide-toggle>
+          </div>
+          } @case (fieldTypes.SelectEntity) {
+          <div class="select-entity-wrapper">
+            <div
+              class="select-entity-container"
+              appAbsoluteDivPopout
+              #errorPopout="boPopout"
+              [popoutContent]="validationMessage"
+              [insideDialog]="insideDialog()"
+              [control]="form().get(field.formControlName)"
+              [strategy]="field.validationStrategy!"
+            >
+              <button
+                [id]="field.formControlName"
+                type="button"
+                class="btn select-entity-button"
+                (click)="openEntityDialog(field)"
+                [class.has-value]="form().get(field.formControlName)?.value"
+                [ngClass]="field.customClassFn ? field.customClassFn() : null"
+              >
+                {{ getEntityDisplayText(field) }}
+              </button>
+            </div>
+            @if (field.onClear && form().get(field.formControlName)?.value && form().get(field.formControlName)?.value !==
+            field.placeholderLabel) {
+            <button
+              [id]="'details_panel_clear_' + field.formControlName"
+              type="button"
+              class="btn clear-entity-button"
+              (click)="clearEntity(field)"
+            >
+              Clear
+            </button>
+            }
+          </div>
+          } @case (fieldTypes.InputWithSelect) {
+          <div
+            class="input-with-select-entity"
+            appAbsoluteDivPopout
+            #errorPopout="boPopout"
+            [popoutContent]="validationMessage"
+            [insideDialog]="insideDialog()"
+            [control]="form().get(field.formControlName)"
+            [strategy]="field.validationStrategy!"
+          >
+            <mat-form-field appearance="outline" class="entity-input-field" subscriptSizing="dynamic">
+              <input
+                matInput
+                [id]="field.formControlName"
+                [formControlName]="field.formControlName"
+                (blur)="form().get(field.formControlName)?.markAsTouched()"
+              />
+            </mat-form-field>
+            <button
+              [id]="'details_panel_open_dialog_' + field.formControlName"
+              type="button"
+              class="btn select-entity-button"
+              (click)="openEntityDialog(field)"
+              [class.has-value]="form().get(field.formControlName)?.value"
+            >
+              Select an option
+            </button>
+          </div>
+          } @case (fieldTypes.Select) {
+          <div
+            class="select-container"
+            appAbsoluteDivPopout
+            #errorPopout="boPopout"
+            [popoutContent]="validationMessage"
+            [insideDialog]="insideDialog()"
+            [control]="form().get(field.formControlName)"
+            [strategy]="field.validationStrategy!"
+          >
+            <bo-search-dropdown
+              [id]="field.formControlName"
+              [formControlName]="field.formControlName"
+              [options]="field.options || []"
+              [valueProperty]="field | fieldProperty: 'value'"
+              [displayProperty]="field | fieldProperty: 'display'"
+              [placeholder]="field.placeholderLabel || 'Select an option'"
+              [hasSearch]="false"
+              [hasClear]="false"
+              [multiple]="field.hasMultipleValues || false"
+              [userMenu]="userMenu()"
+              [disabled]="form().get(field.formControlName)?.disabled || false"
+              (blur)="form().get(field.formControlName)?.markAsTouched()"
+              (click)="handleClick(field, $event)"
+            ></bo-search-dropdown>
+          </div>
+          } @case (fieldTypes.Radio) {
+          <mat-radio-group
+            [id]="field.formControlName"
+            [formControlName]="field.formControlName"
+            class="radio-group"
+            appAbsoluteDivPopout
+            #errorPopout="boPopout"
+            [popoutContent]="validationMessage"
+            [insideDialog]="insideDialog()"
+            [control]="form().get(field.formControlName)"
+            [strategy]="field.validationStrategy!"
+          >
+            @for (opt of field.options ?? []; track opt.value) {
+            <mat-radio-button
+              [id]="'details_panel_option_' + opt.value.toLowerCase().replaceAll(' ', '_')"
+              [value]="opt.value"
+              class="radio-option"
+            >
+              @if (form().get(field.formControlName)?.value === opt.value) {
+              <bo-svg-icon
+                [name]="userMenu() === menuType.administration ? 'radioCheckedBlue' : 'radioCheckedGreen'"
+                class="radio-btn"
+              ></bo-svg-icon>
+              } @else {
+              <bo-svg-icon name="radioUnchecked" class="radio-btn"></bo-svg-icon>
+              } {{ opt.label }}
+            </mat-radio-button>
+            }
+          </mat-radio-group>
+          } @case (fieldTypes.TextArea) {
+          <mat-form-field
+            appearance="outline"
+            class="full-width text-area"
+            subscriptSizing="dynamic"
+            appAbsoluteDivPopout
+            #errorPopout="boPopout"
+            [popoutContent]="validationMessage"
+            [insideDialog]="insideDialog()"
+            [control]="form().get(field.formControlName)"
+            [strategy]="field.validationStrategy!"
+          >
+            <textarea
+              matInput
+              [id]="field.formControlName"
+              [errorStateMatcher]="errorPopout"
+              [formControlName]="field.formControlName"
+              rows="3"
+              [attr.maxLength]="field.maxLength ?? null"
+              (blur)="form().get(field.formControlName)?.markAsTouched()"
+            ></textarea>
+          </mat-form-field>
+          @if (field.maxLength) {
+          <mat-hint align="start" class="hint-count">
+            {{ (form().get(field.formControlName)?.value?.length || 0) }} characters / {{ (field.maxLength -
+            (form().get(field.formControlName)?.value?.length || 0)) }} remaining
+          </mat-hint>
+          } } @case (fieldTypes.TimePicker) {
+          <bo-time-picker
+            [id]="field.formControlName"
+            [formControlName]="field.formControlName"
+            [formatValue]="field.timeFormat || '24'"
+            [allowFormatToggle]="field.allowFormatToggle!"
+          ></bo-time-picker>
+          } @case (fieldTypes.DatePicker) {
+          <div
+            class="date-picker-container"
+            appAbsoluteDivPopout
+            #errorPopout="boPopout"
+            [popoutContent]="validationMessage"
+            [insideDialog]="insideDialog()"
+            [control]="form().get(field.formControlName)"
+            [strategy]="field.validationStrategy!"
+          >
+            <bo-date-picker [id]="field.formControlName" [formControlName]="field.formControlName" [errorStateMatcher]="errorPopout" />
+          </div>
+          } @case (fieldTypes.FileUploader) {
+          <div
+            class="file-upload-container"
+            appAbsoluteDivPopout
+            #errorPopout="boPopout"
+            [popoutContent]="validationMessage"
+            [insideDialog]="insideDialog()"
+            [control]="form().get(field.formControlName)"
+            [strategy]="field.validationStrategy!"
+          >
+            <input type="file" [id]="field.formControlName" [formControlName]="field.formControlName" class="file-input" #fileInput />
+            <button [id]="field.formControlName" mat-button type="button" (click)="fileInput.click()" class="btn file-upload-button">
+              Choose File
+            </button>
+          </div>
+          } @case (fieldTypes.ImagePreview) {
+          <div
+            class="image-preview-container"
+            appAbsoluteDivPopout
+            #errorPopout="boPopout"
+            [popoutContent]="validationMessage"
+            [insideDialog]="insideDialog()"
+            [control]="form().get(field.formControlName)"
+            [strategy]="field.validationStrategy!"
+          >
+            @if (form().get(field.formControlName)?.value) {
+            <img
+              [id]="field.formControlName"
+              [src]="form().get(field.formControlName)?.value"
+              [alt]="field.label + ' preview'"
+              class="image-preview"
+            />
+            } @else {
+            <div class="no-image-placeholder">
+              <span class="no-image-text">No image uploaded</span>
+            </div>
+            }
+          </div>
+          } @case (fieldTypes.ReadOnlyDate) { @if (field.isLocalDate ) {
+          <span [id]="field.formControlName" class="readonly-value">
+            {{ form().get(field.formControlName)?.value | date : (field.dateFormat || dateTimeFormat) }}
+          </span>
+          } @else {
+          <span [id]="field.formControlName" class="readonly-value">
+            {{ form().get(field.formControlName)?.value | customDateUtc : (field.dateFormat || dateTimeFormat) }} @if
+            (form().get(field.formControlName)?.value) { {{currentTZ.currentTz?.Abr}} }
+          </span>
+          } } @case (fieldTypes.CustomTemplate) {
+          <div [id]="field.formControlName">
+            <ng-container
+              [id]="field.formControlName"
+              *ngTemplateOutlet="field.customTemplate; context: { $implicit: form, field: field }"
+            ></ng-container>
+          </div>
+          } } @if (field.hint) {
+          <div class="hint">{{ field.hint }}</div>
+          }
+        </td>
+        }
+      </tr>
+      } @empty { @if (emptyStateTemplate()) {
+      <tr class="empty-state-row">
+        <td colspan="2" class="empty-state-content">
+          <ng-container [ngTemplateOutlet]="emptyStateTemplate()!"></ng-container>
+        </td>
+      </tr>
+      } }
+    </tbody>
+  </table>
+</form>

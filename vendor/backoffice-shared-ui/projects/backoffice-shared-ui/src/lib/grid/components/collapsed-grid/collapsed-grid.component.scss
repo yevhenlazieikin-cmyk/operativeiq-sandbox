@@ -1,0 +1,50 @@
+@use 'variables' as *;
+
+.table-wrapper {
+  overflow: visible;
+
+  ::ng-deep {
+    .stretch {
+      margin: 0;
+    }
+
+    app-mobile-filters {
+      display: block;
+      margin: 0 -15px;
+    }
+  }
+}
+
+.tbl-shadow {
+  border-radius: 4px;
+}
+
+.white-background .section {
+  .section-content {
+    display: none !important;
+  }
+
+  &.active {
+    .section-title bo-svg-icon {
+      transform: translateY(-50%) rotate(90deg);
+    }
+
+    .section-content {
+      display: block !important;
+    }
+  }
+}
+
+.inventory-details-page,
+.supply-request-page,
+.supply-request-history-page {
+  .group + .group {
+    margin-top: 30px;
+  }
+
+  .desktop {
+    .group:first-child {
+      min-height: 180px;
+    }
+  }
+}

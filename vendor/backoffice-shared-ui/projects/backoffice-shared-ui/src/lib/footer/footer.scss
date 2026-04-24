@@ -1,0 +1,19 @@
+@use 'variables' as *;
+
+.footer {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  width: 100%;
+  margin-top: auto;
+  padding: 1rem;
+  background: transparent;
+  color: #ecf0f1;
+}
+
+.footer-bottom {
+  color: $charcoal;
+  font-size: 0.9rem;
+  font-family: $font-source-sans-pro;
+  text-align: center;
+}

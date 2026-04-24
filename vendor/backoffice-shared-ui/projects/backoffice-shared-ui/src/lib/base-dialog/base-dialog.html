@@ -1,0 +1,80 @@
+<div class="{{ (data.className ? data.className + ' ' : '') + 'dialog-content' }}" [ngClass]="{ 'modal-no-heading': !data.header }">
+  <section class="dialog-header">
+    @if (!dialogRef.disableClose || data.enableClose) {
+    <bo-svg-icon name="iconClose" class="icon-close" mat-dialog-close aria-label="Close dialog" />
+    } @if (data.header) {
+    <h2
+      class="{{ data.headerClassName ? data.headerClassName + ' ' : 'dialog-title' }}"
+      [ngClass]="{ 'has-top-buttons': data.topButtons && data.topButtons.length > 0 }"
+    >
+      {{ data.header }} @if (data.topButtons && data.topButtons.length > 0) { }
+    </h2>
+    }
+    <section
+      class="header-action"
+      [ngClass]="{
+      'administration': isAdministration,
+       'operation': isOperation}"
+    >
+      @for (button of data.topButtons; track button.label) {
+      <button
+        id="bc520db040"
+        [ngClass]="button.cssClass || 'action-button'"
+        [disabled]="button.disabled"
+        (click)="onTopButtonClick(button)"
+        type="button"
+        [tabindex]="button.autofocus ? 0 : -1"
+      >
+        {{ button.label }}
+      </button>
+      }
+    </section>
+  </section>
+  <div class="scrollable-content" [ngClass]="data.scrollbarCustomClass || ''">
+    @if (data.isProgressBar) {
+    <bo-progress-bar
+      [mode]="data.progressBarMode || progressBarMode.DETERMINATE"
+      [completed]="data.progressBarCompleted || 0"
+      [total]="data.progressBarTotal || 100"
+      [showPercentage]="data.showPercentage !== false"
+      [showQuantity]="data.showQuantity !== false"
+      [label]="data.progressBarLabel"
+    ></bo-progress-bar>
+    } @if (data.messageHTML) {
+    <div class="inner" [innerHTML]="data.messageHTML"></div>
+    } @if (data.template) {
+    <div class="inner">
+      <ng-container [ngTemplateOutlet]="data.template" [ngTemplateOutletContext]="{ $implicit: data }"></ng-container>
+    </div>
+    } @if (data.message) {
+    <div class="inner">
+      <p>{{ data.message }}</p>
+    </div>
+    }
+  </div>
+  @if ((data.primaryButton || data.secondaryButton) && (!data.topButtons || data.topButtons.length === 0)) {
+  <div class="bottom">
+    <div class="buttons" [ngClass]="{ 'equal-size flex-sb': data.primaryButton && data.secondaryButton }">
+      @if (data.primaryButton) {
+      <button
+        id="fc18e5fb6c"
+        class="button button-sm button-primary"
+        [ngClass]="{ 'color-2': data.primaryButton.disabled }"
+        [mat-dialog-close]="data.primaryButton.return"
+      >
+        {{ data.primaryButton.text }}
+      </button>
+      } @if (data.secondaryButton) {
+      <button
+        id="25f920b0f4"
+        class="button button-sm button-secondary"
+        [ngClass]="{ 'color-2': data.secondaryButton.disabled }"
+        [mat-dialog-close]="data.secondaryButton.return"
+      >
+        {{ data.secondaryButton.text }}
+      </button>
+      }
+    </div>
+  </div>
+  }
+</div>

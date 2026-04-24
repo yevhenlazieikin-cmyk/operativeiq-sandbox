@@ -1,0 +1,17 @@
+@use 'variables' as *;
+
+:host {
+  display: block;
+  background-color: $white;
+}
+
+.anchor {
+  height: 1px;
+}
+
+.infinite-spinner {
+  position: relative;
+  box-sizing: content-box;
+  height: 100px;
+  padding: 15px 0;
+}

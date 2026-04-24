@@ -1,0 +1,65 @@
+@use 'variables' as *;
+
+.icon-close {
+  z-index: 10;
+}
+
+.field-wrapper {
+  display: flex;
+
+  ::ng-deep {
+    .date-input {
+      color: rgb(44 64 76);
+    }
+  }
+}
+
+.icon-field-wrapper {
+  right: 10px;
+  bottom: 2px;
+  left: 10px;
+}
+
+.icon-trans-bg {
+  input,
+  textarea,
+  .date-input {
+    padding-left: 36px;
+  }
+
+  .mat-mdc-select-value {
+    padding-left: 26px;
+  }
+}
+
+.overflow-visible {
+  overflow: visible;
+}
+
+:host ::ng-deep bo-date-picker .mat-mdc-form-field {
+  width: 100%;
+  height: 25px;
+
+  .mat-mdc-form-field-flex {
+    width: 90%;
+  }
+
+  .mat-mdc-form-field-infix {
+    height: 25px;
+    min-height: unset !important;
+    padding: 0 !important;
+  }
+
+  .mdc-notched-outline {
+    all: unset;
+
+    .mat-mdc-notch-piece {
+      display: none;
+    }
+  }
+
+  .mdc-text-field--no-label:not(.mdc-text-field--textarea) .mat-mdc-form-field-input-control.mdc-text-field__input,
+  .mat-mdc-text-field-wrapper .mat-mdc-form-field-input-control {
+    padding-top: 5px !important;
+  }
+}

@@ -1,0 +1,9 @@
+<div id="99b4620b75" class="info-tooltip__origin" #origin (click)="showTooltip($event)">
+  <div class="info-tooltip__marker">i</div>
+</div>
+
+<ng-template #tooltip>
+  <div class="info-tooltip__container">
+    <div [ngStyle]="tooltipConfig()?.style">{{ displayMessage() }}</div>
+  </div>
+</ng-template>

@@ -1,0 +1,139 @@
+@use 'variables' as *;
+
+.setup-columns-dialog {
+  display: flex;
+  flex-direction: column;
+  min-width: 550px;
+  max-width: 650px;
+  background: $white;
+  box-shadow: 0 8px 16px rgb(0 0 0 / 0.15);
+  font-family: $font-source-sans-pro;
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  padding-left: 5px;
+  border-bottom: 1px solid $black-border;
+  background-color: $cloud-gray;
+
+  .header-left {
+    display: flex;
+    align-items: center;
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 5px;
+    margin-right: 10px;
+    margin-left: auto;
+  }
+}
+
+.dialog-content {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 65vh;
+  padding: 0;
+  background: $white;
+}
+
+.table-wrapper {
+  width: 90%;
+  margin: 25px auto;
+}
+
+.columns-table {
+  width: 100%;
+  border: 1px solid $light-gray;
+  border-radius: 4px;
+  background-color: $white;
+  outline: 1px solid $light-gray;
+
+  .table-header {
+    padding: 4px 9px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    background-color: $cool-gray;
+    font-weight: $font-bold;
+    font-size: $font-base1;
+    font-family: $font-source-sans-pro;
+    text-align: left;
+
+    .header-cell {
+      display: inline-block;
+      color: $charcoal;
+    }
+
+    .header-cell-toggle {
+      display: none;
+    }
+  }
+
+  .table-body {
+    .table-row {
+      display: flex;
+      align-items: center;
+      min-height: 30px;
+      background: $white;
+
+      &:first-child {
+        .column-label,
+        .column-toggle {
+          padding-top: 10px;
+        }
+      }
+
+      &:last-child {
+        .column-label,
+        .column-toggle {
+          padding-bottom: 10px;
+        }
+      }
+
+      .column-label {
+        width: 180px;
+        padding: 2px 8px;
+        color: $charcoal;
+        font-weight: normal;
+        font-size: 13px;
+      }
+
+      .column-toggle {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 2px 8px;
+      }
+    }
+  }
+}
+
+.btn-back,
+.btn-save {
+  width: fit-content;
+  height: 30px;
+  margin-right: 5px;
+  padding: 0 10px;
+  border: none;
+  border-radius: 5px;
+  color: $white;
+  cursor: pointer;
+
+  &.administration-action {
+    background-color: $navy-blue;
+
+    &:hover {
+      background-color: $primary-blue;
+    }
+  }
+
+  &.operation-action {
+    background-color: $forest-green;
+
+    &:hover {
+      background-color: $forest-green-light;
+    }
+  }
+}

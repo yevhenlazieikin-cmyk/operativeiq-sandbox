@@ -1,0 +1,59 @@
+@use 'variables' as *;
+
+.action-sub-panel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 28px;
+  border: 1px solid $cloud-gray;
+  border-bottom: unset;
+  border-radius: 4px 4px 0 0;
+  background: $cool-gray;
+  font-family: $font-source-sans-pro !important;
+
+  .panel-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .panel-title {
+    width: fit-content;
+    padding-left: 10px;
+    font-weight: $font-bold;
+    font-size: $font-base1;
+  }
+
+  .action-buttons {
+    width: fit-content;
+    margin-left: auto;
+
+    button {
+      width: fit-content;
+      height: 20px;
+      margin-right: 8px;
+      padding: 0 10px;
+      border: 1px solid #ffffff33;
+      border-radius: 5px;
+      color: $white;
+      font-size: $font-base1;
+      font-family: $font-source-sans-pro;
+    }
+
+    .administration-action {
+      background-color: $deep-steel-blue;
+
+      &:hover {
+        background-color: $steel-blue;
+      }
+    }
+
+    .operation-action {
+      background-color: $olive-green;
+
+      &:hover {
+        background-color: $olive-green-light;
+      }
+    }
+  }
+}

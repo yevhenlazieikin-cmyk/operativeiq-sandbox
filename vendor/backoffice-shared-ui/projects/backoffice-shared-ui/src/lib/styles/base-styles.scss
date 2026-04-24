@@ -1,0 +1,619 @@
+@use '@angular/material' as mat;
+@use 'variables' as *;
+@use 'reset';
+@use 'fonts';
+
+html {
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette
+      ),
+      typography: 'SourceSansPro',
+      density: 0
+    )
+  );
+}
+
+body {
+  margin: 0;
+  background-color: #f2f2f2;
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+  font-family: SourceSansPro, sans-serif !important;
+  color-scheme: light;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+.details-panel {
+  @include mat.form-field-overrides(
+    (
+      outlined-outline-color: transparent,
+      outlined-disabled-outline-color: transparent,
+      outlined-hover-outline-color: transparent,
+      container-height: 24px
+    )
+  );
+  @include mat.select-overrides(
+    (
+      placeholder-text-color: $bright-blue
+    )
+  );
+}
+
+.details-panel.operation {
+  @include mat.form-field-overrides(
+    (
+      outlined-focus-outline-color: $forest-green,
+      outlined-hover-outline-color: $dark-mint-green,
+      outlined-caret-color: $forest-green-light
+    )
+  );
+  @include mat.slide-toggle-overrides(
+    (
+      selected-icon-color: $forest-green,
+      selected-track-color: $forest-green,
+      selected-focus-track-color: $forest-green,
+      selected-focus-state-layer-color: $forest-green,
+      selected-focus-handle-color: #d4e9d1,
+      selected-pressed-track-color: $forest-green,
+      selected-pressed-state-layer-color: $forest-green,
+      selected-pressed-handle-color: #d4e9d1,
+      selected-hover-track-color: $forest-green,
+      selected-hover-state-layer-color: $forest-green,
+      selected-hover-handle-color: #d4e9d1
+    )
+  );
+  @include mat.radio-overrides(
+    (
+      checked-ripple-color: none,
+      ripple-color: none,
+      selected-focus-icon-color: $forest-green-light,
+      selected-hover-icon-color: $forest-green-light,
+      selected-icon-color: $forest-green-light,
+      selected-pressed-icon-color: $forest-green-light
+    )
+  );
+  @include mat.datepicker-overrides(
+    (
+      toggle-active-state-icon-color: $forest-green
+    )
+  );
+}
+
+.details-panel.administration {
+  @include mat.form-field-overrides(
+    (
+      outlined-hover-outline-color: $cyan-blue,
+      outlined-focus-outline-color: $primary-blue,
+      outlined-caret-color: $primary-blue
+    )
+  );
+  @include mat.slide-toggle-overrides(
+    (
+      selected-icon-color: $primary-blue,
+      selected-track-color: $primary-blue,
+      selected-focus-track-color: $primary-blue,
+      selected-focus-state-layer-color: $primary-blue,
+      selected-focus-handle-color: #c6def0,
+      selected-pressed-track-color: $primary-blue,
+      selected-pressed-state-layer-color: $primary-blue,
+      selected-pressed-handle-color: #c6def0,
+      selected-hover-track-color: $primary-blue,
+      selected-hover-state-layer-color: $primary-blue,
+      selected-hover-handle-color: #c6def0
+    )
+  );
+  @include mat.radio-overrides(
+    (
+      checked-ripple-color: none,
+      ripple-color: none,
+      selected-focus-icon-color: $primary-blue,
+      selected-hover-icon-color: $primary-blue,
+      selected-icon-color: $primary-blue,
+      selected-pressed-icon-color: $primary-blue
+    )
+  );
+  @include mat.datepicker-overrides(
+    (
+      toggle-active-state-icon-color: $primary-blue
+    )
+  );
+}
+
+:root {
+  --default-margin-sides: 0 25px;
+  --default-margin-sides-and-bottom: 0 25px 20px;
+  --default-margin-bottom: 25px;
+  --default-gap: 20px;
+
+  @include mat.dialog-overrides(
+    (
+      container-shape: rectangle
+    )
+  );
+  @include mat.datepicker-overrides(
+    (
+      calendar-container-background-color: $white,
+      calendar-date-focus-state-background-color: $primary-blue,
+      calendar-date-hover-state-background-color: $primary-blue,
+      calendar-date-selected-state-text-color: $white,
+      calendar-text-size: 11px,
+      calendar-header-text-size: 11px,
+      calendar-body-label-text-size: 11px
+    )
+  );
+  @include mat.tooltip-overrides(
+    (
+      container-color: $white,
+      supporting-text-size: 14px,
+      supporting-text-line-height: 1,
+      supporting-text-color: #000000
+    )
+  );
+}
+
+.tabber.administration {
+  --mat-tab-inactive-label-text-color: #1684c0;
+
+  @include mat.tabs-overrides(
+    (
+      active-focus-indicator-color: $primary-blue,
+      active-focus-label-text-color: $primary-blue,
+      active-indicator-color: $primary-blue,
+      active-label-text-color: $primary-blue,
+      active-hover-indicator-color: $primary-blue,
+      active-hover-label-text-color: $primary-blue,
+      container-height: 35px,
+      label-text-font: $font-source-sans-pro
+    )
+  );
+}
+
+.tabber.operation {
+  --mat-tab-inactive-label-text-color: #409a3c;
+
+  @include mat.tabs-overrides(
+    (
+      active-focus-indicator-color: $forest-green,
+      active-focus-label-text-color: $forest-green,
+      active-indicator-color: $forest-green,
+      active-label-text-color: $forest-green,
+      active-hover-indicator-color: $forest-green-light,
+      active-hover-label-text-color: $forest-green-light,
+      container-height: 35px,
+      label-text-font: $font-source-sans-pro
+    )
+  );
+}
+
+.dialog-container .action-button {
+  @include mat.button-overrides(
+    (
+      text-label-text-color: $charcoal
+    )
+  );
+}
+
+.progress-container {
+  @include mat.progress-bar-overrides(
+    (
+      active-indicator-color: $charcoal,
+      track-height: 20px,
+      active-indicator-height: 20px
+    )
+  );
+
+  &--grid {
+    @include mat.progress-bar-overrides(
+      (
+        active-indicator-color: $forest-green,
+        track-height: 20px,
+        active-indicator-height: 20px
+      )
+    );
+  }
+}
+
+.file-progress-bar-wrapper {
+  @include mat.progress-bar-overrides(
+    (
+      active-indicator-color: $primary-blue,
+      track-color: $white,
+      track-height: 20px,
+      active-indicator-height: 20px
+    )
+  );
+}
+
+.even-row {
+  background-color: $panel-gray;
+}
+
+.mb-0,
+.my-0 {
+  margin-bottom: 0 !important;
+}
+
+.table {
+  width: 100%;
+}
+
+.tr {
+  display: flex;
+}
+
+.grid {
+  .stretch {
+    margin: 0;
+  }
+
+  .details-descriptions {
+    flex: 0 0 87px;
+  }
+}
+
+.table-wrapper {
+  overflow: hidden;
+  margin-bottom: 10px;
+
+  &.no-line bo-grid .tr:last-child {
+    border-bottom: none;
+  }
+
+  &.tbl-shadow {
+    bo-grid .tr:last-child:not(.tr-heading) {
+      border-bottom: none;
+    }
+  }
+
+  &.bordered {
+    bo-grid .tr {
+      border-right: 1px solid $primary-blue;
+      border-left: 1px solid $primary-blue;
+    }
+  }
+
+  &.heading-high .th {
+    padding-top: 9px;
+    padding-bottom: 9px;
+  }
+
+  .table {
+    margin-bottom: 0;
+    background-color: $white;
+    color: inherit;
+  }
+
+  .table.mob-transparent {
+    background-color: transparent;
+  }
+
+  .main-tr,
+  .sub-tr {
+    display: flex;
+    width: 100%;
+  }
+
+  .sub-trs {
+    padding-bottom: 10px;
+
+    .td {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+  }
+
+  .th {
+    align-items: center;
+    font-weight: 400;
+
+    &.center {
+      justify-content: center;
+      text-align: center;
+
+      .th-title {
+        justify-content: center;
+      }
+
+      .mat-sort-header-container {
+        justify-content: center;
+        border-bottom: none !important;
+
+        .mat-sort-header-content {
+          position: relative;
+          right: -9px;
+          text-align: center;
+        }
+      }
+
+      .mat-sort-header-arrow {
+        right: -9px;
+        color: $navy-blue;
+      }
+    }
+
+    &.th-hidden {
+      pointer-events: none;
+    }
+
+    .mat-sort-header-content {
+      text-align: left;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  .td {
+    &.center {
+      align-items: center;
+      text-align: center;
+    }
+
+    &.flex-1 > * {
+      max-width: 100%;
+    }
+
+    .cell-value {
+      width: 100%;
+      word-wrap: break-word;
+    }
+
+    .field-wrapper {
+      width: 100%;
+    }
+  }
+
+  .cell-wrapper,
+  .cell-items {
+    width: 100%;
+  }
+
+  [mat-sort-header] {
+    cursor: pointer;
+  }
+
+  .center {
+    .empty-item:before {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .counter,
+    .datepicker {
+      margin: 0 auto;
+    }
+  }
+
+  .info-text {
+    top: 0;
+  }
+}
+
+.exception-modal {
+  .dialog-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100%;
+
+    .scrollable-content {
+      max-height: calc(100% - 40px) !important;
+      padding: 37px 60px 13px 35px !important;
+    }
+  }
+}
+
+.base-select-modal {
+  background-color: $white;
+}
+
+.small-dialog {
+  overlay-scrollbars {
+    height: 255px;
+  }
+}
+
+.medium-dialog {
+  overlay-scrollbars {
+    height: 455px;
+    max-height: 100% !important;
+  }
+}
+
+.icon-delete {
+  cursor: pointer;
+}
+
+.options-select-panel {
+  width: 100% !important;
+  min-width: max-content;
+}
+
+.mat-mdc-tooltip-surface {
+  border-radius: unset !important;
+  outline: 1px solid #000000;
+}
+
+.mat-calendar-controls {
+  margin: unset !important;
+
+  .mat-calendar-table-header-divider {
+    display: none;
+  }
+
+  .mdc-button__label {
+    font-size: 11px;
+  }
+}
+
+.mat-calendar-body-cell {
+  width: 30px !important;
+  height: 20px !important;
+
+  .mat-calendar-body-cell-content {
+    border-radius: 3px !important;
+  }
+
+  &:hover,
+  &:focus {
+    .mat-focus-indicator {
+      color: $white;
+    }
+  }
+}
+
+.icon-close {
+  width: 28px;
+  height: 28px !important;
+  border: none;
+  border-radius: 50%;
+  color: $charcoal;
+  font-size: $font-base3;
+  line-height: 1;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $neutral-gray;
+  }
+}
+
+.dialog-title {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  margin-left: 5px;
+  color: $charcoal;
+  font-weight: $font-semibold;
+  font-size: $font-base3;
+  line-height: 1.3;
+}
+
+.double-column-layout {
+  gap: var(--default-gap);
+  margin: var(--default-margin-sides-and-bottom);
+  column-count: 2;
+
+  > * {
+    display: inline-block;
+    width: 100%;
+    margin: 0 0 var(--default-gap) !important;
+    break-inside: avoid;
+
+    &:last-child {
+      margin: 0 !important;
+    }
+  }
+
+  &--equal-items {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--default-gap);
+    margin: var(--default-margin-sides-and-bottom);
+
+    > * {
+      margin: 0 !important;
+    }
+
+    &:last-child {
+      margin-bottom: var(--default-margin-bottom);
+    }
+  }
+
+  &:last-child {
+    margin-bottom: var(--default-margin-bottom);
+  }
+}
+
+.dialog-table .table-wrapper,
+.dialog-details-panel {
+  margin: 0 !important;
+}
+
+.mat-mdc-form-field.text-area .mdc-text-field--outlined:not(.mdc-text-field--disabled):hover {
+  .mdc-notched-outline__leading,
+  .mdc-notched-outline__notch,
+  .mdc-notched-outline__trailing {
+    border-width: var(--mdc-outlined-text-field-focus-outline-width, 2px);
+  }
+}
+
+.mdc-text-field {
+  padding: 0 10px !important;
+}
+
+overlay-scrollbars .anchor {
+  width: calc(100% - 1px);
+  margin: -1px;
+}
+
+.bo-collapsable-content {
+  overflow: hidden;
+  max-height: 2000px;
+  opacity: 1;
+  transition:
+    max-height 220ms ease-in-out,
+    opacity 180ms ease-in-out;
+  transform-origin: top;
+}
+
+.bo-collapsable-content--collapsed {
+  max-height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+tbody.bo-collapsable-content {
+  display: block;
+  overflow: hidden;
+  max-height: 2000px;
+  opacity: 1;
+  transition:
+    max-height 220ms ease-in-out,
+    opacity 180ms ease-in-out;
+}
+
+tbody.bo-collapsable-content > tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+tbody.bo-collapsable-content.bo-collapsable-content--collapsed {
+  max-height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.os-scrollbar-horizontal .os-scrollbar-handle {
+  display: none;
+}
+
+overlay-scrollbars {
+  .bo-collapsable-content {
+    transition: opacity 180ms ease-in-out;
+  }
+}
+
+.authenticator-enroll-dialog-panel .mat-mdc-dialog-surface {
+  min-height: auto;
+}
+
+.profile-edit-dialog-panel,
+.image-cropper-dialog-panel {
+  .mat-mdc-dialog-container {
+    width: 575px !important;
+    max-width: 575px !important;
+    padding: 0;
+
+    .mat-mdc-dialog-inner-container {
+      width: 575px;
+    }
+  }
+}

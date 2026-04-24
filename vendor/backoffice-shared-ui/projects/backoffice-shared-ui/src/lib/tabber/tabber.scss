@@ -1,0 +1,54 @@
+@use 'variables' as *;
+
+:host {
+  display: block;
+  margin: var(--default-margin-sides-and-bottom);
+}
+
+.tabber {
+  width: 100%;
+  max-width: 100%;
+
+  ::ng-deep {
+    .mat-mdc-tab-header {
+      width: fit-content;
+    }
+
+    .mat-mdc-tab-labels {
+      width: fit-content;
+    }
+
+    .mat-mdc-tab-body-wrapper {
+      background-color: transparent !important;
+    }
+
+    .mat-mdc-tab-body-content {
+      padding: 0;
+    }
+
+    .mdc-tab {
+      overflow: hidden;
+      min-width: auto !important;
+      padding: 0 16px !important;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      background-color: $panel-gray !important;
+
+      .mat-ripple-element,
+      .mat-mdc-tab-ripple,
+      .mdc-tab__ripple {
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+      }
+    }
+
+    .mdc-tab--active {
+      background-color: rgb(200 200 200 / 0.5) !important;
+      font-weight: 500;
+    }
+
+    bo-details-panel {
+      margin: 1px !important;
+    }
+  }
+}

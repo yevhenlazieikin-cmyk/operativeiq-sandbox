@@ -1,0 +1,63 @@
+@use 'variables' as *;
+
+.counter {
+  position: relative;
+  display: flex;
+  width: 125px;
+  max-width: 100%;
+
+  input {
+    width: 125px;
+    max-width: 100%;
+    height: $h;
+    padding: 0 40px;
+    text-align: center;
+  }
+
+  div {
+    position: absolute;
+    top: 0;
+    width: 35px;
+    height: $h;
+    padding: 0;
+    background-color: transparent;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover {
+      &:before,
+      &:after {
+        background-color: $primary-blue;
+      }
+    }
+
+    &.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+
+      &:before,
+      &:after {
+        background-color: $charcoal;
+      }
+    }
+  }
+
+  .btn-decrement {
+    left: 0;
+    display: flex;
+    flex-flow: column wrap;
+    place-content: center center;
+  }
+
+  .btn-increment {
+    right: 0;
+    display: flex;
+    flex-flow: column wrap;
+    place-content: center center;
+  }
+
+  .svg-margin {
+    margin-right: auto;
+    margin-left: auto;
+  }
+}

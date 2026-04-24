@@ -1,0 +1,9 @@
+@use 'variables' as *;
+
+.container {
+  position: relative;
+  display: inline-block;
+  width: calc(100% - 40px);
+  min-width: 1210px;
+  margin: 0 20px;
+}

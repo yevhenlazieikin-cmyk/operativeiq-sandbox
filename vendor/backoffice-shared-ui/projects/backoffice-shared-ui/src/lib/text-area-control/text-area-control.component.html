@@ -1,0 +1,23 @@
+<mat-form-field
+  appearance="outline"
+  class="text-area-box"
+  subscriptSizing="dynamic"
+  [ngClass]="{ administration: userMenu() === menuType.administration, operation: userMenu() === menuType.operation }"
+>
+  <textarea
+    id="39f909a564"
+    #textarea
+    matInput
+    rows="2"
+    (input)="onTextChange($event)"
+    [value]="value"
+    [attr.maxLength]="maxLength() ?? null"
+    (blur)="onBlur()"
+    [disabled]="isDisabled"
+    [placeholder]="placeholder()"
+    [attr.autofocus]="autoFocus()"
+  ></textarea>
+</mat-form-field>
+@if (maxLength()) {
+  <mat-hint class="symbol-counter">{{ value.length || 0 }} / {{ maxLength() }} characters</mat-hint>
+}

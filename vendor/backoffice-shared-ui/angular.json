@@ -1,0 +1,229 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "cli": {
+    "packageManager": "npm"
+  },
+  "newProjectRoot": "projects",
+  "projects": {
+    "backoffice-shared-ui": {
+      "projectType": "library",
+      "root": "projects/backoffice-shared-ui",
+      "sourceRoot": "projects/backoffice-shared-ui/src",
+      "prefix": "bo",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/backoffice-shared-ui/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/backoffice-shared-ui/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "projects/backoffice-shared-ui/tsconfig.spec.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/demo-host/src/**/*.ts", "projects/demo-host/src/**/*.html"]
+          }
+        }
+      }
+    },
+    "demo-host": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/demo-host",
+      "sourceRoot": "projects/demo-host/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "projects/demo-host/src/main.ts",
+            "polyfills": ["zone.js"],
+            "tsConfig": "projects/demo-host/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/demo-host/public"
+              },
+              {
+                "glob": "**/*",
+                "input": "projects/backoffice-shared-ui/assets",
+                "output": "assets/backoffice-shared-ui"
+              }
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["projects/backoffice-shared-ui/src/lib/styles"]
+            },
+            "styles": ["projects/demo-host/src/styles.scss", "node_modules/overlayscrollbars/styles/overlayscrollbars.css"]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "10MB",
+                  "maximumError": "15MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "demo-host:build:production"
+            },
+            "development": {
+              "buildTarget": "demo-host:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular/build:extract-i18n"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "polyfills": ["zone.js", "zone.js/testing"],
+            "tsConfig": "projects/demo-host/tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/demo-host/public"
+              }
+            ],
+            "styles": ["projects/demo-host/src/styles.scss", "node_modules/overlayscrollbars/styles/overlayscrollbars.css"]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/backoffice-shared-ui/src/**/*.ts", "projects/backoffice-shared-ui/src/**/*.html"]
+          }
+        }
+      }
+    },
+    "time-picker-wrapper": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/time-picker-wrapper",
+      "sourceRoot": "projects/time-picker-wrapper/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "projects/time-picker-wrapper/src/main.ts",
+            "tsConfig": "projects/time-picker-wrapper/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/time-picker-wrapper/public"
+              }
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["projects/backoffice-shared-ui/src/lib/styles"]
+            },
+            "styles": [
+              "projects/backoffice-shared-ui/src/lib/time-picker/time-picker.scss"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "time-picker-wrapper:build:production"
+            },
+            "development": {
+              "buildTarget": "time-picker-wrapper:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular/build:extract-i18n"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "projects/time-picker-wrapper/tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/time-picker-wrapper/public"
+              }
+            ],
+            "styles": [
+              "projects/time-picker-wrapper/src/styles.scss"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

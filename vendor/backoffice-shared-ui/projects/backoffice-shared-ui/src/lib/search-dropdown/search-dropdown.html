@@ -1,0 +1,63 @@
+<div
+  class="select-field-wrapper"
+  [ngClass]="{'administration': userMenu() === menuType.administration,
+    'operation': userMenu() === menuType.operation}"
+>
+  @if (hasClear()) { @if (isClearable()) {
+  <bo-svg-icon name="iconCloseSmall" class="icon-close" (click)="clear()" />
+  } }
+
+  <mat-select
+    class="select"
+    (openedChange)="onOpen($event)"
+    (closed)="onTouched()"
+    [(ngModel)]="selectValue"
+    disableOptionCentering
+    disableRipple
+    [placeholder]="placeholder()"
+    [disabled]="disabled()"
+    (ngModelChange)="onSelectValueChange($event)"
+    [multiple]="_multiple()"
+    [panelClass]="['my-scoped-select-panel',
+     userMenu() === menuType.administration ? 'dropdown-panel-administration' : 'dropdown-panel-operation']"
+    [ariaLabel]="placeholder() || 'Select option'"
+  >
+    @let tpl = customTemplate(); @let so = selectedOption(); @if (tpl && so) {
+    <mat-select-trigger>
+      <ng-container
+        [ngTemplateOutlet]="tpl"
+        [ngTemplateOutletContext]="{ option: so, applyTemplateForSelectedValue: false }"
+      ></ng-container>
+    </mat-select-trigger>
+    } @if (hasSearch()) {
+    <div class="input-filter-container">
+      <input
+        #inputFilter
+        id="f701235ec9"
+        matInput
+        type="text"
+        autocomplete="off"
+        class="input-filter"
+        (keyup)="filterList($event)"
+        (keydown)="stopEventProp($event)"
+        [value]="searchText()"
+      />
+    </div>
+    } @for (item of optionsFiltered(); track item) {
+    <mat-option [value]="valueProperty() ? item[valueProperty()!] : item">
+      @if (customTemplate(); as template) {
+      <ng-container
+        [ngTemplateOutlet]="template"
+        [ngTemplateOutletContext]="{ option: item, applyTemplateForSelectedValue: applyTemplateForSelectedValue() }"
+      ></ng-container>
+      } @else { {{ displayProperty() ? item[displayProperty()!] : item }} }
+    </mat-option>
+    }
+  </mat-select>
+
+  @if (iconName()) {
+  <div class="icon-wrapper">
+    <bo-svg-icon [name]="iconName()" />
+  </div>
+  }
+</div>

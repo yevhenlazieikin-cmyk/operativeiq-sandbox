@@ -1,0 +1,6 @@
+<div [id]="'filter_' + input()?.name" class="field-wrapper icon-field-wrapper icon-trans-bg overflow-visible" [ngClass]="customClass()">
+  @if (searchByDate) {
+    <bo-svg-icon name="iconCloseSmall" class="icon-close" (click)="clear()"></bo-svg-icon>
+  }
+  <bo-date-picker [(selectValue)]="searchByDate" (selectValueChange)="onChange($event)" [placeholder]="placeholder()" [id]="info.name" />
+</div>

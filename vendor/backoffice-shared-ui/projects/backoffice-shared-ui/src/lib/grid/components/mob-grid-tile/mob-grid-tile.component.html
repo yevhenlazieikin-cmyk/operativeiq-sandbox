@@ -1,0 +1,339 @@
+<div class="item item-mob">
+  @if (
+    options.hasCheckbox ||
+    options.title ||
+    options.subTitle ||
+    options.rightAlign?.rightAlignText ||
+    options.subRightAlign?.subRightAlignText ||
+    options.additionalInfo ||
+    options.labelValue?.length ||
+    options.rowTable?.length
+  ) {
+    <div id="f564f35e82" class="top flex" (click)="itemClick()">
+      @if (options.hasCheckbox) {
+        <div class="checkbox-wrapper">
+          <mat-checkbox
+            class="mar-outer mt-0"
+            (click)="$event.stopPropagation()"
+            (change)="onChange($event)"
+            [checked]="options.row.checked"
+            [disabled]="
+              options.disableCondition && (updatePipeEvent$ | async | callTemplateExpression: options.disableCondition : options.row)
+            "
+            disableRipple
+          ></mat-checkbox>
+        </div>
+      }
+
+      <div class="item-data">
+        <div class="row prevent-wrap">
+          <div class="main-title flex-65">
+            @if (options.title || additionalInfoTitle) {
+              <div
+                class="semi-bold-font mb-10 td-mob"
+                [ngClass]="updatePipeEvent$ | async | setClassFromTemplatePipe: null : { query: 'titleClass', options }"
+              >
+                @if (options.title) {
+                  <span class="view-title">{{ options.title }}</span>
+                }
+                @if (additionalInfoTitle) {
+                  <ng-container
+                    [ngTemplateOutlet]="messageBox"
+                    [ngTemplateOutletContext]="{ rightAlign: false, key: 'title' }"
+                  ></ng-container>
+                }
+              </div>
+            }
+
+            @if (options.subTitle || additionalInfoSubTitle) {
+              <div class="mb-5 sub-title td-mob">
+                @if (options.subTitle) {
+                  <span class="view-subtitle">{{ options.subTitle }}</span>
+                }
+                @if (additionalInfoSubTitle) {
+                  <ng-container
+                    [ngTemplateOutlet]="messageBox"
+                    [ngTemplateOutletContext]="{ rightAlign: false, key: 'subTitle' }"
+                  ></ng-container>
+                }
+              </div>
+            }
+          </div>
+          <div class="sub-align">
+            @if (options.rightAlign?.rightAlignText || options.rightAlign?.customTemplate) {
+              <div
+                class="right-align td-mob"
+                [ngClass]="updatePipeEvent$ | async | setClassFromTemplatePipe: null : { query: 'rightAlign', options }"
+              >
+                <ng-container *ngIf="!options.rightAlign?.customTemplate; else customTemplate">
+                  {{ options.rightAlign?.transformDate ? rightAlignDate : options.rightAlign?.rightAlignText }}
+                </ng-container>
+
+                @if (options.rightAlign?.tooltip) {
+                  @if (
+                    !options.rightAlign?.tooltip?.condition ||
+                    (updatePipeEvent$ | async | callTemplateExpression: options.rightAlign?.tooltip?.condition : options.row)
+                  ) {
+                    <ng-container [ngTemplateOutlet]="infoTooltip" [ngTemplateOutletContext]="{ cell: options.rightAlign }"></ng-container>
+                  }
+                }
+
+                <ng-template #customTemplate>
+                  <ng-container
+                    [ngTemplateOutlet]="options.rightAlign?.customTemplate"
+                    [ngTemplateOutletContext]="{ $implicit: options.row }"
+                  ></ng-container>
+                </ng-template>
+              </div>
+            }
+
+            @if (options.subRightAlign?.subRightAlignText || options.subRightAlign?.customTemplate) {
+              <div
+                class="right-align td-mob"
+                [ngClass]="updatePipeEvent$ | async | setClassFromTemplatePipe: null : { query: 'subRightAlign', options }"
+              >
+                <ng-container *ngIf="!options.subRightAlign?.customTemplate; else customTemplate">
+                  {{ options.subRightAlign?.transformDate ? subRightAlignDate : options.subRightAlign?.subRightAlignText }}
+                </ng-container>
+                @if (options.subRightAlign?.tooltip) {
+                  @if (
+                    !options.subRightAlign?.tooltip?.condition ||
+                    (updatePipeEvent$ | async | callTemplateExpression: options.subRightAlign?.tooltip?.condition : options.row)
+                  ) {
+                    <ng-container
+                      [ngTemplateOutlet]="infoTooltip"
+                      [ngTemplateOutletContext]="{ cell: options.subRightAlign }"
+                    ></ng-container>
+                  }
+                }
+
+                <ng-template #customTemplate>
+                  <ng-container
+                    [ngTemplateOutlet]="options.subRightAlign?.customTemplate"
+                    [ngTemplateOutletContext]="{ $implicit: options.row }"
+                  ></ng-container>
+                </ng-template>
+              </div>
+            }
+
+            @if (options.additionalInfo && (!options.additionalInfoMobPosition || options.additionalInfoMobPosition === 'inside-section')) {
+              <ng-container [ngTemplateOutlet]="messageBox" [ngTemplateOutletContext]="{ rightAlign: true, key: undefined }"></ng-container>
+            }
+          </div>
+        </div>
+
+        @if (options?.labelValue?.length) {
+          <div class="mob-tile-row label-value">
+            <div class="details">
+              <div class="details-content">
+                @for (item of options?.labelValue; track $index) {
+                  <div class="details-row td-mob">
+                    @if (item.row[item.key] || item.showEmptyLabelValue) {
+                      <div class="details-descriptions">
+                        <span>{{ item.label }}</span>
+                      </div>
+                      <div class="details-values">
+                        <span
+                          [ngClass]="
+                            updatePipeEvent$ | async | setClassFromTemplatePipe: null : { query: 'labelValue', options, rowKey: item.key }
+                          "
+                          *ngIf="!item.customTemplate; else customTemplate"
+                        >
+                          {{
+                            item.transformDate
+                              ? item.date
+                              : (item.row[item.key] || item.row[item.key] === 0) && !(item.hideZero && item.row[item.key] === 0)
+                                ? item.row[item.key]
+                                : ''
+                          }}
+                        </span>
+                        @if (item.tooltip) {
+                          @if (
+                            !item.tooltip.condition ||
+                            (updatePipeEvent$ | async | callTemplateExpression: item.tooltip.condition : options.row)
+                          ) {
+                            <ng-container [ngTemplateOutlet]="infoTooltip" [ngTemplateOutletContext]="{ cell: item }"></ng-container>
+                          }
+                        }
+
+                        <ng-template #customTemplate>
+                          <ng-container
+                            [ngTemplateOutlet]="item.customTemplate"
+                            [ngTemplateOutletContext]="{ $implicit: item.row }"
+                          ></ng-container>
+                        </ng-template>
+                      </div>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+            <ng-container [ngTemplateOutlet]="deleteRowTempl"></ng-container>
+            <ng-container [ngTemplateOutlet]="tileClickTempl"></ng-container>
+          </div>
+        }
+
+        @if (options?.rowTable?.length) {
+          <div class="mob-tile-row row-table" [class.bordered-tile]="borderedTile">
+            <div class="details row-details">
+              @for (item of options?.rowTable; track $index) {
+                <div class="grid-view item-details td-mob">
+                  <div class="headings">
+                    <div class="headings-inner">
+                      <div class="heading">
+                        <div>{{ item.label }}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="data-row">
+                    <div class="data-cell">
+                      <div
+                        [ngClass]="
+                          updatePipeEvent$ | async | setClassFromTemplatePipe: null : { query: 'rowTable', options, rowKey: item.key }
+                        "
+                        *ngIf="!item.customTemplate; else customTemplate"
+                      >
+                        {{
+                          item.transformDate
+                            ? item.date
+                            : (item.row[item.key] || item.row[item.key] === 0) && !(item.hideZero && item.row[item.key] === 0)
+                              ? item.row[item.key]
+                              : ''
+                        }}
+
+                        @if (item.tooltip) {
+                          @if (
+                            !item.tooltip.condition ||
+                            (updatePipeEvent$ | async | callTemplateExpression: item.tooltip.condition : options.row)
+                          ) {
+                            <ng-container [ngTemplateOutlet]="infoTooltip" [ngTemplateOutletContext]="{ cell: item }"></ng-container>
+                          }
+                        }
+                      </div>
+                      <ng-template #customTemplate>
+                        <ng-container
+                          [ngTemplateOutlet]="item.customTemplate"
+                          [ngTemplateOutletContext]="{ $implicit: item.row }"
+                        ></ng-container>
+                      </ng-template>
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+            <ng-container [ngTemplateOutlet]="deleteRowTempl"></ng-container>
+            <ng-container [ngTemplateOutlet]="tileClickTempl"></ng-container>
+          </div>
+        }
+
+        <ng-template #tileClickTempl>
+          @if (options.rowClick && !options.rowClick.allRowClickable) {
+            @if (updatePipeEvent$ | async | callTemplateExpression: options.rowClick?.condition : options.row) {
+              <div class="button-container">
+                <button id="b499ce16fc" type="button" class="button button-rfid" (click)="options.rowClick?.onClickCB(options.row)">
+                  View
+                </button>
+              </div>
+            }
+          }
+        </ng-template>
+
+        <ng-template #deleteRowTempl>
+          @if (
+            options.hasDelete &&
+            (!options.deleteIconCondition ||
+              (options.deleteIconCondition && updatePipeEvent$ | async | callTemplateExpression: options.deleteIconCondition : options.row))
+          ) {
+            <div class="delete-wrapper delete-wrapper_main-row">
+              <bo-svg-icon
+                name="iconDelete"
+                class="icon-delete"
+                (click)="options?.deleteCB(options.index, options.subIndex, options.row)"
+              ></bo-svg-icon>
+            </div>
+          }
+        </ng-template>
+      </div>
+    </div>
+  }
+
+  @if (options.editableRow?.length) {
+    <div class="sub-items">
+      <div class="sub-item">
+        <div class="inputs">
+          @for (item of options.editableRow; track $index) {
+            @if (updatePipeEvent$ | async | callTemplateExpression: item.visible : options.row) {
+              <div class="input td-mob">
+                @if (item.label) {
+                  <label class="field-label">{{ item.label }}</label>
+                }
+                <ng-container
+                  [ngTemplateOutlet]="item.template"
+                  [ngTemplateOutletContext]="{ ind: options.index, subInd: options.subIndex, updateEvent: updatePipeEvent$, item }"
+                ></ng-container>
+                <div class="delete-wrapper"></div>
+              </div>
+            }
+          }
+        </div>
+        <div class="delete-wrapper delete-wrapper_itemize">
+          @let subRow = options?.subRow;
+          @if (subRow) {
+            @if (
+              !subRow.deleteIconCondition ||
+              (options.subRow && updatePipeEvent$ | async | callTemplateExpression: subRow.deleteIconCondition : options.row)
+            ) {
+              <bo-svg-icon
+                name="delete"
+                class="icon-delete"
+                (click)="subRow.deleteCB(options.index, options.subIndex, options.row)"
+              ></bo-svg-icon>
+            }
+          }
+        </div>
+      </div>
+    </div>
+  }
+</div>
+
+@if (options.additionalInfo && options.additionalInfoMobPosition === 'bottom') {
+  <ng-container [ngTemplateOutlet]="messageBox" [ngTemplateOutletContext]="{ rightAlign: false, key: undefined }"></ng-container>
+}
+
+<ng-template #messageBox let-rightAlign="rightAlign" let-key="key">
+  <ng-container *ngIf="!key; else withKeyTempl">
+    @if (options.additionalInfo?.length) {
+      @for (addInfo of options?.additionalInfo; track $index) {
+        <ng-container [ngTemplateOutlet]="addIfoTempl" [ngTemplateOutletContext]="{ $implicit: addInfo }"></ng-container>
+      }
+    }
+  </ng-container>
+  <ng-template #withKeyTempl>
+    @for (addInfo of options?.additionalInfo[key]; track $index) {
+      <ng-container [ngTemplateOutlet]="addIfoTempl" [ngTemplateOutletContext]="{ $implicit: addInfo }"></ng-container>
+    }
+  </ng-template>
+
+  <ng-template #addIfoTempl let-addInfo>
+    @if (updatePipeEvent$ | async | callTemplateExpression: addInfo.condition : options.row) {
+      <div class="mb-5" [class.right-align]="rightAlign" [ngClass]="addInfo.classList">
+        {{
+          addInfo.displayText.constructor.name === 'Function'
+            ? (updatePipeEvent$ | async | callTemplateExpression: addInfo.displayText : options.row)
+            : addInfo.displayText
+        }}
+      </div>
+    }
+  </ng-template>
+</ng-template>
+
+<ng-template #infoTooltip let-cell="cell">
+  <bo-info-tooltip
+    [displayMessage]="
+      cell.tooltip.message.constructor.name === 'Function'
+        ? (updatePipeEvent$ | async | callTemplateExpression: cell.tooltip.message : options.row)
+        : cell.tooltip.message
+    "
+    [tooltipConfig]="cell.tooltip.config"
+  ></bo-info-tooltip>
+</ng-template>

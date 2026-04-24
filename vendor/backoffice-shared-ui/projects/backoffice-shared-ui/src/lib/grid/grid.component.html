@@ -1,0 +1,114 @@
+<div
+  [id]="gridId()"
+  class="grid-content table-wrapper tw-filter tbl-shadow pd-big"
+  [ngClass]="{ 'table-wrapper tw-filter tbl-shadow': desktop }"
+>
+  <section class="grid-header">
+    <section class="grid-action">
+      <ng-container *ngTemplateOutlet="mobileFilters"></ng-container>
+      @if (!(infiniteScroll() && !outerService) && (clientGridPagination() || gridType() === 'CUSTOM_SERVER')) {
+        <bo-grid-pagination class="pagination" [totalElements]="elementCount()" (pageEvent)="handlePagination($event)" />
+      }
+      @if (customActionTemplate()) {
+        <section [ngClass]="customActionTemplate()?.customClass">
+          <ng-container *ngTemplateOutlet="customActionTemplate().content"></ng-container>
+        </section>
+      }
+    </section>
+    @if (customMiddleTemplate()) {
+      <section>
+        <ng-container *ngTemplateOutlet="customMiddleTemplate().content"></ng-container>
+      </section>
+    } @else {
+      <section class="empty-header"></section>
+    }
+  </section>
+  <section class="grid-container__wrapper">
+    <section class="grid-container">
+      <section>
+        @if (filterData && filtersIncluded() && (desktop || filtersCondition())) {
+          <bo-grid-filters
+            id="grid-filters"
+            class="follow-me-bar"
+            [data]="filterData"
+            [serverFiltering]="!outerService"
+            [headerColor]="headerColor()"
+            [headerTextColor]="headerTextColor()"
+            [buttonLabel]="buttonLabel()"
+            [userMenu]="userMenu()"
+            [allowFlexRow]="allowFlexRow()"
+            (sortEvent)="onSortChange($event)"
+            appStickyHeader
+            [condition]="filtersIncluded() && (desktop || filtersCondition())"
+            [anchor]="gridAnchor"
+            [originalWrapperHeight]="originalWrapperHeight()"
+            (actionClick)="onActionClick()"
+          ></bo-grid-filters>
+        }
+      </section>
+
+      @if (infiniteScroll() || !desktop) {
+        <div [class.mobile]="!desktop" [class.stretch]="!desktop">
+          <bo-infinite-scroll
+            [class.transparent-background]="generalView()"
+            (updateInfiniteData)="updateInfiniteDataGrid()"
+            [scrollWindow]="scrollWindow()"
+            [scrollSettingsEvent]="scrollSettingsEventGrid.asObservable()"
+            [loadItemsEvent]="loadItemsEvent.asObservable()"
+            (infiniteDataChange)="mobileInfiniteDataChange($event)"
+            [outerService]="true"
+          >
+            <ng-container *ngTemplateOutlet="tempOutlet"></ng-container>
+          </bo-infinite-scroll>
+        </div>
+      } @else {
+        <ng-container *ngTemplateOutlet="tempOutlet"></ng-container>
+      }
+    </section>
+  </section>
+</div>
+
+<ng-template #tempOutlet>
+  <div #scroll class="rows-container">
+    @if (desktop || generalView()) {
+      <ng-content></ng-content>
+    } @else {
+      <ng-template #mobile>
+        <ng-container [ngTemplateOutlet]="mobileContentRef()" [ngTemplateOutletContext]="{ $implicit: mobTemplContext }"></ng-container>
+      </ng-template>
+    }
+  </div>
+</ng-template>
+
+<ng-template #mobileFilters>
+  @if (filterData) {
+    @if (onlySorting) {
+      @if (filtersIncluded() && mobileFilterCondition()) {
+        <bo-mobile-filters
+          [filterData]="filterData"
+          [mobileQueryTemplate]="mobileQueryTemplate"
+          [isMobileFilterActive]="isMobileFilterActive"
+          [clearInput]="clearInput.asObservable()"
+          [serverFiltering]="!outerService"
+          (mobileQueryEvent)="onMobileQueryChanged($event)"
+          (mobileSearchEvent)="onMobileSearchChanged($event)"
+          (filterStateChanged)="isMobileFilterActive = $event"
+          (sortEvent)="onSortChange($event)"
+          (filtersChanged)="onFilterValueChanged($event)"
+        ></bo-mobile-filters>
+      }
+    } @else {
+      @if (mobileSortingCondition()) {
+        <div class="sorting-only_align">
+          <bo-sorting-dropdown
+            [data]="filterData"
+            (sortEvent)="onSortChange($event)"
+            class="full-width sorting-only__dropdown"
+            className="full-width in-row"
+          ></bo-sorting-dropdown>
+        </div>
+      }
+    }
+  }
+</ng-template>
+<div #gridAnchor></div>

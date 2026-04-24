@@ -1,0 +1,168 @@
+@use 'variables' as *;
+
+.select-field-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  &.administration {
+    .select:hover,
+    .select:focus {
+      border: 2px solid $light-gray;
+    }
+
+    .icon-close:hover {
+      color: $black;
+    }
+  }
+
+  &.operation {
+    .select:hover,
+    .select:focus {
+      border: 2px solid $light-gray;
+    }
+
+    .icon-close:hover {
+      color: $black;
+    }
+  }
+}
+
+.select {
+  width: 100%;
+  padding: 0 6px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background-color: transparent;
+}
+
+.icon-close {
+  position: absolute;
+  top: 50%;
+  right: 1px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: transparent;
+  color: $charcoal;
+  font-size: $font-base3;
+  cursor: pointer;
+  transition: color ease;
+  transform: translateY(-50%);
+}
+
+.icon-wrapper {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  z-index: 1;
+  pointer-events: none;
+  transform: translateY(-50%);
+
+  mat-icon {
+    color: $charcoal;
+    font-size: $font-base3;
+  }
+}
+
+.input-filter-container {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: $white;
+}
+
+.input-filter {
+  width: calc(100% - 10px);
+  margin: 5px;
+}
+
+::ng-deep .my-scoped-select-panel {
+  &.mat-mdc-select-panel {
+    width: 99.9% !important;
+    margin-top: 5px;
+    margin-left: -10px;
+    padding: 0 !important;
+    background-color: $white !important;
+  }
+
+  .input-filter-container {
+    background-color: $white !important;
+  }
+
+  .mat-mdc-option {
+    min-height: 30px !important;
+    background-color: $white !important;
+
+    .mdc-list-item__end,
+    .mat-pseudo-checkbox,
+    mat-icon {
+      display: none !important;
+    }
+
+    &.mdc-list-item--selected,
+    &.mat-mdc-option-selected {
+      background-color: $white !important;
+      color: $white !important;
+    }
+
+    &.mdc-list-item--selected:not(.mdc-list-item--disabled, .mat-mdc-option-multiple) .mdc-list-item__primary-text {
+      color: $white !important;
+    }
+
+    &:hover,
+    &:focus,
+    &.mdc-list-item--with-leading-icon:hover,
+    &.mdc-list-item--with-leading-icon:focus,
+    &.mdc-list-item--selected:hover,
+    &.mdc-list-item--selected:focus,
+    &.mat-mdc-option-selected:hover,
+    &.mat-mdc-option-selected:focus {
+      background-color: $forest-green-light !important;
+      color: $white !important;
+    }
+
+    &.mat-mdc-option-active,
+    &.mdc-list-item--selected.mat-mdc-option-active,
+    &.mat-mdc-option-selected.mat-mdc-option-active {
+      background-color: $forest-green-light !important;
+      color: $white !important;
+    }
+  }
+
+  &.dropdown-panel-administration {
+    .mat-mdc-option:hover,
+    .mat-mdc-option:focus,
+    .mat-mdc-option.mat-mdc-option-active {
+      background-color: $royal-blue !important;
+      color: $white !important;
+    }
+  }
+
+  &.dropdown-panel-operation {
+    .mat-mdc-option:hover,
+    .mat-mdc-option:focus,
+    .mat-mdc-option.mat-mdc-option-active {
+      background-color: $royal-blue !important;
+      color: $white !important;
+    }
+  }
+}
+
+:host ::ng-deep {
+  .select-field-wrapper {
+    .mat-mdc-select-arrow-wrapper {
+      z-index: 5;
+    }
+
+    &:has(.icon-close) .mat-mdc-select-arrow-wrapper {
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+}

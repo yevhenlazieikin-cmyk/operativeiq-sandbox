@@ -1,0 +1,22 @@
+<ng-template #quickFiltersTemplate let-field="field">
+  @for (filterGroup of filterGroups(); track filterGroup.label) {
+    <bo-quick-filters
+      [label]="filterGroup.label"
+      [filters]="filterGroup.filters"
+      [multiSelect]="filterGroup.multiSelect"
+      [showClearFilters]="filterGroup.showClearFilters"
+      (filterSelected)="filterGroup.filterSelected($event)"
+      (clearFilters)="filterGroup.clearFilters?.()"
+    />
+  }
+</ng-template>
+
+<bo-details-panel
+  id="1e4fed96b1"
+  [form]="quickFiltersForm"
+  [fields]="quickFiltersFields"
+  [title]="title()"
+  [userMenu]="userMenu()"
+  [isExpandable]="isExpandable()"
+  [expandCollapseStorageName]="expandCollapseStorageName()"
+/>

@@ -1,0 +1,69 @@
+@use 'variables' as *;
+
+.filter {
+  display: flex;
+  align-items: center;
+  padding-left: 30px;
+}
+
+.search-title {
+  width: 50px;
+
+  span {
+    font-weight: $font-semibold;
+    font-size: $font-base2;
+  }
+}
+
+.filter-container-mobile {
+  display: flex;
+  align-items: center;
+  width: 255px;
+  height: 30px;
+  margin: 0 20px;
+  border: 1px solid $navy-blue;
+  border-radius: 4px;
+
+  .field-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  input {
+    all: unset;
+    width: 100%;
+    margin-left: 3px;
+  }
+
+  mat-icon {
+    color: $slate-gray;
+  }
+
+  &:hover,
+  &:focus-within {
+    outline: color-mix(in oklab, #a1a1a1 50%, transparent) solid 3px;
+    outline-offset: -2px;
+  }
+}
+
+.administration {
+  border: 1px solid $primary-blue;
+}
+
+.operation {
+  border: 1px solid $forest-green;
+}
+
+.icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 100%;
+  color: $slate-gray;
+}
+
+.close {
+  cursor: pointer;
+}

@@ -1,0 +1,37 @@
+@if (desktopTitleCondition() && desktopHeader && desktop()) {
+  <div class="desktop-text-header">
+    @if (desktopStringHeader()) {
+      <ng-container class="desktop">
+        <h2>{{ desktopStringHeader() }}</h2>
+      </ng-container>
+    }
+    @if (desktopTemplateHeader()) {
+      <ng-container [ngTemplateOutlet]="desktopTemplateHeader()"></ng-container>
+    }
+  </div>
+}
+
+@if (showGridCondition()) {
+  <div class="table-wrapper pd-big tbl-shadow" [ngClass]="classList()" [class.stretch]="stretchClassCondition()">
+    <div class="table">
+      <div class="section active" #section>
+        @if (!desktop() && (mobileStringHeader() || mobileTemplateHeader())) {
+          <div id="84f111d462" class="section-title" (click)="activeSection()">
+            <bo-svg-icon [name]="isCollapsed() ? 'arrowUp' : 'arrowDown'"></bo-svg-icon>
+            <bo-svg-icon [name]="isCollapsed() ? 'arrowDown' : 'arrowUp'"></bo-svg-icon>
+
+            @if (mobileStringHeader()) {
+              <ng-container>{{ mobileStringHeader() }}</ng-container>
+            }
+            @if (mobileTemplateHeader()) {
+              <ng-container [ngTemplateOutlet]="mobileTemplateHeader()"></ng-container>
+            }
+          </div>
+        }
+        <div class="section-content">
+          <ng-content></ng-content>
+        </div>
+      </div>
+    </div>
+  </div>
+}

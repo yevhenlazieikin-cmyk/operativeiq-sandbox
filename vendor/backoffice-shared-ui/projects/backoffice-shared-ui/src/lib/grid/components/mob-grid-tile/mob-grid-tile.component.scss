@@ -1,0 +1,206 @@
+@use 'variables' as *;
+
+:host {
+  width: 100%;
+}
+
+.sub-tile.item-mob {
+  background-color: $white !important;
+
+  .top {
+    background-color: $white !important;
+  }
+}
+
+.mob-tile-row {
+  display: flex;
+}
+
+.row-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3%;
+
+  .grid-view {
+    flex: 0 0 30%;
+
+    .data-cell:first-child div {
+      text-align: center;
+    }
+  }
+
+  .item-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.row-details > *:nth-child(n + 4) {
+  margin-top: 10px;
+}
+
+.right-align {
+  text-align: right;
+}
+
+.details {
+  flex: 1 1 81.6%;
+}
+
+.inputs {
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+  grid-gap: 10px;
+
+  .input:first-child:last-child {
+    margin-top: -10px;
+  }
+}
+
+.input:last-child:nth-last-child(odd) {
+  grid-column: auto / span 2;
+}
+
+.input:first-child:nth-last-child(even),
+.input:first-child:nth-last-child(even) ~ .input {
+  grid-column: auto / span 1;
+}
+
+.input:first-child:last-child {
+  grid-column: auto / span 1;
+}
+
+.item-mob {
+  position: relative;
+  padding: 10px 15px 0;
+  border-bottom: none;
+
+  ::ng-deep {
+    .datepicker,
+    .counter {
+      width: 100%;
+    }
+
+    ::ng-deep .mat-form-field-infix {
+      width: 100% !important;
+    }
+  }
+
+  .sub-items {
+    margin: 1px -15px 0;
+    padding: 10px 50px 15px 15px;
+    background-color: $white;
+  }
+
+  .row-table {
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -50px;
+    padding: 10px 10px 0 30px;
+  }
+
+  .field-label {
+    color: $slate-gray;
+    font-weight: 400;
+  }
+
+  .details {
+    margin-bottom: 10px;
+
+    &-row {
+      margin-bottom: 4px;
+    }
+  }
+
+  .details-descriptions {
+    flex: 0 0 85px;
+    color: $slate-gray;
+  }
+
+  .delete-wrapper {
+    &_itemize {
+      position: absolute;
+      right: 10px;
+      bottom: 17px;
+    }
+
+    &_main-row {
+      display: none;
+      flex: 1 0 5%;
+      align-items: flex-end;
+      justify-content: flex-end;
+      margin-bottom: 10px;
+    }
+  }
+
+  .sub-title {
+    margin-top: -7px;
+  }
+}
+
+.item-data > .row:first-child + .mob-tile-row {
+  .delete-wrapper_main-row {
+    display: flex;
+  }
+}
+
+.item-data {
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  ::ng-deep {
+    .color-alert {
+      input {
+        color: $cool-gray !important;
+      }
+
+      .date-input {
+        color: $cool-gray !important;
+      }
+    }
+
+    .color-warning {
+      input {
+        color: $snow-white !important;
+      }
+
+      .date-input {
+        color: $snow-white !important;
+      }
+    }
+  }
+}
+
+.flex-65 {
+  flex: 0 1 65%;
+}
+
+.bordered-tile {
+  margin-left: -15px !important;
+  padding-left: 5px !important;
+}
+
+.button-container {
+  align-self: flex-end;
+  margin: 0 0 10px 5px;
+}
+
+.main-title {
+  padding: 0 5px 0 15px;
+}
+
+.sub-align {
+  flex: 0 1 35%;
+  padding: 0 15px 0 5px;
+}
+
+.prevent-wrap {
+  flex-wrap: nowrap !important;
+}
+
+.label-value + .row-table {
+  margin-top: -10px;
+}

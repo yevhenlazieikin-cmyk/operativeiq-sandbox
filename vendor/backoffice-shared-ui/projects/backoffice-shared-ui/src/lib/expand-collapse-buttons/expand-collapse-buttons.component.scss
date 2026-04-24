@@ -1,0 +1,23 @@
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+  align-items: center;
+  width: 14px;
+  margin-right: 6px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.expand-collapse-wrapper__upper-button,
+.expand-collapse-wrapper__lower-button {
+  display: block;
+  width: 14px;
+  height: 9px;
+}
+
+:host ::ng-deep {
+  .svg-arrow-up-dims,
+  .svg-arrow-down-dims {
+    height: 9px;
+  }
+}

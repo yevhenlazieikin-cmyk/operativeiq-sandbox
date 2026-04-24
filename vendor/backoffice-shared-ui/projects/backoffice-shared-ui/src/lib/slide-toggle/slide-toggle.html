@@ -1,0 +1,20 @@
+<div class="toggle-wrapper">
+  <div
+    id="52482ec92d"
+    class="toggle-track"
+    [class.enabled]="value()"
+    [class.disabled-state]="isDisabled"
+    [attr.tabindex]="isDisabled ? -1 : 0"
+    [attr.role]="'switch'"
+    [attr.aria-checked]="value()"
+    [attr.aria-disabled]="isDisabled"
+    (click)="toggle()"
+    (keydown)="onKeyDown($event)"
+  >
+    @if (customTemplate()) {
+    <ng-container [ngTemplateOutlet]="customTemplate()" [ngTemplateOutletContext]="{ $implicit: value(), isDisabled }"></ng-container>
+    } @else {
+    <div class="toggle-label-inside" [class.enabled]="value()">{{ value() ? 'ENABLED' : 'DISABLED' }}</div>
+    }
+  </div>
+</div>

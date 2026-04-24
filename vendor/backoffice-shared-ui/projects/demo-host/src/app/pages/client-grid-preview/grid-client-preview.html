@@ -1,0 +1,43 @@
+<div class="container" appStickyHeaderGroup>
+  <div class="table-wrapper pd-big tbl-shadow mb-0">
+    <div class="table">
+      <bo-grid
+        #gridComponent
+        class="grid"
+        [(sortedDataStore)]="checkedOutKits"
+        [outerService]="true"
+        [filtersIncluded]="true"
+        [filterData]="kitsFilterData"
+        [generalView]="true"
+        [orderEvent]="orderEvent.asObservable()"
+        [mobileSortingCondition]="false"
+        [searchEnum]="searchEnum"
+        [searchCompareProp]="searchCompareProp"
+        (filtersChanged)="onFiltersChanged($event)"
+        [gridType]="'CLIENT'"
+        [itemsPerLoad]="25"
+        [clientGridPagination]="true"
+        [allowFlexRow]="true"
+      >
+        @for (row of checkedOutKits; track row ; let j = $index; let odd = $odd) {
+        <div class="table-wrapper pd-big mb-0" [ngClass]="{ 'tbl-shadow': desktop }">
+          <div class="table" [class.mob-transparent]="!desktop">
+            <div class="tr colored-row mob-ribbon-less">
+              <bo-grid-cell
+                class="grid-cell"
+                [ngClass]="{'even-row': odd}"
+                [row]="row"
+                [index]="j"
+                [cellSchema]="kitsCellSchema"
+                [filterData]="kitsFilterData"
+                [addNewRowCB]="addNewPartRowCB"
+                [itemizeCondition]="true"
+              ></bo-grid-cell>
+            </div>
+          </div>
+        </div>
+        }
+      </bo-grid>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,178 @@
+<div
+  class="table"
+  #tableContainer
+  matSort
+  #sortInstance="matSort"
+  [matSortActive]="data()?.sortOptions?.value ? data()?.sortOptions?.value : null"
+  [matSortDirection]="data()?.sortOptions?.order?.split(',').length === 1 && !hideDirection ? data()?.sortOptions?.order : null"
+  (matSortChange)="onSortChange($event)"
+>
+  @if (buttonLabel()) {
+    <div class="buttons-panel">
+      <div class="panel-content">
+        <div class="panel-left"></div>
+        <div class="panel-right">
+          <button
+            id="931e56a123"
+            class="action-btn"
+            [ngClass]="{
+              'administration-action': userMenu() === menuType.administration,
+              'operation-action': userMenu() === menuType.operation
+            }"
+            (click)="onActionClick()"
+            type="button"
+          >
+            {{ buttonLabel() }}
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+  <div class="tr tr-heading color-bg">
+    @for (input of data()?.inputs; track $index) {
+      <div class="th" [class.pos-relative]="input.customTemplate" [ngStyle]="getColumnStyle(input)">
+        @switch (input.type) {
+          @case (filterFieldType.Default) {
+            <ng-container *ngTemplateOutlet="input.customTemplate"></ng-container>
+            <div
+              class="th-title"
+              id="default-filter"
+              [class.mb-0]="onlySorting"
+              [attr.mat-header-data-type]="input.dataType"
+              [mat-sort-header]="input.customSortHeading || input.name"
+              [attr.mat-sort-header]="input.customSortHeading || input.name"
+              [attr.mat-header-data-id]="input.name"
+              [attr.custom-filter]="input.customFilter"
+              [disabled]="!input.hasSorting"
+              [ngClass]="input.customClassName || ''"
+              [ngStyle]="{ 'background-color': headerColor() || undefined, color: headerTextColor() || undefined }"
+            >
+              <label [class.mg-left]="input.customTemplate">{{ input?.label }}</label>
+            </div>
+          }
+          @case (filterFieldType.Input) {
+            <ng-container *ngTemplateOutlet="input.customTemplate"></ng-container>
+            <div
+              id="input-filter"
+              class="th-title"
+              [attr.mat-header-data-type]="input.dataType"
+              [mat-sort-header]="input.customSortHeading || input.name"
+              [attr.mat-sort-header]="input.customSortHeading || input.name"
+              [attr.mat-header-data-id]="input.name"
+              [attr.custom-filter]="input.customFilter"
+              [disabled]="!input.hasSorting"
+              [ngClass]="input.customClassName || ''"
+              [ngStyle]="{ 'background-color': headerColor() || undefined, color: headerTextColor() || undefined }"
+            >
+              <label [class.mg-left]="input.customTemplate">{{ input?.label }}</label>
+            </div>
+            <bo-filter-input
+              [(value)]="input.value"
+              [input]="input"
+              [serverFiltering]="serverFiltering()"
+              [mask]="input.mask"
+              [hasSortFn]="input.hasSorting"
+            ></bo-filter-input>
+          }
+          @case (filterFieldType.Date) {
+            <ng-container *ngTemplateOutlet="input.customTemplate"></ng-container>
+            <div
+              id="date-filter"
+              class="th-title"
+              [attr.mat-header-data-type]="input.dataType"
+              [mat-sort-header]="input.customSortHeading || input.name"
+              [attr.mat-sort-header]="input.customSortHeading || input.name"
+              [attr.mat-header-data-id]="input.name"
+              [attr.custom-filter]="input.customFilter"
+              [disabled]="!input.hasSorting"
+              [ngClass]="input.customClassName || ''"
+              [ngStyle]="{ 'background-color': headerColor() || undefined, color: headerTextColor() || undefined }"
+            >
+              <label [class.mg-left]="input.customTemplate">{{ input?.label || 'Date' }}</label>
+            </div>
+            <bo-filter-date
+              [(searchByDate)]="input.value"
+              [placeholder]="input.placeholder!"
+              [hasSortFn]="input.hasSorting"
+            ></bo-filter-date>
+          }
+          @case (filterFieldType.DateBase) {
+            <ng-container *ngTemplateOutlet="input.customTemplate"></ng-container>
+            <div
+              id="date-base"
+              class="th-title"
+              [attr.mat-header-data-type]="input.dataType"
+              [mat-sort-header]="input.customSortHeading || input.name"
+              [attr.mat-sort-header]="input.customSortHeading || input.name"
+              [attr.mat-header-data-id]="input.name"
+              [attr.custom-filter]="input.customFilter"
+              [disabled]="!input.hasSorting"
+              [ngClass]="input.customClassName || ''"
+              [ngStyle]="{ 'background-color': headerColor() || undefined, color: headerTextColor() || undefined }"
+            >
+              <label [class.mg-left]="input.customTemplate">{{ input.label }}</label>
+            </div>
+            <bo-filter-select
+              [options]="input.options"
+              [(optionSelected)]="input.value"
+              [hasSearch]="input.hasSearch!"
+              [multiple]="input.multiple!"
+              [itemKeys]="input.itemKeys"
+              [hasSortFn]="input.hasSorting"
+            ></bo-filter-select>
+          }
+          @case (filterFieldType.Select) {
+            <ng-container *ngTemplateOutlet="input.customTemplate"></ng-container>
+            <div
+              id="filter-select"
+              class="th-title"
+              [attr.mat-header-data-type]="input.dataType"
+              [mat-sort-header]="input.customSortHeading || input.name"
+              [attr.mat-sort-header]="input.customSortHeading || input.name"
+              [attr.mat-header-data-id]="input.name"
+              [attr.custom-filter]="input.customFilter"
+              [disabled]="!input.hasSorting"
+              [ngClass]="input.customClassName || ''"
+              [ngStyle]="{ 'background-color': headerColor() || undefined, color: headerTextColor() || undefined }"
+            >
+              <label [class.mg-left]="input.customTemplate">{{ input.label }}</label>
+            </div>
+            <bo-filter-select
+              [options]="input.options"
+              [(optionSelected)]="input.value"
+              [hasSearch]="input.hasSearch!"
+              [hasSortFn]="input.hasSorting"
+              [multiple]="input.multiple!"
+              [itemKeys]="input.itemKeys"
+              [input]="input"
+              [multiIds]="input.multiIds!"
+              [disabled]="input.disabled!"
+            ></bo-filter-select>
+          }
+        }
+        <span matSortHeaderIcon class="sort-icon">
+          @if (
+            sortInstance.active === (input.customSortHeading || input.name) &&
+            (sortInstance.direction === 'desc' || sortInstance.direction === 'asc')
+          ) {
+            <bo-svg-icon [name]="`sort${sortInstance.direction === 'asc' ? 'Asc' : 'Desc'}`" />
+          }
+        </span>
+        @if (allowFlexRow() && isColumnResizable(input)) {
+          @if (canResizeLeft(input.resizeNameColumn || input.name)) {
+            <div
+              class="resize-handle resize-handle-left"
+              (mousedown)="onResizeStart($event, input.resizeNameColumn || input.name, 'left')"
+            ></div>
+          }
+          @if (canResizeRight(input.resizeNameColumn || input.name)) {
+            <div
+              class="resize-handle resize-handle-right"
+              (mousedown)="onResizeStart($event, input.resizeNameColumn || input.name, 'right')"
+            ></div>
+          }
+        }
+      </div>
+    }
+  </div>
+</div>

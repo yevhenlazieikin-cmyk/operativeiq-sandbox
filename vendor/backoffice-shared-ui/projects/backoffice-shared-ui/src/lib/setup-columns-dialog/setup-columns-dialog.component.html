@@ -1,0 +1,61 @@
+<div class="setup-columns-dialog">
+  <div class="dialog-header">
+    <div class="header-left">
+      <bo-svg-icon name="iconClose" class="icon-close" (click)="onCancel()" />
+      <h2 class="dialog-title">{{ title }}</h2>
+    </div>
+    <div class="header-actions">
+      <button
+        id="8ebbc0722b"
+        class="btn-back"
+        [ngClass]="{
+          'administration-action': userMenu === menuType.administration,
+          'operation-action': userMenu === menuType.operation
+        }"
+        (click)="onCancel()"
+        type="button"
+      >
+        Back
+      </button>
+      <button
+        id="0e033420e3"
+        class="btn-save"
+        [ngClass]="{
+          'administration-action': userMenu === menuType.administration,
+          'operation-action': userMenu === menuType.operation
+        }"
+        (click)="onSave()"
+        type="button"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+
+  <div class="dialog-content">
+    <div class="table-wrapper">
+      <bo-dialog-messages
+        [message]="validationMessage ? validationMessage : ''"
+        [class]="validationMessageClass"
+        [maxLength]="maxMessageLength"
+      />
+      <div class="columns-table">
+        <div class="table-header">
+          <div class="header-cell">Setup Columns</div>
+          <div class="header-cell-toggle"></div>
+        </div>
+
+        <div class="table-body">
+          @for (column of data.columns; track column.key; let i = $index) {
+            <div class="table-row">
+              <div class="column-label">{{ getColumnLabel(column.label) }}</div>
+              <div class="column-toggle">
+                <bo-slide-toggle [id]="'setup_' + column.key" [(ngModel)]="column.enabled" [disabled]="column.disabled"></bo-slide-toggle>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

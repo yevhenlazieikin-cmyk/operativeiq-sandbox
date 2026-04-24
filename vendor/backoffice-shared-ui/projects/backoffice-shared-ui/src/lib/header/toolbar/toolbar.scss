@@ -1,0 +1,153 @@
+@use 'variables' as *;
+
+.toolbar-container {
+  position: relative;
+  background: $white;
+}
+
+.toolbar {
+  z-index: 1;
+  display: flex;
+  color: $white;
+
+  .logo {
+    width: 40px;
+    padding: 0;
+  }
+}
+
+.toolbar button {
+  width: 85px;
+  height: 40px;
+  padding: 0 8px;
+  border: none;
+  font-weight: $font-regular;
+  font-size: $font-base1;
+  font-family: $font-source-sans-pro;
+  cursor: pointer;
+}
+
+.settings-toolbar {
+  background: $navy-blue;
+
+  button.selected {
+    background: $primary-blue;
+  }
+}
+
+.settings-element:hover {
+  background: $primary-blue;
+}
+
+.assignment-toolbar {
+  background: $forest-green;
+
+  button.selected {
+    background: $forest-green-light;
+  }
+}
+
+.assignment-element:hover {
+  background: $forest-green-light;
+}
+
+.sub-elements-bar {
+  position: absolute;
+  top: 100%;
+  z-index: 10;
+  display: flex;
+  background-color: $white;
+  box-shadow: 0 4px 8px rgb(0 0 0 / 0.2);
+}
+
+.sub-element {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: $white;
+  cursor: pointer;
+
+  &:hover .child.settings span,
+  .child.settings.active span {
+    color: $primary-blue;
+  }
+
+  &:hover .child.assignment span,
+  .child.assignment.active span {
+    color: $forest-green-light;
+  }
+}
+
+.sub-element-settings:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: $primary-blue;
+  transition:
+    width 0.4s ease-in-out,
+    left 0.4s ease-in-out;
+}
+
+.sub-element-settings:hover:after,
+.sub-element-assignment:hover:after {
+  left: 0;
+  width: 100%;
+}
+
+.sub-element-assignment:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: $forest-green-light;
+  transition:
+    width 0.4s ease-in-out,
+    left 0.4s ease-in-out;
+}
+
+.sub-element-settings.active:after,
+.sub-element-assignment.active:after {
+  left: 0;
+  width: 100%;
+  transition: none;
+}
+
+.child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 85px;
+  height: 40px;
+  white-space: nowrap;
+
+  span {
+    padding: 0 4px;
+    color: $charcoal;
+    font-weight: $font-regular;
+    font-size: $font-base;
+    font-family: $font-source-sans-pro;
+    line-height: 15.6px;
+    letter-spacing: 0.5px;
+    text-align: center;
+    text-wrap: wrap;
+    overflow-wrap: break-word;
+    line-break: auto;
+  }
+}
+
+bo-svg-icon {
+  padding: 0 0 0 2px;
+}
+
+::ng-deep {
+  .svg-menu-icon-administration-dims,
+  .svg-menu-icon-operations-dims {
+    width: 21px !important;
+    height: 21px !important;
+  }
+}

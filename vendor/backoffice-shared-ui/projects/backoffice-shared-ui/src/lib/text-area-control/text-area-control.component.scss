@@ -1,0 +1,64 @@
+@use 'variables' as *;
+
+.text-area-box {
+  --mat-form-field-outlined-outline-color: #f0f0f0;
+  --mat-form-field-outlined-hover-outline-color: #cccccc;
+  --mat-form-field-outlined-focus-outline-color: #cccccc;
+
+  width: 100%;
+  margin-bottom: 5px;
+  padding: 0;
+  background-color: $input-gray;
+
+  textarea {
+    padding: 8px 30px 8px 0;
+    resize: none;
+  }
+}
+
+.mat-mdc-form-field {
+  --mat-sys-corner-extra-small: 8px;
+
+  border-radius: 8px;
+
+  &:hover {
+    --mat-sys-corner-extra-small: 4px;
+  }
+}
+
+.symbol-counter {
+  color: $muted-gray;
+  font-size: $font-base;
+}
+
+.operation {
+  --mat-form-field-outlined-hover-outline-color: #70b86d !important;
+  --mat-form-field-outlined-focus-outline-color: #316828 !important;
+}
+
+.administration {
+  --mat-form-field-outlined-hover-outline-color: #57a5dc !important;
+  --mat-form-field-outlined-focus-outline-color: #006cb7 !important;
+}
+
+::ng-deep {
+  .text-area-box .mdc-text-field--outlined:not(.mdc-text-field--disabled):hover {
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-width: var(--mdc-outlined-text-field-focus-outline-width, 2px);
+    }
+  }
+
+  .mat-mdc-form-field-infix {
+    padding: 2px 0 !important;
+
+    textarea {
+      min-height: 80px !important;
+    }
+  }
+
+  .mdc-text-field {
+    padding: 0 0 0 10px !important;
+  }
+}

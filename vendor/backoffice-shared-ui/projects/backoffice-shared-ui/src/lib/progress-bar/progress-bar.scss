@@ -1,0 +1,94 @@
+@use 'variables' as *;
+
+.progress-container {
+  width: 100%;
+  margin: 0.5rem 0;
+
+  &--grid {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    align-items: center;
+    width: auto;
+    margin: 0;
+
+    .progress-bar-wrapper {
+      flex: 0 0 auto;
+      width: 25%;
+    }
+
+    .progress-info {
+      display: flex;
+      flex-shrink: 0;
+      gap: 4px;
+      align-items: center;
+      margin: 0;
+    }
+
+    .progress-percentage {
+      min-width: auto;
+      font-weight: 500;
+      font-size: 13px;
+      text-align: left;
+    }
+
+    .progress-quantity {
+      font-weight: 500;
+      font-size: 13px;
+      opacity: 0.8;
+    }
+  }
+}
+
+.progress-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  color: $charcoal;
+  font-size: $font-base2;
+}
+
+.progress-label {
+  color: $charcoal;
+  font-weight: 500;
+}
+
+.progress-info {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.progress-percentage {
+  min-width: 3rem;
+  color: $charcoal;
+  font-weight: 600;
+  text-align: right;
+}
+
+.progress-quantity {
+  color: rgba($charcoal, 0.8);
+  font-size: $font-base;
+  white-space: nowrap;
+}
+
+.progress-bar-wrapper {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+}
+
+.mdc-linear-progress {
+  overflow-x: visible;
+}
+
+.administration {
+  --mat-progress-bar-active-indicator-color: #00467d;
+}
+
+.operation {
+  --mat-progress-bar-active-indicator-color: #316828;
+}

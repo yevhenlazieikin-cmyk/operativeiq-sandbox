@@ -1,0 +1,53 @@
+<div class="verification-dialog-container" [boDialogInputNavigation]="userVerificationDetailsPanel" [actionButtons]="actionButtons">
+  <div class="dialog-header">
+    <bo-svg-icon name="iconClose" class="icon-close" (click)="onCancel()" aria-label="Close dialog" />
+    <h2 class="dialog-title">Security Verification</h2>
+    <section
+      class="header-action"
+      [ngClass]="{ administration: userMenu() === menuType.administration, operation: userMenu() === menuType.operation }"
+    >
+      <button id="eb691960ce" class="action-button" (click)="onCancel()" type="button">Back</button>
+    </section>
+  </div>
+  <mat-dialog-content class="verification-dialog-content">
+    <div class="notification-wrapper">
+      <bo-dialog-messages
+        class="dialog-messages"
+        [message]="validationMessage ? validationMessage : ''"
+        [class]="validationMessageClass"
+        [maxLength]="maxMessageLength"
+      />
+    </div>
+    <div class="general-info">
+      <div class="top-info">No Password Authenticator information available.</div>
+      <div class="bottom-info">
+        On your phone install the Google or Microsoft Authenticator app from your app store. After you install the Authenticator app on your
+        device enter your Pin and sign to continue enrollment.
+      </div>
+    </div>
+    <div>
+      <bo-details-panel
+        id="0ed116f8ae"
+        class="details-panel"
+        [title]="userName()"
+        [userMenu]="userMenu()"
+        [fields]="userVerificationDetailsPanel"
+        [form]="form"
+        [actionButtons]="actionButtons"
+        [insideDialog]="true"
+      ></bo-details-panel>
+    </div>
+    <section class="digital-signature-section">
+      <div class="digital-signature-header">
+        <bo-action-button-sub-panel
+          id="699e489357"
+          class="canvas-control__panel"
+          title="Digital Signature"
+          [buttons]="canvasActionButtons"
+          [state]="userMenu()"
+        ></bo-action-button-sub-panel>
+      </div>
+      <canvas #signatureCanvas class="signature-canvas" role="img" aria-label="Sign here"></canvas>
+    </section>
+  </mat-dialog-content>
+</div>

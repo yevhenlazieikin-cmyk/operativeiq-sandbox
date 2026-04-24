@@ -1,0 +1,8 @@
+@use 'base-styles';
+@use '../assets/sprites/sprite.css';
+
+.modal {
+  overlay-scrollbars {
+    height: 400px;
+  }
+}

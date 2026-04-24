@@ -1,0 +1,157 @@
+@use 'variables' as *;
+
+.mg-left {
+  margin-left: 25px;
+}
+
+.pos-relative {
+  position: relative;
+}
+
+.table {
+  width: 100%;
+  margin-bottom: 0;
+  background-color: $white;
+}
+
+.tr {
+  display: flex;
+  page-break-inside: avoid;
+}
+
+.th {
+  position: relative;
+}
+
+.th-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  height: 30px;
+  padding: 0 10px 0 15px;
+  border-right: 1px solid $cloud-gray;
+  border-bottom: 1px solid $cloud-gray;
+  background-color: $panel-gray;
+  cursor: default;
+
+  label {
+    flex: 1 1 0;
+    overflow: hidden;
+    font-weight: $font-semibold;
+    font-size: $font-base1;
+    font-family: $font-source-sans-pro !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.tr-heading {
+  border: 1px solid $cloud-gray;
+  border-top: none;
+  color: $charcoal;
+}
+
+.tw-filter .tr.color-bg {
+  background-color: transparent;
+}
+
+.buttons-panel {
+  position: relative;
+  border-bottom: 1px solid $light-gray;
+  background: $cool-gray;
+
+  .panel-content {
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 15px;
+    color: $white;
+  }
+
+  .panel-left {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .panel-right {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  button {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    width: fit-content;
+    height: 20px;
+    padding: 0 10px;
+    border-radius: 4px;
+    color: $white;
+    font-weight: $font-regular;
+    font-size: $font-base1;
+    font-family: $font-source-sans-pro;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &.administration-action {
+      background-color: $navy-blue;
+
+      &:hover {
+        background-color: $primary-blue;
+      }
+    }
+
+    &.operation-action {
+      background-color: $forest-green;
+
+      &:hover {
+        background-color: $forest-green-light;
+      }
+    }
+
+    &:disabled {
+      background: none;
+      color: $mint;
+      cursor: default;
+    }
+
+    mat-icon {
+      width: 18px;
+      height: 18px;
+      font-size: 18px;
+      line-height: 18px;
+    }
+  }
+}
+
+::ng-deep {
+  .mat-sort-header-arrow {
+    display: none;
+  }
+}
+
+.sort-icon {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+}
+
+.resize-handle {
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  width: 5px;
+  height: 100%;
+  cursor: ew-resize;
+
+  &.resize-handle-left {
+    left: -2.5px;
+  }
+
+  &.resize-handle-right {
+    right: -2.5px;
+  }
+}

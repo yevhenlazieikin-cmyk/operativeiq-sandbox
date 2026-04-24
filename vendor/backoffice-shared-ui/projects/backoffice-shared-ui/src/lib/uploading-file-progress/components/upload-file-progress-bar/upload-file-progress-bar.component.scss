@@ -1,0 +1,104 @@
+@use 'variables' as *;
+
+.uploading-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 8px;
+
+  .file-name {
+    flex: 0 1 40%;
+    max-width: 200px;
+    margin: 0 10px;
+    font-weight: $font-regular;
+    font-size: $font-base2;
+  }
+
+  .file-progress {
+    display: flex;
+    flex: 0 1 60%;
+    align-items: center;
+    min-height: 28px;
+    padding: 0 10px 0 0;
+
+    .file-progress-bar-wrapper {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      height: 20px;
+      border-radius: 4px;
+
+      .file-progress__percentage-container {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: $font-regular;
+        font-family: $font-source-sans-pro;
+        pointer-events: none;
+        inset: 0;
+
+        .percentage-text {
+          position: absolute;
+          width: 100%;
+          text-align: center;
+          transition: color 0.3s ease;
+
+          &--base {
+            z-index: 1;
+            color: $primary-blue;
+
+            &.failed-text {
+              color: $alert-red;
+            }
+          }
+
+          &--overlay {
+            z-index: 2;
+            color: $white;
+            clip-path: inset(0 calc(100% - var(--progress)) 0 0);
+          }
+        }
+      }
+    }
+
+    &__bar {
+      overflow: hidden;
+      border: 1px solid $soft-gray;
+      border-radius: 4px;
+
+      &.failed {
+        --mat-progress-bar-active-indicator-color: #{$alert-red};
+
+        border-color: $alert-red;
+      }
+    }
+
+    &__close-icon {
+      flex: 0 1 10%;
+      cursor: pointer;
+    }
+  }
+
+  .message {
+    margin: 0 10px;
+    color: $alert-red;
+    font-weight: 400;
+    font-size: 12px;
+  }
+
+  .successful {
+    .file-name {
+      color: $forest-green-light;
+    }
+  }
+
+  .canceled,
+  .failed {
+    .file-name {
+      color: $alert-red;
+      text-decoration: line-through;
+      text-decoration-color: $alert-red;
+    }
+  }
+}

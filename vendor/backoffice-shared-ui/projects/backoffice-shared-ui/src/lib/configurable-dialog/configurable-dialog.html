@@ -1,0 +1,43 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <div class="header">
+      <bo-svg-icon (click)="onButtonClick({label: 'Close', action: 'cancel'})" name="iconClose" class="icon-close" />
+      <h2 class="dialog-title">{{ config.title }}</h2>
+    </div>
+    <section
+      class="header-action"
+      [ngClass]="{
+        'administration': config.userMenu === menuType.administration,
+         'operation': config.userMenu === menuType.operation}"
+    >
+      @if (buttons.length) { @for (button of buttons; track button.action) {
+      <button
+        id="52a8317d13"
+        [ngClass]="button.cssClass || 'action-button'"
+        [disabled]="isButtonDisabled(button)"
+        (click)="onButtonClick(button)"
+        type="button"
+      >
+        {{ button.label }}
+      </button>
+      } }
+    </section>
+  </div>
+
+  <mat-dialog-content class="dialog-content">
+    <bo-dialog-messages
+      [message]="validationMessage ? validationMessage : ''"
+      [class]="validationMessageClass"
+      [maxLength]="maxMessageLength"
+    />
+    <bo-details-panel
+      id="7c3acec308"
+      class="dialog-details-panel"
+      [form]="form"
+      [fields]="config.fields"
+      [title]="config?.subTitle"
+      [userMenu]="config.userMenu || menuType.administration"
+      [insideDialog]="true"
+    />
+  </mat-dialog-content>
+</div>

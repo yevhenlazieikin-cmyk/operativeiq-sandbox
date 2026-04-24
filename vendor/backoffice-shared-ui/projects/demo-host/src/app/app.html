@@ -1,0 +1,42 @@
+<bo-layout [headerDataSourceUrl]="headerDataUrl" [headerLinksSourceUrl]="headerLinksDataUrl" appUrl="test">
+  <bo-counter [minValue]="0" [maxValue]="50" [counter]="'5'" [disabled]="false" />
+  <bo-info-tooltip [displayMessage]="'Test string to display'" />
+
+  <bo-svg-icon name="key" />
+  <mat-button-toggle-group name="favoriteColor" aria-label="Favorite Color" (change)="handleGridRoute($event.value)">
+    <mat-button-toggle value="server" matTooltip="Before go to Server Grid neeed to provide session in service">
+      Server Grid
+    </mat-button-toggle>
+    <mat-button-toggle value="client">Client grid</mat-button-toggle>
+  </mat-button-toggle-group>
+  <button mat-button routerLink="" routerLinkActive>hide grid</button>
+  <router-outlet></router-outlet>
+
+  <!-- <bo-tabber [tabs]="tabItems" [selectedIndex]="2"></bo-tabber> -->
+
+  <bo-action-buttons-panel [title]="'Demo actions'" [buttons]="actionButtons"></bo-action-buttons-panel>
+
+  <bo-details-panel
+    [title]="'Details panel'"
+    [actionButtons]="actionPanelButtons"
+    [form]="subModulesForm"
+    [fields]="detailsFields"
+  ></bo-details-panel>
+
+  <bo-time-picker [timeValue]="timeValue" [formatValue]="timeFormat" [allowFormatToggle]="true"></bo-time-picker>
+
+  <bo-progress-bar [completed]="50" [total]="200" [label]="'Test PB'"></bo-progress-bar>
+
+  <bo-action-button-sub-panel [title]="'Demo actions'" [buttons]="actionButtons" [state]="'ADMINISTRATION'" />
+
+  <button mat-button (click)="openDialog()">Open dialog</button>
+  <button mat-button (click)="openEntityDialog()">Open Entity dialog</button>
+  <button mat-button (click)="openGenericSortDialog()">Open Generic Sort dialog</button>
+  <button mat-button (click)="openMultiSelectDialog()">Open Multi Select dialog</button>
+  <br />
+  <h3>Messages Controls:</h3>
+  <button mat-button (click)="showMessage(successMessage())">Show Success Message</button>
+  <button mat-button (click)="showMessage(shortErrorMessage(), true)">Show Short Error Message</button>
+  <button mat-button (click)="showMessage(longErrorMessage(), true)">Show Long Error Message</button>
+  <button mat-button (click)="resetMessage()">Hide Message</button>
+</bo-layout>

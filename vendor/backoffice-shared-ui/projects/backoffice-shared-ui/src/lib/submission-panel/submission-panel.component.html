@@ -1,0 +1,48 @@
+<form id="c033a60b63" class="submission-form" [formGroup]="form()">
+  @if (label()) {
+    <span class="label">
+      {{ label() }}
+      @if (additionalLabel(); as additionalLabel) {
+        @if (typeof additionalLabel === 'string') {
+          <span class="additional-label">{{ additionalLabel }}</span>
+        } @else {
+          <ng-container [ngTemplateOutlet]="additionalLabel" />
+        }
+      }
+    </span>
+  }
+  <div class="form-controls">
+    <bo-text-area-control
+      id="4d2e669467"
+      appAbsoluteDivPopout
+      [formControlName]="textControlName()"
+      [placeholder]="textAreaPlaceholder()"
+      [userMenu]="userMenu()"
+      [autoFocus]="autoFocus()"
+      [popoutContent]="validationMessage()"
+      [insideDialog]="insideDialog()"
+      [strategy]="strategy()"
+      [control]="form().get(textControlName())"
+    />
+    @if (fileAttachmentControl()) {
+      <app-file-uploader id="4702c71490" [formControl]="fileAttachmentControl()!" [multiple]="true" class="attachment-pin" />
+    }
+    <button id="391d42b057" type="submit" class="submit" (click)="onSubmitComment()" [disabled]="isButtonDisabled()">
+      {{ buttonLabel() }}
+    </button>
+  </div>
+  <div class="attachments">
+    @if (attachmentControl() && attachmentControl()?.length > 0) {
+      <overlay-scrollbars [options]="attachmentsScrollOptions()" class="attachments-scroll">
+        @for (control of attachmentControl(); track control; let i = $index) {
+          <app-attachment-item
+            [attachment]="control.value"
+            [invalid]="control.invalid"
+            (removeAttachment)="removeAttachment.emit(i)"
+            [readonly]="false"
+          />
+        }
+      </overlay-scrollbars>
+    }
+  </div>
+</form>
