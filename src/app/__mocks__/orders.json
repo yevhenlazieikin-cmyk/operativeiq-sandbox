@@ -1,0 +1,7 @@
+[
+  { "id": "ORD-2026-0001", "status": "OPEN", "createdAt": "2026-04-19T09:14:00Z", "requestedBy": "Morgan Patel", "station": "Station 3", "total": 412.55, "lineCount": 4 },
+  { "id": "ORD-2026-0002", "status": "SHIPPED", "createdAt": "2026-04-18T15:02:00Z", "requestedBy": "Jordan Rivera", "station": "Station 1", "total": 1298.4, "lineCount": 12 },
+  { "id": "ORD-2026-0003", "status": "RECEIVED", "createdAt": "2026-04-15T11:47:00Z", "requestedBy": "Priya Chen", "station": "Station 2", "total": 64.8, "lineCount": 2 },
+  { "id": "ORD-2026-0004", "status": "CANCELLED", "createdAt": "2026-04-12T07:30:00Z", "requestedBy": "Sam Okafor", "station": "Station 7", "total": 0, "lineCount": 0 },
+  { "id": "ORD-2026-0005", "status": "OPEN", "createdAt": "2026-04-22T13:20:00Z", "requestedBy": "Alex Müller", "station": "Station 9", "total": 742.1, "lineCount": 7 }
+]

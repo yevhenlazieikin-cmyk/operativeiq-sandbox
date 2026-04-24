@@ -1,0 +1,37 @@
+<div class="layout">
+  <header class="layout__header">
+    <span class="layout__brand">OperativeIQ</span>
+    <span class="layout__subtitle">Sandbox</span>
+    <div class="layout__spacer"></div>
+    <span class="layout__env">dev • local</span>
+  </header>
+
+  <aside class="layout__nav" aria-label="Pages">
+    <div class="layout__nav-heading">Pages</div>
+    <nav>
+      <ul>
+        @for (item of navItems(); track item.path) {
+          <li>
+            <a
+              [routerLink]="item.path"
+              routerLinkActive="is-active"
+              [routerLinkActiveOptions]="{ exact: item.path === '/' }"
+            >
+              {{ item.title }}
+            </a>
+          </li>
+        }
+      </ul>
+    </nav>
+  </aside>
+
+  <main class="layout__body">
+    <router-outlet />
+  </main>
+
+  <footer class="layout__footer">
+    <span>@backoffice/shared-ui available</span>
+    <span class="layout__footer-spacer"></span>
+    <span>Edit files under <code>src/app/pages/</code> via the terminal.</span>
+  </footer>
+</div>

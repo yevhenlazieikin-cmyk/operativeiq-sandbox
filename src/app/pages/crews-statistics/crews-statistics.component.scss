@@ -1,0 +1,27 @@
+@use 'variables' as *;
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+.crews-statistics {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &__tabs {
+    flex-shrink: 0;
+  }
+
+  &__tab-panel {
+    padding: 16px 24px;
+    background: $white;
+  }
+
+  &__grid {
+    flex: 1;
+    min-height: 0;
+    padding: 16px 24px 0;
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "permissions": {
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep",
+      "Edit(src/app/pages/**)",
+      "Edit(src/app/app.routes.ts)",
+      "Edit(src/app/core/constants/permission.constants.ts)",
+      "Write(src/app/pages/**)",
+      "Write(src/app/__mocks__/**)",
+      "Bash(ng build:*)",
+      "Bash(ng test:*)",
+      "Bash(ng generate:*)",
+      "Bash(npm run:*)",
+      "Bash(npx tsc:*)"
+    ],
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Bash(npm install:*)",
+      "Bash(npm i:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(git push:*)",
+      "Bash(git commit:*)",
+      "WebFetch",
+      "Read(.env)",
+      "Read(**/*.key)",
+      "Read(**/*.pem)",
+      "Edit(src/app/layout/**)",
+      "Edit(src/app/core/guards/**)",
+      "Edit(src/app/core/resolvers/**)",
+      "Edit(src/app/core/services/**)",
+      "Edit(src/styles.scss)",
+      "Edit(src/index.html)",
+      "Edit(src/main.ts)",
+      "Edit(src/app/app.config.ts)",
+      "Edit(src/app/app.ts)",
+      "Edit(package.json)",
+      "Edit(angular.json)",
+      "Edit(tsconfig.json)",
+      "Edit(tsconfig.app.json)",
+      "Edit(tsconfig.spec.json)",
+      "Edit(.claude/**)",
+      "Edit(CLAUDE.md)",
+      "Write(package.json)",
+      "Write(angular.json)",
+      "Write(.claude/**)",
+      "Write(CLAUDE.md)"
+    ]
+  }
+}

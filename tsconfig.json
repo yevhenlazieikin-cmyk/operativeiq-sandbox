@@ -1,0 +1,38 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "@backoffice/shared-ui": [
+        "vendor/backoffice-shared-ui/projects/backoffice-shared-ui/src/public-api.ts"
+      ],
+      "@backoffice/shared-ui/*": [
+        "vendor/backoffice-shared-ui/projects/backoffice-shared-ui/src/*"
+      ],
+      "@core/*": ["src/app/core/*"],
+      "@shared/*": ["src/app/shared/*"],
+      "@env/*": ["src/environments/*"],
+      "@mocks/*": ["src/app/__mocks__/*"]
+    }
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true
+  },
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.spec.json" }
+  ]
+}
