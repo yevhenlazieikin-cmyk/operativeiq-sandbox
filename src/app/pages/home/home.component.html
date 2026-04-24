@@ -1,0 +1,32 @@
+<section class="home">
+  <bo-action-buttons-panel
+    [title]="'Welcome to OperativeIQ'"
+    [buttons]="actionButtons"
+    [state]="menuType.operation"
+  />
+
+  <div class="home__card">
+    <h2>How this sandbox works</h2>
+    <p>
+      Describe a page in the terminal on the left. Claude Code will read
+      <code>CLAUDE.md</code>, pick the right skill
+      (<code>apply-code-design</code> for plain-text descriptions,
+      <code>apply-figma-design</code> for Figma URLs), and scaffold files
+      under <code>src/app/pages/</code>. The new page shows up in the side
+      navigation automatically once it's registered in
+      <code>app.routes.ts</code>.
+    </p>
+
+    <h3>Available today</h3>
+    <ul>
+      <li>Full <code>&#64;backoffice/shared-ui</code> public API</li>
+      <li>SCSS tokens — <code>$primary-blue</code>, <code>$forest-green</code>, <code>$error-red</code></li>
+      <li><code>MessageService</code>, permission guard stubs, resolver stubs</li>
+      <li>Mock JSON fixtures under <code>src/app/__mocks__/</code></li>
+    </ul>
+
+    @if (lastAction(); as action) {
+      <p class="home__action-echo">Last action: {{ action }}</p>
+    }
+  </div>
+</section>

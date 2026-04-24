@@ -1,0 +1,44 @@
+@use 'variables' as *;
+
+:host { display: block; height: 100%; }
+
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px 32px;
+  max-width: 960px;
+
+  &__card {
+    background: $white;
+    border: 1px solid $cool-gray;
+    border-radius: 6px;
+    padding: 20px 24px;
+    font-size: $font-base2;
+    line-height: 1.55;
+    color: $charcoal;
+
+    h2 { margin: 0 0 12px; font-size: $font-base4; font-weight: $font-semibold; color: $primary-blue; }
+    h3 { margin: 20px 0 6px; font-size: $font-base3; font-weight: $font-semibold; color: $charcoal; }
+    ul { margin: 8px 0 0; padding-left: 18px; li { margin-bottom: 4px; } }
+
+    code {
+      font-family: 'Cascadia Mono', 'Consolas', monospace;
+      font-size: 12px;
+      padding: 1px 5px;
+      border-radius: 3px;
+      background: $panel-gray;
+      color: $charcoal;
+    }
+  }
+
+  &__action-echo {
+    margin-top: 16px;
+    padding: 8px 12px;
+    border-left: 3px solid $forest-green;
+    background: $mint;
+    color: $forest-green;
+    font-size: $font-base1;
+    font-family: 'Cascadia Mono', 'Consolas', monospace;
+  }
+}
