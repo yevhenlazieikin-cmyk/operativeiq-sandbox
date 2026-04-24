@@ -17,6 +17,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Configure Git for private GitLab submodule
+        env:
+          GITLAB_TOKEN: ${{ secrets.GITLAB_ACCESS_TOKEN }}
+        run: |
+          git config --global url."https://oauth2:${GITLAB_TOKEN}@git.operativeiq.com/".insteadOf "https://git.operativeiq.com/"
+
       - uses: actions/checkout@v4
         with:
           submodules: recursive
