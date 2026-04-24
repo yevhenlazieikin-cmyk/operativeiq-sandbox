@@ -1,4 +1,4 @@
 [submodule "vendor/backoffice-shared-ui"]
 	path = vendor/backoffice-shared-ui
-	url = https://git.operativeiq.com/ems-technology-solutions/backoffice-shared/backoffice-shared-ui.git
-	branch = Staging
+	url = https://github.com/yevhenlazieikin-cmyk/backoffice-shared-ui.git
+	branch = main
