@@ -1,0 +1,7 @@
+[
+  { "id": 1, "firstName": "Morgan", "lastName": "Patel", "email": "morgan.patel@example.com", "role": "Captain", "station": "Station 3", "country": "USA" },
+  { "id": 2, "firstName": "Jordan", "lastName": "Rivera", "email": "jordan.rivera@example.com", "role": "Lieutenant", "station": "Station 1", "country": "USA" },
+  { "id": 3, "firstName": "Sam", "lastName": "Okafor", "email": "sam.okafor@example.com", "role": "Paramedic", "station": "Station 7", "country": "Canada" },
+  { "id": 4, "firstName": "Priya", "lastName": "Chen", "email": "priya.chen@example.com", "role": "Engineer", "station": "Station 2", "country": "USA" },
+  { "id": 5, "firstName": "Alex", "lastName": "Muller", "email": "alex.muller@example.com", "role": "Firefighter", "station": "Station 9", "country": "Germany" }
+]

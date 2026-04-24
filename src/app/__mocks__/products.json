@@ -1,0 +1,8 @@
+[
+  { "id": "P-001", "name": "Oxygen Mask", "sku": "OX-MASK-42", "category": "Respiratory", "stock": 128, "unitPrice": 14.5, "supplier": "MediCore" },
+  { "id": "P-002", "name": "Defibrillator Pads", "sku": "DF-PAD-10", "category": "Cardiac", "stock": 42, "unitPrice": 38.0, "supplier": "CardioLine" },
+  { "id": "P-003", "name": "Trauma Shears", "sku": "TR-SHR-5", "category": "Tools", "stock": 260, "unitPrice": 6.75, "supplier": "FieldKit" },
+  { "id": "P-004", "name": "IV Starter Kit", "sku": "IV-START-1", "category": "Vascular", "stock": 88, "unitPrice": 11.2, "supplier": "MediCore" },
+  { "id": "P-005", "name": "Cervical Collar (Adult)", "sku": "CV-COLL-A", "category": "Immobilization", "stock": 34, "unitPrice": 9.9, "supplier": "SpineGuard" },
+  { "id": "P-006", "name": "Burn Dressing 4x4", "sku": "BD-4-4", "category": "Burn care", "stock": 512, "unitPrice": 2.2, "supplier": "FieldKit" }
+]
