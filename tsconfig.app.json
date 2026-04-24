@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/app",
+    "types": []
+  },
+  "include": [
+    "src/**/*.ts",
+    "vendor/backoffice-shared-ui/projects/backoffice-shared-ui/src/**/*.ts"
+  ],
+  "exclude": [
+    "src/**/*.spec.ts",
+    "vendor/backoffice-shared-ui/projects/backoffice-shared-ui/src/**/*.spec.ts"
+  ]
+}
