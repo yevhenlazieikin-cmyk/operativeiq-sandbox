@@ -6,7 +6,6 @@
 />
 
 <section class="crews-statistics">
-  <h1>Local test</h1>
   <bo-action-buttons-panel
     [title]="'Crews Statistics'"
     [buttons]="actionButtons"
@@ -53,6 +52,8 @@
       (sortedDataChange)="onDataChange($event)"
       [userMenu]="menuType.administration"
       [scrollWindow]="false"
+      [clientGridPagination]="true"
+      [initialPageSize]="10"
     >
       @for (member of displayedMembers(); track member.id; let i = $index) {
         <bo-grid-cell
