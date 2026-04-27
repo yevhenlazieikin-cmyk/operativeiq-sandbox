@@ -22,6 +22,20 @@ export const routes: Routes = [
     data: { menuType: 'ADMINISTRATION' },
   },
   {
+    path: 'apps/task-list/asset-classes',
+    redirectTo: 'asset-classes',
+  },
+  {
+    path: 'asset-classes',
+    loadComponent: () =>
+      import('./pages/asset-classes/asset-classes.component').then(
+        (m) => m.AssetClassesComponent
+      ),
+    canActivate: [permissionGuard(PermissionConstants.assetClassesView, false)],
+    title: 'Asset Classes',
+    data: { menuType: 'ADMINISTRATION' },
+  },
+  {
     path: 'task-list',
     loadComponent: () =>
       import('./pages/task-list/task-list.component').then(

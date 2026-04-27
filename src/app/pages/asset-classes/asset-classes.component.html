@@ -1,0 +1,40 @@
+<bo-header
+  toolbarUrl="/mock/api"
+  appUrl="task-list"
+  [initialMenuType]="menuType.administration"
+  [siteInfo]="siteInfo()"
+/>
+
+<section class="asset-classes">
+  <bo-action-buttons-panel
+    [title]="'Asset Classes'"
+    [buttons]="actionButtons"
+    [state]="menuType.administration"
+  />
+
+  <div class="asset-classes__grid">
+    <bo-grid
+      [gridType]="'CLIENT'"
+      [outerService]="true"
+      [filtersIncluded]="true"
+      [filterData]="filterData"
+      [sortedDataStore]="rawAssetClasses()"
+      (sortedDataChange)="onDataChange($event)"
+      [userMenu]="menuType.administration"
+      [scrollWindow]="false"
+      [clientGridPagination]="true"
+      [initialPageSize]="10"
+    >
+      @for (assetClass of displayedAssetClasses(); track assetClass.id; let i = $index) {
+        <bo-grid-cell
+          [row]="assetClass"
+          [index]="i"
+          [cellSchema]="cellSchema"
+          [filterData]="filterData"
+        />
+      }
+    </bo-grid>
+  </div>
+
+  <bo-footer />
+</section>

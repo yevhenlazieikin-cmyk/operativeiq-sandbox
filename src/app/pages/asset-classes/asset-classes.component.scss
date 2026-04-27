@@ -1,0 +1,22 @@
+@use 'variables' as *;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.asset-classes {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin-top: 40px;
+
+  &__grid {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    padding: 16px 24px;
+    background: $white;
+  }
+}
