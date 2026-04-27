@@ -29,6 +29,7 @@ import { SiteInfo } from '@backoffice/shared-ui/lib/header/site-info.interface';
 import { MockMenuService } from './mock-menu.service';
 import {
   MaintenanceHistoryRow,
+  PartHistoryRow,
   UnitAttachment,
   WorkOrderService,
 } from './work-order-service/work-order.service';
@@ -70,6 +71,8 @@ export class WorkOrderComponent {
   protected readonly attachments = signal<UnitAttachment[]>([]);
   protected readonly rawMaintenance = signal<MaintenanceHistoryRow[]>([]);
   protected readonly displayedMaintenance = signal<MaintenanceHistoryRow[]>([]);
+  protected readonly rawPartHistory = signal<PartHistoryRow[]>([]);
+  protected readonly displayedPartHistory = signal<PartHistoryRow[]>([]);
 
   protected readonly placeholderTabName = signal<string>('');
 
@@ -138,6 +141,39 @@ export class WorkOrderComponent {
     ],
   };
 
+  protected readonly partHistoryCellSchema: GridCell = {
+    mainRow: [
+      { type: GridCellType.readonlyText, key: 'dateInstalled' },
+      { type: GridCellType.readonlyText, key: 'woNumber' },
+      { type: GridCellType.readonlyText, key: 'partNumber' },
+      { type: GridCellType.readonlyText, key: 'description' },
+      { type: GridCellType.readonlyText, key: 'manufacturer' },
+      { type: GridCellType.readonlyText, key: 'quantity' },
+      { type: GridCellType.readonlyText, key: 'cost' },
+      { type: GridCellType.readonlyText, key: 'warrantyExpiration' },
+      { type: GridCellType.readonlyText, key: 'installedBy' },
+    ],
+  };
+
+  protected readonly partHistoryFilterData: FilterData = {
+    filterHeader: 'grid_filter_WorkOrderPartHistory',
+    userMenu: menuType.operation,
+    inputs: [
+      { label: 'Date Installed',       type: FilterFieldTypeEnum.Input, name: 'dateInstalled',       value: '', hasSorting: true, dataType: 'string', customSortDataType: 'string', style: { width: '11%' } },
+      { label: 'WO #',                 type: FilterFieldTypeEnum.Input, name: 'woNumber',            value: '', hasSorting: true, dataType: 'string', customSortDataType: 'string', style: { width: '9%' } },
+      { label: 'Part Number',          type: FilterFieldTypeEnum.Input, name: 'partNumber',          value: '', hasSorting: true, dataType: 'string', customSortDataType: 'string', style: { width: '12%' } },
+      { label: 'Description',          type: FilterFieldTypeEnum.Input, name: 'description',         value: '', hasSorting: true, dataType: 'string', customSortDataType: 'string', style: { width: '20%' } },
+      { label: 'Manufacturer',         type: FilterFieldTypeEnum.Input, name: 'manufacturer',        value: '', hasSorting: true, dataType: 'string', customSortDataType: 'string', style: { width: '12%' } },
+      { label: 'Quantity',             type: FilterFieldTypeEnum.Input, name: 'quantity',            value: '', hasSorting: true, dataType: 'number', customSortDataType: 'number', style: { width: '7%' } },
+      { label: 'Cost',                 type: FilterFieldTypeEnum.Input, name: 'cost',                value: '', hasSorting: true, dataType: 'number', customSortDataType: 'number', style: { width: '7%' } },
+      { label: 'Warranty Expiration',  type: FilterFieldTypeEnum.Input, name: 'warrantyExpiration',  value: '', hasSorting: true, dataType: 'string', customSortDataType: 'string', style: { width: '12%' } },
+      { label: 'Installed By',         type: FilterFieldTypeEnum.Input, name: 'installedBy',         value: '', hasSorting: true, dataType: 'string', customSortDataType: 'string', style: { width: '10%' } },
+    ],
+    sortOptions: { default: { key: 'dateInstalled', direction: 'desc' } },
+    mobSearch: '',
+    mobSearchPlaceholder: 'Part Number, Description, Manufacturer',
+  };
+
   private readonly woStatusOptions = [
     { id: '', value: 'All' },
     { id: 'Open', value: 'Open' },
@@ -186,6 +222,10 @@ export class WorkOrderComponent {
     this.displayedMaintenance.set(data);
   }
 
+  protected onPartHistoryDataChange(data: PartHistoryRow[]): void {
+    this.displayedPartHistory.set(data);
+  }
+
   protected statusRowClass(row: MaintenanceHistoryRow): string {
     return `work-order__row work-order__row--${row.statusColor}`;
   }
@@ -232,6 +272,14 @@ export class WorkOrderComponent {
       .subscribe((items) => {
         this.rawMaintenance.set(items);
         this.displayedMaintenance.set(items);
+      });
+
+    this.service
+      .getPartHistory()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((items) => {
+        this.rawPartHistory.set(items);
+        this.displayedPartHistory.set(items);
       });
   }
 

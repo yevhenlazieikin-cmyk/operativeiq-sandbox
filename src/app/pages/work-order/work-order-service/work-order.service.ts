@@ -29,6 +29,19 @@ export interface UnitAttachment {
   fileName: string;
 }
 
+export interface PartHistoryRow {
+  id: string;
+  dateInstalled: string;
+  woNumber: string;
+  partNumber: string;
+  description: string;
+  manufacturer: string;
+  quantity: number;
+  cost: number;
+  warrantyExpiration: string;
+  installedBy: string;
+}
+
 export type MaintenanceStatusColor = 'gray' | 'green' | 'red';
 
 export interface MaintenanceHistoryRow {
@@ -99,6 +112,16 @@ export class WorkOrderService {
       { id: 'MH4', date: '10/15/2024', unit: '2001', woNumber: '8001089', customer: 'FLEET A - Truck', woStatus: 'Open',   services: 1, workOrderType: 'Work Order', reason: 'Road Call',              description: 'Brake system failure',             serviceCompletion: 'Unscheduled Maintenance', hours: '965', miles: '121,340', labor: '450.00', parts: '675.00', fees: '50.00', total: '1,175.00', statusColor: 'red'   },
       { id: 'MH5', date: '09/30/2024', unit: '2001', woNumber: '8001022', customer: 'FLEET A - Truck', woStatus: 'Closed', services: 3, workOrderType: 'Work Order', reason: 'Inspection, Routine',    description: 'Annual safety inspection',         serviceCompletion: 'In Service',              hours: '950', miles: '119,800', labor: '200.00', parts: '150.00', fees: '35.00', total: '385.00',   statusColor: 'green' },
       { id: 'MH6', date: '09/18/2024', unit: '2001', woNumber: '8000988', customer: 'FLEET A - Truck', woStatus: 'Closed', services: 2, workOrderType: 'Work Order', reason: "Driver's Report",        description: 'AC not working properly',          serviceCompletion: 'Unscheduled Maintenance', hours: '942', miles: '118,920', labor: '275.00', parts: '320.00', fees: '20.00', total: '615.00',   statusColor: 'gray'  },
+    ]);
+  }
+
+  getPartHistory(): Observable<PartHistoryRow[]> {
+    return of([
+      { id: 'PH1', dateInstalled: '11/19/2024', woNumber: '8001234', partNumber: 'FL-2016',       description: 'Oil Filter - Heavy Duty',  manufacturer: 'Fleetguard', quantity: 1, cost: 45.99,  warrantyExpiration: '05/19/2025', installedBy: 'Gavur Halyna'    },
+      { id: 'PH2', dateInstalled: '11/05/2024', woNumber: '8001185', partNumber: 'AF-25962',      description: 'Air Filter Element',       manufacturer: 'Fleetguard', quantity: 1, cost: 89.50,  warrantyExpiration: '11/05/2025', installedBy: 'John Smith'      },
+      { id: 'PH3', dateInstalled: '10/22/2024', woNumber: '8001102', partNumber: 'BW-5073',       description: 'Coolant Filter',           manufacturer: 'Baldwin',    quantity: 2, cost: 52.25,  warrantyExpiration: '10/22/2025', installedBy: 'Mike Johnson'    },
+      { id: 'PH4', dateInstalled: '10/15/2024', woNumber: '8001089', partNumber: 'DT-466E-BRK',   description: 'Brake Pad Set - Front',    manufacturer: 'Detroit',    quantity: 1, cost: 225.00, warrantyExpiration: '10/15/2025', installedBy: 'Sarah Williams'  },
+      { id: 'PH5', dateInstalled: '09/30/2024', woNumber: '8001022', partNumber: 'GATES-T287',    description: 'Serpentine Belt',          manufacturer: 'Gates',      quantity: 1, cost: 67.50,  warrantyExpiration: '03/30/2025', installedBy: 'David Brown'     },
     ]);
   }
 }

@@ -98,6 +98,31 @@
         }
       </bo-grid>
     </div>
+
+    <h2 class="work-order__section-title">Part History</h2>
+    <div class="work-order__grid">
+      <bo-grid
+        [gridType]="'CLIENT'"
+        [outerService]="true"
+        [filtersIncluded]="true"
+        [filterData]="partHistoryFilterData"
+        [sortedDataStore]="rawPartHistory()"
+        (sortedDataChange)="onPartHistoryDataChange($event)"
+        [userMenu]="menuType.operation"
+        [scrollWindow]="false"
+        [clientGridPagination]="true"
+        [initialPageSize]="10"
+      >
+        @for (row of displayedPartHistory(); track row.id; let i = $index) {
+          <bo-grid-cell
+            [row]="row"
+            [index]="i"
+            [cellSchema]="partHistoryCellSchema"
+            [filterData]="partHistoryFilterData"
+          />
+        }
+      </bo-grid>
+    </div>
   </ng-template>
 
   <ng-template #placeholderTab>
