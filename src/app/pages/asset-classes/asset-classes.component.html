@@ -7,10 +7,19 @@
 
 <section class="asset-classes">
   <bo-action-buttons-panel
-    [title]="'Asset Classes'"
+    [title]="'Test Page'"
     [buttons]="actionButtons"
     [state]="menuType.administration"
   />
+
+  <div class="asset-classes__summary">
+    <bo-details-panel
+      [form]="summaryForm"
+      [fields]="summaryFields"
+      title="Asset Classes Summary"
+      [userMenu]="menuType.administration"
+    />
+  </div>
 
   <div class="asset-classes__grid">
     <bo-grid

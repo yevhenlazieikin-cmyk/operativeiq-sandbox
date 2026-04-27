@@ -12,6 +12,10 @@
   height: 100%;
   margin-top: 40px;
 
+  &__summary {
+    padding: 16px 24px 0;
+  }
+
   &__grid {
     flex: 1;
     min-height: 0;

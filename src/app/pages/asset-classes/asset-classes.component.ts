@@ -5,10 +5,14 @@ import {
   inject,
   signal,
 } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   ActionButton,
   ActionButtonsPanel,
+  DetailsPanel,
+  FieldConfig,
+  FieldType,
   Footer,
   GridModule,
   Header,
@@ -23,7 +27,7 @@ import { MockMenuService } from './mock-menu.service';
 
 @Component({
   selector: 'app-asset-classes',
-  imports: [Header, ActionButtonsPanel, Footer, GridModule],
+  imports: [Header, ActionButtonsPanel, DetailsPanel, Footer, GridModule, ReactiveFormsModule],
   templateUrl: './asset-classes.component.html',
   styleUrl: './asset-classes.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -40,11 +44,30 @@ export class AssetClassesComponent {
     LastLoginInfo: null,
   });
 
+  private readonly fb = inject(FormBuilder);
   private readonly service = inject(AssetClassesService);
   private readonly destroyRef = inject(DestroyRef);
 
   protected readonly rawAssetClasses = signal<AssetClass[]>([]);
   protected readonly displayedAssetClasses = signal<AssetClass[]>([]);
+
+  protected readonly summaryForm: FormGroup = this.fb.group({
+    totalAssetClasses: [''],
+    enabled: [''],
+    disabled: [''],
+    verifyOnFrontLine: [''],
+    displayOnFrontLine: [''],
+    lastUpdated: [''],
+  });
+
+  protected readonly summaryFields: FieldConfig[] = [
+    { label: 'Total Asset Classes', type: FieldType.ReadOnly, formControlName: 'totalAssetClasses' },
+    { label: 'Enabled', type: FieldType.ReadOnly, formControlName: 'enabled' },
+    { label: 'Disabled', type: FieldType.ReadOnly, formControlName: 'disabled' },
+    { label: 'Verify on Front Line', type: FieldType.ReadOnly, formControlName: 'verifyOnFrontLine' },
+    { label: 'Display on Front Line', type: FieldType.ReadOnly, formControlName: 'displayOnFrontLine' },
+    { label: 'Last Updated', type: FieldType.ReadOnly, formControlName: 'lastUpdated' },
+  ];
 
   private readonly enabledOptions = [
     { id: '', value: 'All' },
@@ -145,11 +168,19 @@ export class AssetClassesComponent {
   ];
 
   constructor() {
+    this.loadSummary();
     this.loadAssetClasses();
   }
 
   protected onDataChange(data: AssetClass[]): void {
     this.displayedAssetClasses.set(data);
+  }
+
+  private loadSummary(): void {
+    this.service
+      .getSummary()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((summary) => this.summaryForm.patchValue(summary));
   }
 
   private loadAssetClasses(): void {

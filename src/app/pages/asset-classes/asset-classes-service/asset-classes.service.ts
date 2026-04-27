@@ -13,9 +13,29 @@ export interface AssetClass {
   status: EnabledFlag;
 }
 
+export interface AssetClassesSummary {
+  totalAssetClasses: string;
+  enabled: string;
+  disabled: string;
+  verifyOnFrontLine: string;
+  displayOnFrontLine: string;
+  lastUpdated: string;
+}
+
 // TODO: replace of() stub with real HTTP call when /assets/AssetClassList endpoint is wired up
 @Injectable({ providedIn: 'root' })
 export class AssetClassesService {
+  getSummary(): Observable<AssetClassesSummary> {
+    return of({
+      totalAssetClasses: '25',
+      enabled: '22',
+      disabled: '3',
+      verifyOnFrontLine: '18',
+      displayOnFrontLine: '19',
+      lastUpdated: '2026-04-25 09:42',
+    });
+  }
+
   getAssetClasses(): Observable<AssetClass[]> {
     return of([
       { id: 1,  name: 'Defibrillators',          description: 'AED and manual defibrillators',           verifyOnFrontLine: 'Enabled',  scheduling: 'Monthly',     displayOnFrontLine: 'Enabled',  status: 'Enabled'  },
