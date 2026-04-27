@@ -1,0 +1,64 @@
+@use 'variables' as *;
+
+.submission-form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+
+  .label {
+    margin-bottom: 5px;
+    font-weight: $font-semibold;
+    font-size: $font-base2;
+  }
+
+  .additional-label {
+    margin-left: 5px;
+    color: $slate-gray;
+    font-weight: $font-light;
+    font-size: $font-base2;
+  }
+
+  .form-controls {
+    position: relative;
+    margin-bottom: 10px;
+
+    textarea {
+      padding: 0;
+      resize: none;
+    }
+
+    .attachment-pin {
+      position: absolute;
+      right: 15px;
+      bottom: 27px;
+      transform: rotate(45deg);
+    }
+
+    .submit {
+      position: absolute;
+      top: -30;
+      right: 0;
+      padding: 6px 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: $olive-green;
+      color: $white;
+      font-weight: $font-regular;
+      font-size: $font-base1;
+
+      &:disabled {
+        background-color: $olive-green-light;
+        pointer-events: none;
+      }
+
+      &:not(:disabled):hover {
+        opacity: 0.7;
+      }
+    }
+  }
+
+  .attachments-scroll {
+    height: auto !important;
+    max-height: 120px !important;
+  }
+}

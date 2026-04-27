@@ -1,0 +1,43 @@
+@if (isGridItem()) {
+<div class="progress-container progress-container--grid">
+  <div class="progress-bar-wrapper">
+    <mat-progress-bar [mode]="mode()" [value]="progressValue()" class="progress-bar"></mat-progress-bar>
+  </div>
+  @if (showPercentage() || showQuantity()) {
+  <div class="progress-info">
+    @if (showPercentage()) {
+    <span class="progress-percentage">{{ percentage() }}%</span>
+    } @if (showQuantity()) {
+    <span class="progress-quantity">({{ completed() }}/{{ total() }})</span>
+    }
+  </div>
+  }
+</div>
+} @else {
+<div class="progress-container">
+  @if (label() || showPercentage() || showQuantity()) {
+  <div class="progress-header">
+    @if (label()) {
+    <span class="progress-label">{{ label() }}</span>
+    }
+    <div class="progress-info">
+      @if (showPercentage()) {
+      <span class="progress-percentage">{{ percentage() }}%</span>
+      } @if (showQuantity()) {
+      <span class="progress-quantity">{{ completed() }}/{{ total() }}</span>
+      }
+    </div>
+  </div>
+  }
+
+  <div
+    [ngClass]="{
+    'administration': typeOfMenu() === 'ADMINISTRATION',
+    'operation': typeOfMenu() === 'OPERATION',
+    }"
+    class="progress-bar-wrapper"
+  >
+    <mat-progress-bar [mode]="mode()" [value]="progressValue()" class="progress-bar"></mat-progress-bar>
+  </div>
+</div>
+}

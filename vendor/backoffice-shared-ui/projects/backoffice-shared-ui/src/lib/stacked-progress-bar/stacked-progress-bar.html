@@ -1,0 +1,30 @@
+<div class="stacked-progress-container">
+  @if (config().title) {
+  <div class="progress-header">
+    <span class="progress-title">{{ config().title }}</span>
+    @if (config().showPercentage) {
+    <span class="progress-total-percentage">{{ totalPercentage() }}% ({{ totalCount() }}/{{ total() }})</span>
+    }
+  </div>
+  }
+
+  <div class="stacked-progress-bar">
+    @for (item of itemsWithPercentages(); track item.label) {
+    <div class="progress-segment" [style.width.%]="item.percentage" [style.background-color]="item.color"></div>
+    }
+  </div>
+
+  @if (config().showLegend) {
+  <div class="progress-legend">
+    @for (item of config().items; track item.label) {
+    <div class="legend-item">
+      <div class="legend-color" [style.background-color]="item.color"></div>
+      <span class="legend-label">{{ item.label }}</span>
+      @if (config().showCounts && item.count !== undefined) {
+      <span class="legend-count">({{ item.count }})</span>
+      }
+    </div>
+    }
+  </div>
+  }
+</div>

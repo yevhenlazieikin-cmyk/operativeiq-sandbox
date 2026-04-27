@@ -1,0 +1,81 @@
+@use 'variables' as *;
+
+.action-panel {
+  position: relative;
+  margin-bottom: var(--default-margin-bottom);
+  background: $white;
+}
+
+.panel-header {
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 20px;
+  color: $white;
+}
+
+.panel button {
+  width: fit-content;
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid #ffffff33;
+  border-radius: 4px;
+  font-weight: $font-regular;
+  font-size: $font-base2;
+  font-family: $font-source-sans-pro;
+  cursor: pointer;
+}
+
+.admin-panel {
+  background: $navy-blue;
+
+  button.selected {
+    background: $primary-blue;
+  }
+}
+
+.assignment-panel {
+  background: $forest-green;
+
+  button.selected {
+    background: $forest-green-light;
+  }
+}
+
+.panel-title {
+  min-width: 250px;
+  height: 40px;
+  margin-top: 2px;
+  padding: 0 0 0 20px;
+  color: $white;
+  font: 15px/40px $font-source-sans-pro;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 2px;
+
+  button:disabled {
+    background: none;
+    color: $mint;
+    cursor: default;
+  }
+}
+
+.settings-element {
+  background-color: #ffffff1a;
+}
+
+.settings-element:hover {
+  background: #ffffff40;
+}
+
+.assignment-element {
+  background-color: #ffffff1a;
+}
+
+.assignment-element:hover {
+  background: #ffffff40;
+}

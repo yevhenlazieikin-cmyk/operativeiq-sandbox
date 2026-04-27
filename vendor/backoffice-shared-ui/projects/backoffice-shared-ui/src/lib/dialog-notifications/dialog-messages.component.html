@@ -1,0 +1,8 @@
+<div class="dialog-message" [ngClass]="class()" [class.has-message]="message() && message().trim().length > 0">
+  @if (message()) {
+    {{ message() | truncate: maxLength() }}
+    @if (message().length > maxLength()) {
+      <span id="34a5804bf5" class="show-all" (click)="showAll()">Show All</span>
+    }
+  }
+</div>

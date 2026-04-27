@@ -1,0 +1,362 @@
+<div class="flex cell-template" [ngClass]="{ 'selected-row': entity.checked }">
+  @for (cell of cellData; track $index) {
+    @switch (cell.type) {
+      @case (gridCellType.checkboxText) {
+        <div [ngStyle]="cell.style" [ngClass]="updatePipeEvent$ | async | setClassFromTemplatePipe: { row, cell, subItem }">
+          <ng-container [ngTemplateOutlet]="content"></ng-container>
+          <ng-template #content>
+            <div class="cell-wrapper flex-alc-str">
+              <bo-svg-icon [name]="entity.checked ? 'itemCheck' : 'itemUnchecked'" class="item-check"></bo-svg-icon>
+              <mat-checkbox
+                [id]="'checkbox_' + cell.key"
+                class="mar-outer"
+                (click)="$event.stopPropagation()"
+                (change)="onChangeCheckbox($event, cell)"
+                [checked]="entity.checked"
+                disableRipple
+                [disabled]="
+                  (cell.disableCondition && (updatePipeEvent$ | async | callTemplateExpression: cell.disableCondition : row)) ||
+                  (updateEvent | async | callTemplateExpression: cell?.disableCondition : row)
+                "
+              ></mat-checkbox>
+              <ng-container [appMobViewType]="cell" [row]="entity" [index]="index" [subIndex]="subIndex">
+                <div class="td flex-1" [ngClass]="cell.classList">
+                  <div class="cell-value">
+                    <div class="semi-bold-font">{{ entity[cell.key!] }}</div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </ng-template>
+        </div>
+      }
+      @case (gridCellType.readonlyDate) {
+        <ng-container [appMobViewType]="cell" [row]="entity" [index]="index" [subIndex]="subIndex">
+          <div class="td" [ngStyle]="cell.style" [ngClass]="updatePipeEvent$ | async | setClassFromTemplatePipe: { row, cell, subItem }">
+            <ng-container [ngTemplateOutlet]="content"></ng-container>
+            <ng-template #content>
+              <div [id]="'row_' + cell.key" class="cell-value">
+                @if (cell.useCustomPipe) {
+                  {{
+                    entity[cell.key!]
+                      | dynamic
+                        : datePipe
+                        : (cell.formatDatePipe ? (settingHelperService.getDate() ? [cell.formatDatePipe] : dateFormat) : [])
+                  }}
+                } @else {
+                  {{ entity[cell.key!] | date: (cell.formatDatePipe ? cell.formatDatePipe : dateFormat) }}
+                }
+                @if (entity[cell.key!] && cell.showTimeZone) {
+                  {{ currentTZ.currentTz?.Abr }}
+                }
+                @if (cell.tooltipInfo) {
+                  @if (
+                    !cell.tooltipInfo.condition || (updatePipeEvent$ | async | callTemplateExpression: cell.tooltipInfo.condition : entity)
+                  ) {
+                    <bo-info-tooltip
+                      [displayMessage]="
+                        cell.tooltipInfo.message.constructor.name === 'Function'
+                          ? (updatePipeEvent$ | async | callTemplateExpression: cell.tooltipInfo?.message : entity)
+                          : cell.tooltipInfo.message
+                      "
+                      [tooltipConfig]="cell.tooltipInfo.config"
+                    ></bo-info-tooltip>
+                  }
+                }
+              </div>
+            </ng-template>
+          </div>
+        </ng-container>
+      }
+      @case (gridCellType.readonlyText) {
+        <ng-container [appMobViewType]="cell" [row]="entity" [index]="index" [subIndex]="subIndex">
+          <div class="td" [ngStyle]="cell.style" [ngClass]="updatePipeEvent$ | async | setClassFromTemplatePipe: { row, cell, subItem }">
+            <ng-container [ngTemplateOutlet]="content"></ng-container>
+            <ng-template #content>
+              <div [id]="'row_' + cell.key" class="cell-value" [ngClass]="cell.classList">
+                {{ entity[cell.key!] || entity[cell.key!] === 0 ? entity[cell.key!] : '' }}
+                @if (cell.tooltipInfo) {
+                  @if (
+                    !cell.tooltipInfo.condition || (updatePipeEvent$ | async | callTemplateExpression: cell.tooltipInfo.condition : entity)
+                  ) {
+                    <bo-info-tooltip
+                      [displayMessage]="
+                        cell.tooltipInfo.message.constructor.name === 'Function'
+                          ? (updatePipeEvent$ | async | callTemplateExpression: cell.tooltipInfo?.message : entity)
+                          : cell.tooltipInfo.message
+                      "
+                      [tooltipConfig]="cell.tooltipInfo.config"
+                    ></bo-info-tooltip>
+                  }
+                }
+              </div>
+
+              @if (cell.additionalInfo) {
+                @for (addInfo of cell.additionalInfo; track $index) {
+                  @if (updatePipeEvent$ | async | callTemplateExpression: addInfo.condition : entity) {
+                    <div class="info-text mb-0" [ngClass]="addInfo.classList">
+                      {{
+                        addInfo.displayText.constructor.name === 'Function'
+                          ? (updatePipeEvent$ | async | callTemplateExpression: addInfo?.displayText : entity)
+                          : addInfo.displayText
+                      }}
+                    </div>
+                  }
+                }
+              }
+            </ng-template>
+          </div>
+        </ng-container>
+      }
+      @case (gridCellType.empty) {
+        <ng-container [appMobViewType]="cell" [row]="entity" [index]="index" [subIndex]="subIndex">
+          <ng-container [ngTemplateOutlet]="content"></ng-container>
+          <ng-template #content>
+            <div
+              [id]="'row_' + cell.key"
+              class="td"
+              [ngStyle]="cell.style"
+              [ngClass]="updatePipeEvent$ | async | setClassFromTemplatePipe: { row, cell, subItem }"
+            ></div>
+          </ng-template>
+        </ng-container>
+      }
+      @case (gridCellType.delete || gridCellType.deleteSubRow) {
+        <ng-container [appMobViewType]="cell" [row]="entity" [index]="index" [subIndex]="subIndex">
+          <div class="td" [ngStyle]="cell.style" [ngClass]="cell.classList">
+            <ng-container [ngTemplateOutlet]="content"></ng-container>
+            <ng-template #content>
+              @if (!cell.condition || (!!cell.condition && updatePipeEvent$ | async | callTemplateExpression: cell.condition : row)) {
+                <bo-svg-icon
+                  [id]="'row_' + cell.key"
+                  name="iconDelete"
+                  class="icon-delete"
+                  (click)="cell?.removeRow(index, subIndex, entity)"
+                ></bo-svg-icon>
+              }
+            </ng-template>
+          </div>
+        </ng-container>
+      }
+      @case (gridCellType.editText) {
+        <ng-container [appMobViewType]="cell" [row]="entity" [index]="index" [subIndex]="subIndex">
+          <div class="td" [ngStyle]="cell.style" [ngClass]="{ 'reset-background': !cell.condition || cell.condition(row) }">
+            <ng-container [ngTemplateOutlet]="content" [ngTemplateOutletContext]="{ ind: index, subInd: subIndex }"></ng-container>
+
+            <ng-template #content let-updateEvent="updateEvent">
+              @if (!cell.condition || cell.condition(row)) {
+                <div
+                  [id]="'row_' + cell.key"
+                  class="field-wrapper"
+                  [class.icon-field-wrapper]="cell.iconName"
+                  [ngClass]="(updatePipeEvent$ | async) || (updateEvent | async) | setClassFromTemplatePipe: { row, cell, subItem }"
+                >
+                  <input
+                    [appNextInputFocus]="!!cell.inputFocusClass"
+                    [idPrefix]="'input_' + index + '_' + subIndex"
+                    type="text"
+                    autocomplete="off"
+                    appInputSanitizer
+                    [attr.data-field]="cell.dataAttribute ? cell.dataAttribute : 'editable-text'"
+                    [ngClass]="[!!cell.inputFocusClass ? cell.inputFocusClass?.join() : '', cell.classList ? cell.classList.join() : '']"
+                    [id]="'input_' + index + '_' + subIndex"
+                    [disabled]="
+                      (cell.disableCondition && (updatePipeEvent$ | async | callTemplateExpression: cell.disableCondition : row)) ||
+                      (updateEvent | async | callTemplateExpression: cell?.disableCondition : row)
+                    "
+                    [placeholder]="cell.placeholder || ''"
+                    [(ngModel)]="entity[cell.key!]"
+                    (ngModelChange)="onChanged(cell)"
+                    (keydown.enter)="onSearch($event, cell)"
+                    (focusout)="onFocusOut(cell)"
+                  />
+                  @if (cell.iconName) {
+                    <div
+                      id="8f766ad959"
+                      class="icon-wrapper"
+                      (click)="onIconClicked(cell)"
+                      [class.barcode-icon-wrapper]="cell.iconName === 'wrapperRfidInput'"
+                    >
+                      <!-- TODO add icon    <bo-svg-icon [name]="cell.iconName" class="icon"></bo-svg-icon>-->
+                    </div>
+                  }
+
+                  @if (cell.tooltipInfo) {
+                    @if (
+                      !cell.tooltipInfo.condition ||
+                      (updatePipeEvent$ | async | callTemplateExpression: cell.tooltipInfo.condition : entity)
+                    ) {
+                      <bo-info-tooltip
+                        [displayMessage]="
+                          cell.tooltipInfo.message.constructor.name === 'Function'
+                            ? (updatePipeEvent$ | async | callTemplateExpression: cell.tooltipInfo?.message : entity)
+                            : cell.tooltipInfo.message
+                        "
+                        [tooltipConfig]="cell.tooltipInfo.config"
+                      ></bo-info-tooltip>
+                    }
+                  }
+                </div>
+              }
+            </ng-template>
+          </div>
+        </ng-container>
+      }
+      @case (gridCellType.date) {
+        <ng-container [appMobViewType]="cell" [row]="entity" [index]="index" [subIndex]="subIndex">
+          <div class="td" [ngStyle]="cell.style">
+            <ng-container [ngTemplateOutlet]="content" [ngTemplateOutletContext]="{ ind: index, subInd: subIndex }"></ng-container>
+
+            <ng-template #content let-updateEvent="updateEvent">
+              @if (!cell.condition || cell.condition(row)) {
+                <div
+                  [id]="'row_' + cell.key"
+                  [ngClass]="(updatePipeEvent$ | async) || (updateEvent | async) | setClassFromTemplatePipe: { row, cell, subItem }"
+                  class="date-field"
+                >
+                  <bo-date-picker
+                    id="02e4e624d2"
+                    [disabled]="
+                      (cell.disableCondition && (updatePipeEvent$ | async | callTemplateExpression: cell.disableCondition : row)) ||
+                      (updateEvent | async | callTemplateExpression: cell?.disableCondition : row)
+                    "
+                    [showError]="!!(cell.errorCondition && (updatePipeEvent$ | async | callTemplateExpression: cell.errorCondition : row))"
+                    [(selectValue)]="entity[cell.key!]"
+                    (selectValueChange)="onChanged(cell)"
+                    (blurEvent)="onBlur($event, entity, cell)"
+                  />
+
+                  @if (cell.tooltipInfo) {
+                    @if (
+                      !cell.tooltipInfo.condition ||
+                      (updatePipeEvent$ | async | callTemplateExpression: cell.tooltipInfo.condition : entity)
+                    ) {
+                      <bo-info-tooltip
+                        [displayMessage]="
+                          cell.tooltipInfo.message.constructor.name === 'Function'
+                            ? (updatePipeEvent$ | async | callTemplateExpression: cell.tooltipInfo?.message : entity)
+                            : cell.tooltipInfo.message
+                        "
+                        [tooltipConfig]="cell.tooltipInfo.config"
+                      ></bo-info-tooltip>
+                    }
+                  }
+                </div>
+              }
+            </ng-template>
+          </div>
+        </ng-container>
+      }
+      @case (gridCellType.counter) {
+        <ng-container [appMobViewType]="cell" [row]="entity" [index]="index" [subIndex]="subIndex">
+          <div class="td" [ngStyle]="cell.style">
+            <ng-container [ngTemplateOutlet]="content" [ngTemplateOutletContext]="{ ind: index, subInd: subIndex }"></ng-container>
+
+            <ng-template #content let-subInd="subInd" let-updateEvent="updateEvent">
+              <div [ngClass]="(updatePipeEvent$ | async) || (updateEvent | async) | setClassFromTemplatePipe: { row, cell, subItem }">
+                <bo-counter
+                  [counter]="entity[cell.key!]"
+                  [minValue]="minValueGetter(cell)"
+                  [maxValue]="maxValueGetter(cell)"
+                  [disabled]="
+                    (cell.disableCondition && (updatePipeEvent$ | async | callTemplateExpression: cell.disableCondition : row)) ||
+                    (updateEvent | async | callTemplateExpression: cell?.disableCondition : row)
+                  "
+                  (counterChangeValue)="cell?.changeCB($event, index, subInd, row)"
+                ></bo-counter>
+
+                @if (cell.tooltipInfo) {
+                  @if (
+                    !cell.tooltipInfo.condition || (updatePipeEvent$ | async | callTemplateExpression: cell.tooltipInfo.condition : entity)
+                  ) {
+                    <bo-info-tooltip
+                      [displayMessage]="
+                        cell.tooltipInfo.message.constructor.name === 'Function'
+                          ? (updatePipeEvent$ | async | callTemplateExpression: cell.tooltipInfo?.message : entity)
+                          : cell.tooltipInfo.message
+                      "
+                      [tooltipConfig]="cell.tooltipInfo.config"
+                    ></bo-info-tooltip>
+                  }
+                }
+              </div>
+            </ng-template>
+          </div>
+        </ng-container>
+      }
+      @case (gridCellType.customView) {
+        <ng-container [appMobViewType]="cell" [row]="entity" [index]="index" [subIndex]="subIndex">
+          <div
+            class="td"
+            [id]="'row_' + cell.key"
+            [ngStyle]="cell.style"
+            [ngClass]="updatePipeEvent$ | async | setClassFromTemplatePipe: { row, cell, subItem }"
+          >
+            <ng-container [ngTemplateOutlet]="cell.content" [ngTemplateOutletContext]="{ $implicit: entity }"></ng-container>
+          </div>
+        </ng-container>
+      }
+      @case (gridCellType.dropDown) {
+        <ng-container [appMobViewType]="cell" [row]="entity" [index]="index" [subIndex]="subIndex">
+          <div class="td" [ngStyle]="cell.style">
+            <ng-container [ngTemplateOutlet]="content" [ngTemplateOutletContext]="{ ind: index, subInd: subIndex }"></ng-container>
+
+            <ng-template #content let-updateEvent="updateEvent">
+              @if (!cell.condition || cell.condition(row)) {
+                <div
+                  [id]="'row_' + cell.key"
+                  class="field-wrapper"
+                  [class.icon-field-wrapper]="cell.iconName"
+                  [ngClass]="(updatePipeEvent$ | async) || (updateEvent | async) | setClassFromTemplatePipe: { row, cell, subItem }"
+                >
+                  <bo-search-dropdown
+                    [ngClass]="[!!cell.inputFocusClass ? cell.inputFocusClass?.join() : '', cell.classList ? cell.classList.join() : '']"
+                    [id]="'input_' + index + '_' + subIndex"
+                    [disabled]="
+                      (cell.disableCondition && (updatePipeEvent$ | async | callTemplateExpression: cell.disableCondition : row)) ||
+                      (updateEvent | async | callTemplateExpression: cell?.disableCondition : row)
+                    "
+                    [hasSearch]="cell.hasSearch!"
+                    [hasClear]="false"
+                    [placeholder]="cell.placeholder || ''"
+                    [displayProperty]="cell.displayProperty || 'value'"
+                    [valueProperty]="cell.valueProperty || 'id'"
+                    [options]="cell.options!"
+                    [(ngModel)]="entity[cell.key!]"
+                    (ngModelChange)="onChanged(cell)"
+                  ></bo-search-dropdown>
+                  @if (cell.iconName) {
+                    <div
+                      id="8f2e6bc672"
+                      class="icon-wrapper"
+                      (click)="onIconClicked(cell)"
+                      [class.barcode-icon-wrapper]="cell.iconName === 'wrapperRfidInput'"
+                    >
+                      <!--          TODO add icon  <bo-svg-icon [name]="cell.iconName" class="icon"></bo-svg-icon>-->
+                    </div>
+                  }
+
+                  @if (cell.tooltipInfo) {
+                    @if (
+                      !cell.tooltipInfo.condition ||
+                      (updatePipeEvent$ | async | callTemplateExpression: cell.tooltipInfo.condition : entity)
+                    ) {
+                      <bo-info-tooltip
+                        [displayMessage]="
+                          cell.tooltipInfo.message.constructor.name === 'Function'
+                            ? (updatePipeEvent$ | async | callTemplateExpression: cell.tooltipInfo?.message : entity)
+                            : cell.tooltipInfo.message
+                        "
+                        [tooltipConfig]="cell.tooltipInfo.config"
+                      ></bo-info-tooltip>
+                    }
+                  }
+                </div>
+              }
+            </ng-template>
+          </div>
+        </ng-container>
+      }
+    }
+  }
+</div>

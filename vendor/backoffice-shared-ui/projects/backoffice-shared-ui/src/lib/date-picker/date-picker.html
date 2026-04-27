@@ -1,0 +1,46 @@
+<section class="datepicker-section">
+  <mat-form-field
+    class="datepicker"
+    appearance="outline"
+    [attr.data-placeholder]="placeholder()"
+    [class.toggle-less]="!hasPicker()"
+    subscriptSizing="dynamic"
+  >
+    <input
+      id="12ac1b7e54"
+      matInput
+      class="date-input mat-input-element"
+      #dateInput
+      [inputMask]="dateInputMask()"
+      [(ngModel)]="selectValue"
+      (change)="manualDateChanged($event)"
+      (keydown)="onInputKeydown($event)"
+      (input)="onInputInteraction()"
+      [disabled]="disabled()"
+      autocomplete="off"
+      [ngClass]="classList()"
+      (focusout)="onBlur($event)"
+      (focus)="checkInputValue()"
+      [errorStateMatcher]="localErrorStateMatcher()"
+    />
+    <input
+      type="hidden"
+      class="date-input"
+      [id]="id()"
+      [matDatepicker]="picker"
+      autocomplete="off"
+      [disabled]="disabled()"
+      (dateChange)="dateChanged($event.value)"
+      [(ngModel)]="selectValue"
+      [max]="maxDate()"
+      [min]="minDate()"
+      [ngModelOptions]="{ standalone: standaloneOptions() }"
+    />
+  </mat-form-field>
+  @if (hasPicker()) {
+  <mat-datepicker-toggle [for]="picker" class="datepicker-toggle" matRipple [matRippleDisabled]="true">
+    <bo-svg-icon matDatepickerToggleIcon name="calendar" class="icon-calendar"></bo-svg-icon>
+  </mat-datepicker-toggle>
+  }
+  <mat-datepicker #picker></mat-datepicker>
+</section>

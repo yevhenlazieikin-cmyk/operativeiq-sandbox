@@ -1,0 +1,23 @@
+<section class="action-sub-panel">
+  <div class="panel-header">
+    @if (title().length) {
+    <h2 class="panel-title">{{ title() }}</h2>
+    } @if (buttons().length) {
+    <div class="action-buttons">
+      @for (button of buttons(); track $index; let i = $index){
+      <button
+        [id]="'action_sub_btn_' + button.name.toLowerCase().replaceAll(' ', '_')"
+        [disabled]="button.disabled"
+        [ngClass]="{
+             'administration-action': state() === menuType.administration,
+             'operation-action': state() === menuType.operation}"
+        (click)="executeAction(button)"
+        type="button"
+      >
+        {{ button.name }}
+      </button>
+      }
+    </div>
+    }
+  </div>
+</section>

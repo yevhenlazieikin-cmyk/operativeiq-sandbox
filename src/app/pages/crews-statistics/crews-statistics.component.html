@@ -1,0 +1,69 @@
+<bo-header
+  toolbarUrl="/mock/api"
+  appUrl="task-list"
+  [initialMenuType]="menuType.administration"
+  [siteInfo]="siteInfo()"
+/>
+
+<section class="crews-statistics">
+  <h1>Local test</h1>
+  <bo-action-buttons-panel
+    [title]="'Crews Statistics'"
+    [buttons]="actionButtons"
+    [state]="menuType.administration"
+  />
+
+  <div class="crews-statistics__tabs">
+    <bo-tabber
+      [tabs]="tabs()"
+      [typeMenu]="menuType.administration"
+      [(selectedIndex)]="selectedTabIndex"
+    />
+  </div>
+
+  <ng-template #summaryTab>
+    <div class="crews-statistics__tab-panel">
+      <bo-details-panel
+        [form]="summaryForm"
+        [fields]="summaryFields"
+        title="Crew Overview"
+        [userMenu]="menuType.administration"
+      />
+    </div>
+  </ng-template>
+
+  <ng-template #performanceTab>
+    <div class="crews-statistics__tab-panel">
+      <bo-details-panel
+        [form]="performanceForm"
+        [fields]="performanceFields"
+        title="Performance Metrics"
+        [userMenu]="menuType.administration"
+      />
+    </div>
+  </ng-template>
+
+  <div class="crews-statistics__grid">
+    <bo-grid
+      [gridType]="'CLIENT'"
+      [outerService]="true"
+      [filtersIncluded]="true"
+      [filterData]="filterData"
+      [sortedDataStore]="rawMemberData()"
+      (sortedDataChange)="onDataChange($event)"
+      [userMenu]="menuType.administration"
+      [scrollWindow]="false"
+    >
+      @for (member of displayedMembers(); track member.id; let i = $index) {
+        <bo-grid-cell
+          [row]="member"
+          [index]="i"
+          [cellSchema]="cellSchema"
+          [filterData]="filterData"
+        />
+      }
+    </bo-grid>
+  </div>
+
+  <bo-footer />
+</section>

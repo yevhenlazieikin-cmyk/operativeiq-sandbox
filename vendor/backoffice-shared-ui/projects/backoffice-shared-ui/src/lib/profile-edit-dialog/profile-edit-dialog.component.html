@@ -1,0 +1,130 @@
+<div class="profile-edit-dialog-container">
+  <div class="dialog-header">
+    <bo-svg-icon name="iconClose" class="icon-close" (click)="onCancel()" aria-label="Close dialog" />
+    <h2 class="dialog-title">Profile Edit</h2>
+    <section
+      class="header-action"
+      [ngClass]="{ administration: userMenu() === menuType.administration, operation: userMenu() === menuType.operation }"
+    >
+      <button id="627ca29ef6" class="action-button" (click)="onSubmit()" type="button">Submit</button>
+      <button id="b1d57b3594" class="action-button" (click)="onCancel()" type="button">Cancel</button>
+    </section>
+  </div>
+  <mat-dialog-content class="dialog-content" [formGroup]="profileForm()">
+    <div>
+      <bo-dialog-messages
+        [message]="validationMessage ? validationMessage : ''"
+        [class]="validationMessageClass"
+        [maxLength]="maxMessageLength"
+      />
+    </div>
+    <div class="profile-edit-content">
+      <!-- Left Column: Form Sections -->
+      <div class="form-sections">
+        <div class="profile-info-section">
+          <!-- Profile Info Section -->
+          <bo-details-panel
+            id="4cc4b6fd18"
+            class="profile-details"
+            [form]="profileForm()"
+            [fields]="fieldConfigs()!.profileInfoFields"
+            [title]="'Profile Info'"
+            [userMenu]="userMenu()"
+            [insideDialog]="true"
+          />
+          <!-- Right Column: Avatar -->
+          <div class="avatar-section">
+            <bo-avatar-selector
+              [formControl]="profileForm().get('avatar')"
+              [avatarUrlCrewPhotoFolder]="data.profileData?.avatarUrlCrewPhotoFolder"
+              [userMenu]="userMenu()"
+              [accept]="'image/*'"
+              [disabled]="!canEditEmailImage"
+            />
+          </div>
+        </div>
+        <!-- Preferences Section -->
+        @if (hasDefaultApplicationOptions) {
+          <bo-details-panel
+            id="18930ed273"
+            class="preferences-details"
+            [form]="profileForm()"
+            [fields]="fieldConfigs()!.preferencesFields"
+            [title]="'Preferences'"
+            [userMenu]="userMenu()"
+            [insideDialog]="true"
+          />
+        }
+
+        <!-- Biometric Fingerprint Template Section -->
+        <bo-details-panel
+          id="6ff492c806"
+          class="biometric-details"
+          [form]="profileForm()"
+          [fields]="fieldConfigs()!.biometricFields"
+          [title]="'Biometric Fingerprint Template'"
+          [userMenu]="userMenu()"
+          [insideDialog]="true"
+        />
+
+        <!-- Password Authenticator Section - Only shown when DisplayOTP is true -->
+        @if (displayOTP) {
+          <bo-details-panel
+            id="793b394663"
+            class="password-authenticator-details"
+            [form]="profileForm()"
+            [fields]="fieldConfigs()!.passwordAuthenticatorFields"
+            [title]="'Password Authenticator'"
+            [userMenu]="userMenu()"
+            [insideDialog]="true"
+          />
+        }
+
+        <!-- Digital Signature Section -->
+        <bo-details-panel
+          id="e0ace828c2"
+          class="signature-details"
+          [form]="profileForm()"
+          [fields]="fieldConfigs()!.digitalSignatureFields"
+          [title]="'Digital Signature'"
+          [userMenu]="userMenu()"
+          [insideDialog]="true"
+        />
+
+        <!-- Role Security Section -->
+        <bo-details-panel
+          id="eb9bb2eba8"
+          class="role-details"
+          [form]="profileForm()"
+          [fields]="fieldConfigs()!.roleSecurityFields"
+          [title]="'Role Security'"
+          [userMenu]="userMenu()"
+          [insideDialog]="true"
+        />
+      </div>
+    </div>
+  </mat-dialog-content>
+</div>
+
+<!-- Password Authenticator field template -->
+<ng-template #passwordAuthenticatorTemplate let-form let-field="field">
+  <div class="password-authenticator-control">
+    @if (!canEditVerificationSetup) {
+      <span class="password-authenticator-status">{{ passwordAuthenticatorStatus }}</span>
+    }
+    @if (canEditVerificationSetup) {
+      @if (hasPasswordAuthenticator) {
+        <a id="bd3096ba8f" href="javascript:void(0)" class="password-authenticator-link" (click)="onUpdatePasswordAuthenticator()">
+          Update
+        </a>
+        <a id="3589c823b2" href="javascript:void(0)" class="password-authenticator-link" (click)="onDeletePasswordAuthenticator()">
+          Delete
+        </a>
+      } @else {
+        <a id="f63a6dbb8d" href="javascript:void(0)" class="password-authenticator-link" (click)="onUpdatePasswordAuthenticator()">
+          Enroll
+        </a>
+      }
+    }
+  </div>
+</ng-template>

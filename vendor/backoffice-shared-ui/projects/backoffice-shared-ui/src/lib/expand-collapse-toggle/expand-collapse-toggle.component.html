@@ -1,0 +1,25 @@
+<ng-template #expandCollapseTemplate let-enabled let-isDisabled="isDisabled">
+  <div class="expand-collapse-template">
+    <div
+      class="expand-collapse-template__option"
+      [class.expand-collapse-template__option--active]="enabled"
+      [class.expand-collapse-template__option--disabled]="isDisabled"
+    >
+      EXPAND ALL
+    </div>
+    <div
+      class="expand-collapse-template__option"
+      [class.expand-collapse-template__option--active]="!enabled"
+      [class.expand-collapse-template__option--disabled]="isDisabled"
+    >
+      COLLAPSE ALL
+    </div>
+  </div>
+</ng-template>
+
+<bo-slide-toggle
+  id="expand_collapse_toggle"
+  class="expand-collapse-toggle"
+  [(ngModel)]="isExpanded"
+  [customTemplate]="expandCollapseTemplate"
+/>

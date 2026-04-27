@@ -1,0 +1,22 @@
+<div [id]="'filter_' + input()?.name" class="field-wrapper icon-field-wrapper icon-trans-bg" [ngClass]="customClass()">
+  @if (!mask()) {
+    <input
+      #filterInput
+      class="filter-input"
+      type="text"
+      [placeholder]="input()?.placeholder || ' '"
+      [(ngModel)]="value"
+      id="{{ info.name }}"
+    />
+  } @else {
+    <input
+      #filterInput
+      class="filter-input"
+      type="text"
+      [placeholder]="input()?.placeholder || ' '"
+      [(ngModel)]="value"
+      id="{{ info.name }}"
+      [inputMask]="mask()"
+    />
+  }
+</div>

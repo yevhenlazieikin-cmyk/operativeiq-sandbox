@@ -1,0 +1,31 @@
+@use 'variables' as *;
+
+.notification {
+  flex-direction: row;
+  align-items: center;
+  overflow: hidden;
+  height: 25px;
+  padding: 0 6px;
+  border-radius: 4px;
+  font-weight: $font-bold;
+  font-size: $font-base2;
+  font-family: $font-source-sans-pro;
+  line-height: 25px;
+
+  .error {
+    color: $error-red;
+  }
+
+  .success {
+    color: $forest-green-light;
+  }
+}
+
+.show-all {
+  color: $primary-blue;
+  cursor: pointer;
+
+  &:hover {
+    color: $deep-teal;
+  }
+}

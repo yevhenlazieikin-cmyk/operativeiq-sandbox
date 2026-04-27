@@ -1,0 +1,23 @@
+export enum EmsExpireDateIdEnum {
+  CurrentWeek = 'current-week',
+  NextWeek = 'next-week',
+  LastMonth = 'last-month',
+  CurrentMonth = 'current-month',
+  NextMonth = 'next-month',
+  LastQuarter = 'last-quarter',
+  CurrentQuarter = 'current-quarter',
+  LastYear = 'last-year',
+  CurrentYear = 'current-year',
+  NextYear = 'next-year',
+  Last12Month = 'last-12-months',
+  Expired = 'expired',
+  ExpiredBeforeToday = 'expired-before-today',
+  ExpiredSoon = 'expired-soon',
+  ExpiredAndExpiredSoon = 'expired-expires-soon',
+  ExpiredSoonFromToday = 'expired-soon-from-today',
+  ExpireNext30Days = 'expire Next 30 days',
+  ExpireNext90Days = 'expire Next 90 days',
+  ExpireNext12Month = 'expire Next 12 months',
+  ExpireOver12Month = 'expire Over 12 months',
+  All = 'all'
+}

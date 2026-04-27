@@ -1,0 +1,11 @@
+@if (isLoading$ | async) {
+  <div class="loader-overlay">
+    <div class="loader-container">
+      <div class="loader-bars">
+        @for (bar of bars; track $index) {
+          <div class="bar bar-{{ $index }}"></div>
+        }
+      </div>
+    </div>
+  </div>
+}

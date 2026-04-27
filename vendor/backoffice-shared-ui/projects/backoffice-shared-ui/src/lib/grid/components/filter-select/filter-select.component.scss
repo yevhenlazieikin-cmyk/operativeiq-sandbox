@@ -1,0 +1,203 @@
+@use 'variables' as *;
+
+.field-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 24px;
+  margin: 3px 5px;
+  border: 1px solid $cloud-gray;
+  border-radius: 4px;
+  color: $charcoal;
+  outline-offset: -2px;
+
+  input {
+    width: 100%;
+    margin-left: 10px;
+    all: unset;
+  }
+
+  &:hover {
+    outline: color-mix(in oklab, $translucent-gray 50%, transparent) solid 3px;
+  }
+
+  &:focus-within {
+    outline: color-mix(in oklab, $translucent-gray 50%, transparent) solid 3px;
+  }
+}
+
+.input-filter-container {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: $white;
+}
+
+.input-filter {
+  width: calc(100% - 10px);
+  height: 24px;
+  margin: 5px 5px 10px;
+  border: 1px solid $cloud-gray;
+  border-radius: 4px;
+  font-weight: $font-regular;
+  font-size: $font-base1;
+  font-family: $font-source-sans-pro;
+
+  &:focus-within {
+    outline: 2px solid $cloud-gray;
+  }
+}
+
+.select-filter__disabled {
+  .icon-wrapper {
+    background-color: $light-gray !important;
+  }
+
+  ::ng-deep {
+    .mat-mdc-select {
+      background-color: $light-gray;
+      color: $slate-gray;
+    }
+  }
+}
+
+.clear-filter {
+  position: absolute;
+  top: 50%;
+  right: 2px;
+  z-index: 3;
+  width: 18px;
+  height: 18px;
+  background-color: $white;
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.filter-select {
+  width: 100%;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: $font-base;
+
+  ::ng-deep {
+    .mat-mdc-select-arrow-wrapper {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      transform: translateY(-50%);
+
+      .mat-mdc-select-arrow {
+        width: 8px;
+        height: 8px;
+        margin-top: -4px;
+        border: none;
+        border-right: 2px solid $black;
+        border-bottom: 2px solid $black;
+        transform: rotate(45deg);
+
+        svg {
+          display: none;
+        }
+      }
+    }
+
+    .mat-mdc-select-value {
+      width: calc(100% - 32px);
+      padding: 0 0 2px 4px;
+    }
+
+    .mat-mdc-select-placeholder {
+      padding-right: 0;
+    }
+
+    .mat-mdc-select-panel {
+      white-space: nowrap;
+    }
+  }
+}
+
+::ng-deep .options-select-panel {
+  &.mat-mdc-select-panel {
+    padding: 0 !important;
+    border-radius: 4px;
+    outline: 1px solid $light-gray;
+  }
+
+  .mat-mdc-option {
+    min-height: 26px !important;
+    padding: 3px 8px !important;
+    background: $white !important;
+    font-size: $font-base1;
+    white-space: nowrap;
+
+    .mat-pseudo-checkbox-full {
+      flex: 0 0 14px;
+      width: 14px;
+      height: 14px;
+      margin-right: 8px;
+      border: 1px solid $light-gray;
+      border-radius: 3px;
+      background-color: $white;
+      outline: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      appearance: none;
+    }
+
+    .mat-pseudo-checkbox-checked {
+      position: relative;
+      border-color: $tic-color;
+      background-color: $tic-color;
+
+      &:after {
+        content: '';
+        position: absolute;
+        top: -3px;
+        left: 1px;
+        width: 4px;
+        height: 7px;
+        border: solid $white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+    }
+
+    .mat-pseudo-checkbox-minimal {
+      display: none !important;
+    }
+
+    &.mdc-list-item--selected,
+    &.mat-mdc-option-selected {
+      --mat-option-selected-state-label-text-color: $white;
+
+      background-color: $link-blue !important;
+      color: $white !important;
+    }
+
+    &:hover,
+    &:focus,
+    &.mdc-list-item--with-leading-icon:hover,
+    &.mdc-list-item--with-leading-icon:focus,
+    &.mdc-list-item--selected:hover,
+    &.mdc-list-item--selected:focus,
+    &.mat-mdc-option-selected:hover,
+    &.mat-mdc-option-selected:focus {
+      background-color: $link-blue !important;
+      color: $white !important;
+    }
+
+    &.mat-mdc-option-active,
+    &.mdc-list-item--selected.mat-mdc-option-active,
+    &.mat-mdc-option-selected.mat-mdc-option-active {
+      background-color: $link-blue !important;
+      color: $white !important;
+    }
+  }
+}

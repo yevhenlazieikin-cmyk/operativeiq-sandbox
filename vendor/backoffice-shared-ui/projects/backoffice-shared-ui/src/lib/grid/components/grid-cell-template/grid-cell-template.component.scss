@@ -1,0 +1,135 @@
+@use 'variables' as *;
+
+:host(bo-grid-cell-template) {
+  width: 100%;
+}
+
+.flex {
+  display: flex;
+  width: 100%;
+
+  &:hover {
+    background-color: #adddff;
+  }
+}
+
+.cell-template {
+  .color-alert {
+    ::ng-deep {
+      .date-input {
+        color: $cool-gray !important;
+      }
+    }
+
+    input {
+      color: $cool-gray !important;
+    }
+  }
+
+  .color-warning {
+    ::ng-deep {
+      .date-input {
+        color: $snow-white !important;
+      }
+    }
+
+    input {
+      color: $snow-white !important;
+    }
+  }
+}
+
+.td {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  overflow: hidden;
+  padding: 3px 5px 3px 10px;
+
+  &.center {
+    align-items: center;
+    text-align: center;
+  }
+
+  &.flex-1 > * {
+    max-width: 100%;
+  }
+
+  .cell-value {
+    width: 100%;
+    min-width: 0;
+
+    &.t-center {
+      text-align: center;
+    }
+
+    &.t-right {
+      padding-right: 16px;
+      text-align: right;
+    }
+  }
+
+  .field-wrapper {
+    width: 100%;
+    padding: 1px 3px;
+
+    input {
+      /* stylelint-disable-next-line order/properties-order */
+      all: unset;
+      width: 100%;
+      border-radius: 4px;
+      outline: 1px solid $medium-gray;
+
+      &:focus,
+      &:hover {
+        outline: 2px solid $medium-gray;
+      }
+    }
+  }
+}
+
+.reset-background {
+  background-color: $white;
+}
+
+.date-field {
+  width: 100%;
+
+  ::ng-deep .datepicker-section .mat-mdc-form-field {
+    --mat-sys-corner-extra-small: 4px !important;
+    --mat-form-field-outlined-outline-color: #cccccc;
+
+    border-radius: 4px;
+    background-color: $white;
+  }
+}
+
+.selected-row {
+  background-color: $selected-row;
+}
+
+.cell-wrapper {
+  position: relative;
+}
+
+.flex-alc-str {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  height: 100%;
+}
+
+.mar-outer {
+  position: absolute;
+  left: 50%;
+  height: 24px;
+  transition: 90ms;
+  transform: translateX(-50%);
+}
+
+::ng-deep .mdc-checkbox__background {
+  display: none !important;
+}

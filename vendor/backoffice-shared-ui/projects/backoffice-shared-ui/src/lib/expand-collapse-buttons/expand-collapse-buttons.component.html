@@ -1,0 +1,9 @@
+<span id="0ed0a8f7f7" class="expand-collapse-wrapper__button-container" (click)="onToggle($event)">
+  @if (expanded()) {
+    <bo-svg-icon name="arrowDown" class="expand-collapse-wrapper__upper-button" />
+    <bo-svg-icon name="arrowUp" class="expand-collapse-wrapper__lower-button" />
+  } @else {
+    <bo-svg-icon name="arrowUp" class="expand-collapse-wrapper__upper-button" />
+    <bo-svg-icon name="arrowDown" class="expand-collapse-wrapper__lower-button" />
+  }
+</span>

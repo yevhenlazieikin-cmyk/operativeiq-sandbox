@@ -1,0 +1,43 @@
+<section class="pagination-container">
+  <div class="controls-wrapper">
+    <div class="element-count">
+      Total:
+      <span>{{ totalElements() }}</span>
+    </div>
+
+    <div class="control-buttons-wrapper">
+      <div class="dropdown-wrapper">
+        <mat-select [panelClass]="'pagination-dropdown'" [value]="currentPageIndex()" (selectionChange)="onPageChange($event)">
+          @for (page of pages(); track page) {
+            <mat-option [value]="page">
+              <span class="selected-option">
+                <img ngSrc="assets/backoffice-shared-ui/images/paging_page.gif" alt="page" height="18" width="18" />
+                <span>Page {{ page }}</span>
+              </span>
+            </mat-option>
+          }
+        </mat-select>
+      </div>
+
+      <div class="dropdown-wrapper">
+        <mat-select [panelClass]="'pagination-dropdown'" [value]="rowsPerPage()" (selectionChange)="onRowsChange($event)">
+          @for (row of rowsOptions; track row) {
+            <mat-option [value]="row">
+              <span class="selected-option">
+                <img ngSrc="assets/backoffice-shared-ui/images/paging_page.gif" alt="page" height="18" width="18" />
+                <span>{{ row }} Rows</span>
+              </span>
+            </mat-option>
+          }
+        </mat-select>
+      </div>
+
+      <section class="pagination-buttons">
+        <button id="993a90f433" (click)="goToFirstPage()" [disabled]="isFirstPage()" class="nav-button">&lt;&lt;</button>
+        <button id="2055bdfd75" (click)="goToPreviousPage()" [disabled]="isFirstPage()" class="nav-button">&lt;</button>
+        <button id="1b5b41e113" (click)="goToNextPage()" [disabled]="isLastPage()" class="nav-button">&gt;</button>
+        <button id="1dcaa66b82" (click)="goToLastPage()" [disabled]="isLastPage()" class="nav-button">&gt;&gt;</button>
+      </section>
+    </div>
+  </div>
+</section>

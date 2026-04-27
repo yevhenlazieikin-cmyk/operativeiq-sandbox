@@ -1,0 +1,17 @@
+{
+  "mode": {
+    "css": {
+      "render": {
+        "css": {
+          "dest": "sprite.css"
+        }
+      }
+    }
+  },
+  "shape": {
+    "spacing": {
+      "padding": 2,
+      "box": "content"
+    }
+  }
+}

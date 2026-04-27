@@ -1,0 +1,53 @@
+@use 'variables' as *;
+
+:host {
+  display: block;
+  width: 100%;
+  min-width: 1275px;
+}
+
+.layout-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 0 40px;
+
+  @media screen and (width <= 1400px) {
+    padding: 0 20px;
+  }
+}
+
+.main-logo {
+  position: absolute;
+  top: 0;
+  right: 2px;
+  z-index: 0;
+  width: 490px;
+  height: 490px;
+}
+
+.main-content {
+  z-index: 1;
+  flex: 1 0 auto;
+  font-family: $font-source-sans-pro !important;
+
+  &__surface {
+    display: flow-root;
+    background-color: $white;
+
+    &:empty {
+      min-height: 200px;
+      background-color: transparent;
+    }
+  }
+}
+
+.notifications {
+  z-index: 1;
+  width: 100%;
+  height: 25px;
+  min-height: 16px;
+  margin-top: 43px;
+  font-family: $font-source-sans-pro;
+}

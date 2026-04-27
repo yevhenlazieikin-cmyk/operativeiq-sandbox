@@ -1,0 +1,37 @@
+@use 'variables' as *;
+
+.expand-collapse-template {
+  display: flex;
+  height: 100%;
+}
+
+.expand-collapse-template__option {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding-top: 1px;
+  color: $charcoal;
+  font-size: 10px;
+  user-select: none;
+}
+
+.expand-collapse-template__option--active {
+  background-color: $forest-green;
+  color: $white;
+}
+
+.expand-collapse-template__option--disabled {
+  color: $white;
+}
+
+.expand-collapse-toggle {
+  display: inline-block;
+
+  ::ng-deep {
+    .toggle-track {
+      width: 190px;
+      height: 13px;
+    }
+  }
+}

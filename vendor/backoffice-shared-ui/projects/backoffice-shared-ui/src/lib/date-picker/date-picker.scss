@@ -1,0 +1,57 @@
+@use 'variables' as *;
+
+:host ::ng-deep .datepicker-section {
+  display: flex;
+  align-items: center;
+
+  .mat-mdc-form-field {
+    --mat-form-field-outlined-hover-outline-color: #cccccc;
+    --mat-form-field-outlined-focus-outline-color: #cccccc;
+    --mat-form-field-container-vertical-padding: 0px;
+    --mat-sys-corner-extra-small: 8px;
+    --mat-icon-button-state-layer-size: 0;
+
+    width: 100%;
+    height: 26px;
+    letter-spacing: normal;
+
+    &.full-width {
+      width: 100%;
+    }
+
+    .mdc-text-field {
+      height: 26px;
+    }
+
+    .mat-mdc-form-field-wrapper {
+      padding-bottom: 0;
+    }
+
+    .mat-mdc-form-field-subscript-wrapper {
+      min-height: 0;
+      margin-top: 0;
+    }
+  }
+
+  .datepicker-toggle {
+    --mat-icon-button-container-shape: 26px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 26px;
+    padding: 0 0 1px 2px;
+
+    .mat-mdc-icon-button .mat-mdc-button-persistent-ripple {
+      display: none;
+    }
+  }
+}
+
+::ng-deep .mat-datepicker-content .mat-datepicker-content-container .mat-calendar {
+  width: 200px;
+  height: 240px;
+  border-radius: 5px;
+  outline: 1px solid $cool-gray;
+}

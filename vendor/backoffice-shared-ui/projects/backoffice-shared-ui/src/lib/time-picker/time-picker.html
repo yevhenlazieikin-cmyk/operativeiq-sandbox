@@ -1,0 +1,90 @@
+<div class="time-picker" #host>
+  <div class="input-wrap_45879">
+    <input
+      id="f6d5a2f4e6"
+      #textInput
+      class="time-input_15896"
+      [attr.placeholder]="format === '12' ? 'hh:mm AM' : 'hh:mm'"
+      [value]="displayValue"
+      (input)="onInput($event)"
+      (keydown)="onKeydown($event)"
+      (blur)="onBlur()"
+      (click)="handleCursor($event)"
+      autocomplete="off"
+      inputmode="numeric"
+      [disabled]="isDisabled"
+    />
+
+    <button
+      id="0c89247ce1"
+      class="icon-btn_90235"
+      type="button"
+      (click)="togglePopover($event)"
+      aria-label="Open time picker"
+      [disabled]="isDisabled"
+    >
+      <bo-svg-icon name="iconTime" />
+    </button>
+  </div>
+
+  @if (isOpen()) {
+  <div id="f4e7945d2b" class="tp-backdrop_65238" (click)="close(true)"></div>
+  } @if (isOpen()) {
+  <div id="996c9890a9" class="popover_78452" #popover (click)="$event.stopPropagation()">
+    <div class="controls_65123">
+      <div class="time-edit_05963">
+        <div class="unit_12365">
+          <button id="ad8b300aea" type="button" class="arrow_68964" (click)="incHour(true)" aria-label="Increase hour">▲</button>
+          <input
+            id="f7afa4d521"
+            type="text"
+            maxlength="2"
+            inputmode="numeric"
+            [value]="displayHour"
+            (input)="onHourInput($event)"
+            (blur)="updateDisplayHours()"
+            (keydown)="$event.stopPropagation()"
+          />
+          <button id="faaac95d22" type="button" class="arrow_68964" (click)="decHour(true)" aria-label="Decrease hour">▼</button>
+        </div>
+
+        <div class="sep_81697">:</div>
+
+        <div class="unit_12365">
+          <button id="c725535254" type="button" class="arrow_68964" (click)="incMinute(true)" aria-label="Increase minute">▲</button>
+          <input
+            id="409ed7cb4c"
+            type="text"
+            maxlength="2"
+            inputmode="numeric"
+            [value]="displayMinute"
+            (input)="onMinuteInput($event)"
+            (blur)="updateDisplayMinutes()"
+            (keydown)="$event.stopPropagation()"
+          />
+          <button id="3db6cc5b47" type="button" class="arrow_68964" (click)="decMinute(true)" aria-label="Decrease minute">▼</button>
+        </div>
+
+        @if (format === '12') {
+        <div class="ampm_71124">
+          <button id="7a998ce358" type="button" class="ampm-btn_93478" (click)="toggleAmPm(true)">{{ isAm ? 'AM' : 'PM' }}</button>
+        </div>
+        }
+      </div>
+
+      <div class="footer_79523">
+        @if (allowFormatToggle()) {
+        <label class="format-toggle-11696">
+          <input id="1e579186ea" type="checkbox" [checked]="format === '12'" (change)="onFormatToggle($event)" />
+          12H
+        </label>
+        }
+        <div class="actions_89527">
+          <button id="88f74f78d6" type="button" (click)="applyAndClose()">OK</button>
+          <button id="a23b0f996e" type="button" (click)="close(false)">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+</div>

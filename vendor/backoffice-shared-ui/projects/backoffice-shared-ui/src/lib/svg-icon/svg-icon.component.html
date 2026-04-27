@@ -1,0 +1,8 @@
+@if (svgName) {
+  <div
+    class="svg-{{ svgName }} svg-{{ svgName }}-dims"
+    appHoverClass
+    [hoverClass]="hoverClass() ? 'svg-' + hoverClass() : ''"
+    [svgName]="svgName"
+  ></div>
+}

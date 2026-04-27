@@ -1,0 +1,58 @@
+@use 'variables' as *;
+
+.toggle-wrapper {
+  display: flex;
+  align-items: center;
+  font-family: $font-source-sans-pro;
+}
+
+.toggle-track {
+  position: relative;
+  overflow: hidden;
+  width: 95px;
+  height: 15px;
+  border: solid 1px $cloud-gray;
+  border-radius: 2px;
+  background-color: $panel-gray;
+  line-height: 18px;
+  cursor: pointer;
+  transition: all ease;
+
+  &.disabled-state {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.toggle-label-inside {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 1px;
+  border-radius: 2px;
+  color: $white;
+  font-weight: $font-regular;
+  font-size: 10px;
+  white-space: nowrap;
+  transition: all ease;
+
+  &.enabled {
+    right: 50%;
+    left: 0;
+    background-color: $forest-green;
+  }
+
+  &:not(.enabled) {
+    right: 0;
+    left: 50%;
+    background-color: $alert-red;
+  }
+}
+
+.toggle-track.disabled-state .toggle-label-inside {
+  background-color: $muted-gray !important;
+  color: $white !important;
+}

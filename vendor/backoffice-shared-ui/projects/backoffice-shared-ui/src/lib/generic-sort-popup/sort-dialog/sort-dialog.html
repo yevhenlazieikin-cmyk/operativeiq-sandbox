@@ -1,0 +1,23 @@
+<section class="sort-dialog">
+  <section>
+    <p>
+      Move
+      <span>{{data.element.name}}</span>
+      to number
+    </p>
+    <bo-svg-icon name="iconClose" class="icon-close" mat-dialog-close></bo-svg-icon>
+  </section>
+  <section class="dialog-action">
+    <input
+      id="82be826a4e"
+      name="sort-dialog"
+      type="number"
+      step="1"
+      min="1"
+      [max]="data.elementsLength"
+      value="{{ data.currentElementIndex + 1}}"
+      #newIndex
+    />
+    <button id="019ef51c8c" (click)="save(newIndex.value)">OK</button>
+  </section>
+</section>

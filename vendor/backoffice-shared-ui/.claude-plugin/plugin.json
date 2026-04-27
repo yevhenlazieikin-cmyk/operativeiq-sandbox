@@ -1,0 +1,5 @@
+{
+  "name": "bo-skills",
+  "version": "1.0.0",
+  "description": "Shared Angular skills for all projects using @backoffice/shared-ui"
+}

@@ -1,0 +1,57 @@
+<div class="image-cropper-dialog-container">
+  <div class="dialog-header">
+    <bo-svg-icon name="iconClose" class="icon-close" (click)="onCancel()" aria-label="Close dialog" />
+    <h2 class="dialog-title">Select Photo</h2>
+    <section
+      class="header-action"
+      [ngClass]="{ administration: userMenu() === menuType.administration, operation: userMenu() === menuType.operation }"
+    >
+      <button id="f1a7b80a93" class="action-button" (click)="onCancel()" type="button">Back</button>
+      <button id="1cbfb8090e" class="action-button" (click)="crop()" type="button">Save</button>
+    </section>
+  </div>
+  <mat-dialog-content class="cropper-dialog-content">
+    <div class="notification-wrapper">
+      <bo-dialog-messages
+        [message]="validationMessage ? validationMessage : ''"
+        [class]="validationMessageClass"
+        [maxLength]="maxMessageLength"
+      />
+    </div>
+    <input id="8ff4e0b57a" #fileInput type="file" (change)="onFileSelected($event)" accept="image/*" hidden />
+    <bo-action-button-sub-panel
+      id="27fc5cee81"
+      class="action-sub-panel"
+      title="Upload File"
+      [buttons]="actionButtons"
+      [state]="userMenu()"
+    />
+
+    @if (imageSrc()) {
+    <div class="cropper-wrapper">
+      <cropper-canvas background>
+        <cropper-image #imageEl [src]="imageSrc()" alt="Picture" rotatable scalable translatable skewable zoomable></cropper-image>
+
+        <cropper-shade hidden></cropper-shade>
+
+        <cropper-handle action="select" plain></cropper-handle>
+
+        <cropper-selection #selectionEl initial-coverage="0.6" movable resizable aspect-ratio="1">
+          <cropper-grid role="grid" covered></cropper-grid>
+          <cropper-crosshair centered></cropper-crosshair>
+
+          <cropper-handle action="move" theme-color="rgba(255, 255, 255, 0.35)"></cropper-handle>
+          <cropper-handle action="n-resize"></cropper-handle>
+          <cropper-handle action="e-resize"></cropper-handle>
+          <cropper-handle action="s-resize"></cropper-handle>
+          <cropper-handle action="w-resize"></cropper-handle>
+          <cropper-handle action="ne-resize"></cropper-handle>
+          <cropper-handle action="nw-resize"></cropper-handle>
+          <cropper-handle action="se-resize"></cropper-handle>
+          <cropper-handle action="sw-resize"></cropper-handle>
+        </cropper-selection>
+      </cropper-canvas>
+    </div>
+    }
+  </mat-dialog-content>
+</div>

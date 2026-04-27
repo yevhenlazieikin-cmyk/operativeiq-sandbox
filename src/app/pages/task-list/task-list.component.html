@@ -1,0 +1,47 @@
+<section class="task-list">
+  <bo-action-buttons-panel
+    [title]="'Task List'"
+    [buttons]="actionButtons"
+    [state]="menuType.administration"
+  />
+
+  <div class="task-list__grid">
+    <div class="table-wrapper pd-big tbl-shadow mb-0">
+      <div class="table">
+        <bo-grid
+          [gridType]="'CLIENT'"
+          [outerService]="true"
+          [filtersIncluded]="true"
+          [filterData]="filterData"
+          [(sortedDataStore)]="rawTasks"
+          [generalView]="true"
+          [clientGridPagination]="true"
+          [clearAllFilters]="clearAllFiltersEvent"
+          [mobileSortingCondition]="false"
+          [mobileFilterCondition]="false"
+          [allowFlexRow]="true"
+          [orderEvent]="orderEvent.asObservable()"
+        >
+          @for (task of rawTasks(); track task.id; let odd = $odd) {
+            <div class="grid-cell-wrapper pd-big mb-0">
+              <div class="table">
+                <div class="tr colored-row mob-ribbon-less">
+                  <bo-grid-cell
+                    class="grid-cell"
+                    [ngClass]="{ 'even-row': odd }"
+                    [row]="task"
+                    [index]="$index"
+                    [cellSchema]="cellSchema"
+                    [filterData]="filterData"
+                  />
+                </div>
+              </div>
+            </div>
+          }
+        </bo-grid>
+      </div>
+    </div>
+  </div>
+
+  <bo-footer />
+</section>

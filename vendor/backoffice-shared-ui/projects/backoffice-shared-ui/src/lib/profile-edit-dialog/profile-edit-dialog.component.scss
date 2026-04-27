@@ -1,0 +1,184 @@
+@use '../styles/variables' as *;
+
+.profile-edit-dialog-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+
+  bo-details-panel {
+    margin: 0 !important;
+  }
+
+  .dialog-header {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    height: 42px;
+    margin: 0;
+    padding-left: 5px;
+    border-bottom: 1px solid $black-border;
+    background-color: $pale-gray;
+    color: $charcoal;
+    font-weight: 600;
+    font-size: $font-base4;
+    line-height: 1.3;
+
+    .icon-close {
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+    }
+
+    .dialog-title {
+      flex: 1;
+      margin: 0;
+      padding: 5px 0 0;
+      font-weight: 600;
+      font-size: $font-base3;
+    }
+
+    .header-action {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-right: 30px;
+
+      .action-button {
+        height: 32px;
+        padding: 0 10px;
+        border: 1px solid $white-alpha-20;
+        border-radius: 5px;
+        background-color: $deep-steel-blue;
+        color: $white;
+        font-size: $font-base2;
+        font-family: $font-source-sans-pro;
+        cursor: pointer;
+
+        &:hover:not(:disabled) {
+          background-color: $steel-blue;
+        }
+
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+      }
+
+      &.administration .action-button {
+        background-color: $deep-steel-blue;
+
+        &:hover:not(:disabled) {
+          background-color: $steel-blue;
+        }
+      }
+
+      &.operation .action-button {
+        background-color: $olive-green;
+
+        &:hover:not(:disabled) {
+          background-color: $olive-green-light;
+        }
+      }
+    }
+  }
+
+  .mat-mdc-dialog-content {
+    overflow: unset;
+    max-height: unset;
+  }
+
+  .dialog-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px 25px;
+  }
+}
+
+.profile-info-section {
+  display: flex;
+
+  .profile-details {
+    ::ng-deep {
+      table.details-panel {
+        width: 385px;
+
+        tbody.section-content tr.form-row td.form-label {
+          width: 132px !important;
+        }
+      }
+    }
+  }
+}
+
+.preferences-details,
+.biometric-details,
+.password-authenticator-details,
+.signature-details,
+.role-details {
+  ::ng-deep {
+    tbody.section-content tr.form-row td.form-label {
+      width: 151px !important;
+    }
+  }
+}
+
+.biometric-details {
+  ::ng-deep {
+    tbody.section-content tr.form-row td.form-label {
+      white-space: wrap !important;
+    }
+  }
+}
+
+.profile-edit-content {
+  display: flex;
+  gap: 24px;
+  min-height: 400px;
+
+  .form-sections {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 19px;
+    min-width: 0;
+  }
+
+  .avatar-section {
+    top: 0;
+    display: flex;
+    flex-shrink: 0;
+    align-items: flex-start;
+    align-self: flex-start;
+    justify-content: center;
+    margin: 0 0 0 16px;
+  }
+}
+
+.password-authenticator-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+  .password-authenticator-link {
+    color: $bright-blue;
+    font-size: $font-base2;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+      color: $deep-teal;
+    }
+  }
+}
+
+// Responsive layout
+
+@media (width <= 1024px) {
+  .profile-edit-dialog-container {
+    min-width: auto;
+    max-width: 95vw;
+  }
+}

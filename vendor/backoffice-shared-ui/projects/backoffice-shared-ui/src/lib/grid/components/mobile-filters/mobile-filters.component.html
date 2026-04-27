@@ -1,0 +1,36 @@
+<section class="filter">
+  <div class="search-title">
+    <span>Search</span>
+  </div>
+
+  <div
+    class="filter-container-mobile"
+    [ngClass]="{
+      administration: filterData?.userMenu === menuType.administration,
+      operation: filterData?.userMenu === menuType.operation
+    }"
+  >
+    <!--    <button id="cd04c9f5e3" class="filter-button" [ngClass]="{ 'filtered-color': isMobileFilterActive }" (click)="openFilter()">
+      <div class="icon-wrapper">
+        <mat-icon>filter_alt</mat-icon>
+      </div>
+    </button>-->
+    <div class="field-wrapper icon-field-wrapper search">
+      <input
+        appAutoSelect
+        #mobileSearchInput
+        id="mobileSearchInput"
+        type="text"
+        autocomplete="off"
+        name="search"
+        [(ngModel)]="mobileSearch"
+        [placeholder]="filterData?.mobSearchPlaceholder || ''"
+        (focusout)="searchFieldFocusOut()"
+        (focusin)="searchFieldFocusIn()"
+      />
+    </div>
+    @if (mobileSearchInput.value) {
+      <bo-svg-icon name="iconCloseSmall" hoverClass="icon-close-small-hover" class="close" (click)="clearMobileFilter(false)" />
+    }
+  </div>
+</section>

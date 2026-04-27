@@ -1,0 +1,68 @@
+<div
+  id="e484c66a27"
+  class="row-wrapper wide-ribbon colored-row"
+  [ngClass]="updatePipeEvent$ | async | setRibbonStatus: row : ribbonStatusesCB"
+  [style.background-color]="setActiveRowColor()"
+  (click)="onRowClick()"
+>
+  <ng-container
+    [appGridCell]="cellTempl"
+    [context]="{ $implicit: cellSchema.mainRow, index: index }"
+    [datePipe]="datePipe"
+    mainClass="main-tile"
+    [clickFn]="cellSchema.onClick"
+    [itemizeLabel]="itemizeLabel"
+    [updateEvent]="updateEventObservable$"
+    (checkBoxEvent)="onCheckboxChanged()"
+  >
+    <div class="main-tr" [class.cut-bottom]="row[itemizeLabel]?.length">
+      <ng-template #cellTempl let-cellData>
+        <bo-grid-cell-template
+          #cellTemplComponent
+          [row]="row"
+          [index]="index"
+          [cellData]="cellData"
+          [updateEvent]="updateEventObservable$"
+          (checkboxChanged)="onCheckboxChanged()"
+        ></bo-grid-cell-template>
+      </ng-template>
+      <ng-template appAdHost></ng-template>
+    </div>
+  </ng-container>
+
+  @if (row[itemizeLabel]?.length) {
+    <div class="sub-trs">
+      @for (subItem of row[itemizeLabel]; let j = $index; track $index) {
+        <div #subTr class="sub-tr">
+          <ng-container
+            [appGridCell]="cellTempl"
+            [context]="{ $implicit: cellSchema.subRow, subItem: subItem, subIndex: j, index: index }"
+            [datePipe]="datePipe"
+            [itemizeLabel]="itemizeLabel"
+            [updateEvent]="updateEventObservable$"
+            mainClass="sub-tile"
+          >
+            <ng-template #cellTempl let-cellData>
+              <bo-grid-cell-template
+                #cellTemplComponent
+                [row]="row"
+                [cellData]="cellData"
+                [index]="index"
+                [subItem]="subItem"
+                [subIndex]="j"
+                [updateEvent]="updateEventObservable$"
+              ></bo-grid-cell-template>
+            </ng-template>
+            <ng-template appAdHost></ng-template>
+          </ng-container>
+        </div>
+      }
+    </div>
+  }
+
+  @if (addRowCondition) {
+    <div class="main-tr-link">
+      <div id="add_row" class="link" (click)="addNewRow(index, row)">+ Add Row</div>
+    </div>
+  }
+</div>

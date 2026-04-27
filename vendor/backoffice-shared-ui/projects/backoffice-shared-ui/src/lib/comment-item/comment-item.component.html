@@ -1,0 +1,44 @@
+<div
+  class="comment-item"
+  boExpandCollapse
+  [isExpandable]="isExpandable()"
+  [storageName]="storageName()"
+  [initialExpanded]="initialExpanded()"
+  #ec="boExpandCollapse"
+>
+  @if (customTemplate()) {
+    <ng-container [ngTemplateOutlet]="customTemplate()" [ngTemplateOutletContext]="{ $implicit: comment() }"></ng-container>
+  } @else {
+    <div class="comment-item__header" static-content>
+      <div class="comment-item__author-section">
+        <span class="comment-item__author">{{ comment().author }}</span>
+        @if (comment().status) {
+          <span class="status-badge status-badge--{{ comment().status?.toLowerCase() }}">
+            {{ comment().status }}
+          </span>
+        }
+      </div>
+      <div class="comment-item__timestamp">
+        @if (!ec.expanded() && comment().attachments?.length) {
+          <bo-svg-icon name="iconAttach" class="comment-item__attachments-icon" />
+        }
+        {{ comment().timestamp | customDateUtc: getDateFormat() }} {{ currentTZ.currentTz?.Abr }}
+      </div>
+    </div>
+    <p [matTooltip]="comment().comment" [matTooltipDisabled]="ec.expanded() || comment().comment.length < 50" class="comment-item__text">
+      {{ comment().comment | truncate: (!ec.expanded() ? 50 : comment().comment.length) }}
+    </p>
+    <div collapsable-content class="attachments">
+      @if (comment().attachments?.length) {
+        @for (attachment of comment()?.attachments; track getAttachmentTrackId(attachment, $index)) {
+          <app-attachment-item
+            [attachment]="attachment"
+            [readonly]="true"
+            [canRemove]="canRemoveAttachment(attachment)"
+            (removeAttachment)="onRemoveAttachment(attachment)"
+          />
+        }
+      }
+    </div>
+  }
+</div>

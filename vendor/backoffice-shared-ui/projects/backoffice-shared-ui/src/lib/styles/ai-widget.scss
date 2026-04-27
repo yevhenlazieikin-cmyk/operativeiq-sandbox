@@ -1,0 +1,28 @@
+// AI Widget positioning overrides for Angular version
+// These styles override embedded library styles with higher specificity
+// This file should be imported globally in the consuming application
+
+body.ais {
+  header.ais-relative {
+    position: relative;
+  }
+
+  header .ais-content {
+    position: absolute !important;
+  }
+
+  &.ais-opened {
+    header .ais-content {
+      position: fixed !important;
+      top: 56px !important; // Height of header-information - position from bottom edge
+      z-index: 1000 !important;
+      margin-top: 0 !important;
+    }
+  }
+
+  &.ais-closed {
+    header .ais-content {
+      top: 52px !important;
+    }
+  }
+}

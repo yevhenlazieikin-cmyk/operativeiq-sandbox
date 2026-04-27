@@ -1,0 +1,24 @@
+<bo-comments-panel
+  label="Add Comment"
+  buttonLabel="Add Comment"
+  textControlName="comment"
+  [maxCommentsHeight]="250"
+  [title]="'Comments'"
+  [customTemplate]="CommentTemplate"
+  [form]="commentForm"
+  [items]="comments"
+  [attachmentControl]="attachmentsArray.controls"
+  [fileAttachmentControl]="fileAttachmentsControl"
+  (submitComment)="onSubmitComment()"
+  (removeAttachment)="removeAt($event, attachmentsArray)"
+/>
+
+<ng-template #CommentTemplate let-items>
+  @if (items.length <= 0) {
+  <div class="no-comments">
+    <p>No comments yet.</p>
+  </div>
+  } @else { @for (item of items; track item) {
+  <app-comment-item [comment]="item" dateFormat="MM/dd/yyyy hh:mm a z" />
+  } }
+</ng-template>

@@ -1,0 +1,63 @@
+<div
+  [id]="'filter_' + input()?.name"
+  class="field-wrapper select-field-wrapper icon-field-wrapper icon-trans-bg"
+  [ngClass]="customClass()"
+  [class.select-filter__disabled]="disabled()"
+>
+  <mat-select
+    #filterSelect
+    id="{{ info.name }}"
+    (openedChange)="onOpen($event)"
+    class="filter-select"
+    [placeholder]="input()?.placeholder || 'Select'"
+    disableOptionCentering
+    disableRipple
+    [panelClass]="optionsCustomClass() + ' options-select-panel'"
+    [multiple]="multiple()"
+    [disabled]="disabled()"
+    [(value)]="optionSelected"
+    (change)="onChange($event)"
+    (selectionChange)="onChange($event)"
+  >
+    @if (hasSearch()) {
+      <div class="input-filter-container">
+        <input
+          id="b14ad182a4"
+          matInput
+          type="text"
+          class="input-filter"
+          (keyup)="filterList($event.target!.value)"
+          (keydown)="stopEventProp($event)"
+          [(ngModel)]="searchText"
+        />
+      </div>
+    }
+
+    @for (option of optionsFiltered; track $index) {
+      <mat-option [value]="itemKeys()?.id ? option[itemKeys().id] : option.id">
+        {{ itemKeys()?.value ? option[itemKeys().value] : option.value }}
+      </mat-option>
+    }
+  </mat-select>
+
+  @if (optionSelected !== '' && optionSelected !== null && optionSelected !== undefined && !clearToggle && multiple()) {
+    <bo-svg-icon name="iconCloseSmall" class="clear-filter" hoverClass="icon-close-small-hover" (click)="clear()" />
+  }
+
+  <!-- TODO NDR
+  <div *ngIf="!input()?.icon; else customIcon" class="icon-wrapper">
+    <mat-icon>crown</mat-icon>
+      TODO SVG
+    <bo-svg-icon [name]="optionSelected ? 'filterActive' : 'filterInactive'" class="icon"></bo-svg-icon>
+  </div> -->
+</div>
+
+<ng-template #customIcon>
+  @if (input()?.icon !== 'empty') {
+    <div class="icon-wrapper">
+      <mat-icon>crown</mat-icon>
+      <!-- TODO SVG
+       <bo-svg-icon [name]="input?.icon" class="icon"></bo-svg-icon>-->
+    </div>
+  }
+</ng-template>

@@ -1,0 +1,21 @@
+<section class="action-panel">
+  <div class="panel" [ngClass]="{'admin-panel': state() === menuType.administration, 'assignment-panel': state() === menuType.operation} ">
+    <div class="panel-header">
+      <h2 class="panel-title">{{ title() }}</h2>
+      <div class="action-buttons">
+        @for (button of buttons(); track $index; let i = $index){
+        <button
+          [id]="'action_btn_' + button.name.toLowerCase().replaceAll(' ', '_')"
+          class="action-btn"
+          [disabled]="button.disabled"
+          [ngClass]="{'settings-element': state() === menuType.administration, 'assignment-element': state() === menuType.operation} "
+          (click)="executeAction(button)"
+          type="button"
+        >
+          {{ button.name }}
+        </button>
+        }
+      </div>
+    </div>
+  </div>
+</section>

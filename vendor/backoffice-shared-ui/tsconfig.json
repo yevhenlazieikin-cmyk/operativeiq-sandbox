@@ -1,0 +1,54 @@
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "paths": {
+      "backoffice-shared-ui": ["./dist/backoffice-shared-ui"],
+
+      "@backoffice/shared-ui": ["./projects/backoffice-shared-ui/src/public-api.ts"],
+      "@backoffice/shared-ui/*": [
+        "./projects/backoffice-shared-ui/src/*"
+      ]
+    },
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "preserve"
+  },
+  "angularCompilerOptions": {
+    //    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true
+    //    "strictInputAccessModifiers": true,
+    //    "typeCheckHostBindings": true,
+    //    "strictTemplates": true
+  },
+  "files": [],
+  "references": [
+    {
+      "path": "./projects/backoffice-shared-ui/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/backoffice-shared-ui/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/demo-host/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/demo-host/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/time-picker-wrapper/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/time-picker-wrapper/tsconfig.spec.json"
+    }
+  ]
+}

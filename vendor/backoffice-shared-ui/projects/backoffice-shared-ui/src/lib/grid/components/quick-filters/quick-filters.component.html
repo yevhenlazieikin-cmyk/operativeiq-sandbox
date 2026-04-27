@@ -1,0 +1,27 @@
+<div class="quick-filters-container">
+  <span class="filter-group-label">
+    {{ label() }}
+
+    @if (showClearFilters()) {
+      <button id="a6c65bad04" type="button" class="clear-filters-btn" (click)="clearFilters.emit()">Clear Filters</button>
+    }
+  </span>
+  <div class="quick-filters-buttons">
+    @for (filter of filters(); track filter.value) {
+      <button
+        [id]="filter.value.toLowerCase().replaceAll(' ', '_')"
+        type="button"
+        class="quick-filter-button"
+        [class]="'quick-filter-' + (filter.color === 'all' || filter.isActive ? filter.color || 'green' : 'grey')"
+        [class.active]="filter.isActive"
+        [class.all-active]="filter.color === 'all' && isAllTypesActive()"
+        (click)="onFilterClick(filter)"
+      >
+        <span class="filter-label">{{ filter.label }}</span>
+        @if (filter.count !== undefined) {
+          <span class="filter-count">{{ filter.count }}</span>
+        }
+      </button>
+    }
+  </div>
+</div>

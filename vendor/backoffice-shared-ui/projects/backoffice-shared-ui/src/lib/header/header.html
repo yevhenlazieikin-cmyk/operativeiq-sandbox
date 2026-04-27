@@ -1,0 +1,52 @@
+<header class="ais-relative">
+  <div class="ais-content"></div>
+  <section class="header-information">
+    <div class="information">
+      <ul>
+        <li [ngClass]="{ 'administration': userMenu() === 'ADMINISTRATION', 'operation': userMenu() === 'OPERATION' }">
+          {{ userMenu() === 'OPERATION' ? `${userMenu()}S` : userMenu() }} menu
+        </li>
+        <li class="left-border">
+          <a id="b8a8a8d500" href="/">{{ companyName() }}</a>
+        </li>
+        <li class="left-border">
+          <a id="3a5ab3e14f" href="javascript:void(0)" (click)="onProfileEditClick()">{{ crewName() }}</a>
+        </li>
+      </ul>
+    </div>
+    <div class="action">
+      <img ngSrc="assets/backoffice-shared-ui/header/images/img.png" alt="logo" width="20" height="20" />
+      <ul>
+        <li><a id="2ddadf5047" (click)="redirectToInternalHelp('')">knowledge center</a></li>
+        @if (featureFlags().flEnabled) {
+        <li class="left-border"><a id="2668254671" (click)="redirectToFrontLine()">front line</a></li>
+        } @if (featureFlags().upgradeToFrontLineEnabled) {
+        <li class="left-border"><a id="e02d04f822" (click)="redirectToFLDemo()">upgrade to front line</a></li>
+        } @if (featureFlags().rfidHandheldEnabled) {
+        <li class="left-border"><a id="56ffe22230" (click)="onHandheldClick()">rfid handheld</a></li>
+        } @if (featureFlags().statusBoardEnabled) {
+        <li class="left-border"><a id="3211e3c366" (click)="redirectToStatusBoard()">status board</a></li>
+        }
+        <li class="left-border">
+          <a id="08846e2405" (click)="logout()" href="/security/login.aspx?action=logout">logout</a>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <bo-toolbar [dataSourceUrl]="toolbarUrl()" [appUrl]="appUrl()" [initialMenuType]="initialMenuType()" (menuName)="setMenuTitle($event)" />
+</header>
+
+<ng-template #handheldContentTemplate>
+  <div class="handheld-content">
+    <div class="handheld-text">
+      <p>Scan this QR code with your RFID handheld device to log in.The QR Code is valid for {{ handheldExpirationSeconds() }} seconds.</p>
+    </div>
+    @if (handheldQrCode) {
+    <div class="handheld-qrcode">
+      <qr-code [value]="handheldQrCode" [size]="200"></qr-code>
+    </div>
+    } @else {
+    <div class="loading-message">Loading QR code...</div>
+    }
+  </div>
+</ng-template>

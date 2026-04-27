@@ -1,0 +1,98 @@
+<div [ngClass]="data.classList" class="base-select-modal dialog-content size-1 full-width">
+  <section class="dialog-header">
+    <bo-svg-icon name="iconClose" class="icon-close" mat-dialog-close />
+    <h2 class="dialog-title">{{ data.title }}</h2>
+    <section class="header-action">
+      @for (button of data.buttons; track button.action) {
+      <button id="dc00afa4ad" (click)="onHeaderButtonClick(button.action)" [disabled]="button.disabled ? button.disabled() : false">
+        {{ button.label }}
+      </button>
+      }
+    </section>
+  </section>
+
+  <!--
+  boDialogClose
+  <bo-header
+    class="mobile-only"
+    [title]="data.title"
+    [info]="data.subTitle"
+    [isDialog]="true"
+    [goBackCustom]="data.customBackPathCB"
+    (customBackEmit)="data.customBackPathCB()"
+  ></bo-header>-->
+
+  <div class="table-wrapper pd-big">
+    <bo-dialog-messages
+      [message]="validationMessage ? validationMessage : ''"
+      [class]="validationMessageClass"
+      [maxLength]="maxMessageLength"
+    />
+    @if(data.gridTitle){
+    <h3 class="table-description">{{data.gridTitle}}</h3>
+    }
+    <div class="dialog-table" [ngClass]="{ 'has-overlay': data.gridOptions.infiniteScroll }">
+      <bo-grid
+        id="85489d9689"
+        #gridRef
+        [(sortedDataStore)]="items"
+        [outerService]="!!data.gridOptions.items"
+        [orderEvent]="data.gridOptions.orderEvent?.asObservable()!"
+        [customQueryInitial]="data.gridOptions.customQueryInitial!"
+        [serviceTitle]="data.gridOptions.serviceTitle"
+        [serviceMethod]="data.gridOptions.serviceMethod"
+        [serviceSort]="data.gridOptions.serviceSort"
+        [filtersIncluded]="true"
+        [filterOptions]="data.filterOptions ?? {}"
+        [filterData]="data.gridOptions.filterData"
+        [scrollWindow]="data.gridOptions.scrollWindow!"
+        [infiniteScroll]="data.gridOptions.infiniteScroll!"
+        [mobileQueryTempKeys]="data.gridOptions.mobileQueryTempKeys!"
+        [mobileQueryTemplate]="data.gridOptions.mobileQueryTemplate!"
+        [mobileSortingCondition]="mobileSortingCondition"
+        [filtersCondition]="filtersCondition"
+        [mobileFilterCondition]="mobileFilterCondition"
+        [scrollSettingsEvent]="scrollSettingsEvent"
+        [searchEnum]="data.gridOptions.searchEnum"
+        [generalView]="true"
+        [proceedInitQueryOnInit]="proceedInitQuery"
+        (sortedDataStoreChange)="onDataChanged($event)"
+        (filtersChanged)="onFilterChanged($event)"
+        [gridType]="data.gridType"
+        [itemsPerLoad]="data.gridOptions.itemsPerLoad!"
+        [clientGridPagination]="data.clientGridPagination"
+        [allowFlexRow]="data?.allowFlexRow"
+      >
+        @if (!desktop) {
+        <ng-container [ngTemplateOutlet]="data.gridOptions.mobileExtraHeaderRef"></ng-container>
+        } @for (item of items; track item; let j = $index; let odd = $odd) {
+        <div
+          class="tr"
+          [ngClass]="{ 'active-item': activeItem === item[customUniqId],'even-row': odd }"
+          [id]="item[customUniqId]"
+          (click)="onClick(item)"
+        >
+          <bo-grid-cell
+            class="grid-cell"
+            [row]="item"
+            [index]="$index"
+            [cellSchema]="data.gridOptions.cellSchema!"
+            [filterData]="data.gridOptions.filterData!"
+          ></bo-grid-cell>
+        </div>
+        }
+      </bo-grid>
+    </div>
+  </div>
+  <!--  <app-footer-dialog
+    *ngIf="data.selectButtonTitle"
+    [primaryButtonTitle]="data.selectButtonTitle"
+    secondaryButtonTitle="Cancel"
+    (primaryButtonEvent)="itemSelected()"
+    (secondaryButtonEvent)="activeItem = null"
+    [primaryButtonDisabled]="disableSubmit"
+    [primaryButtonHidden]="data.primaryButtonHidden"
+    [secondaryButtonHidden]="data.cancelButtonHidden"
+    buttonsLocation="right"
+  ></app-footer-dialog>-->
+</div>

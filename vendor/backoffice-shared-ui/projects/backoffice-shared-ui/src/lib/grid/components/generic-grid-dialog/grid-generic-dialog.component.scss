@@ -1,0 +1,81 @@
+@use 'variables' as *;
+
+.dialog-content {
+  padding-bottom: 15px;
+
+  .dialog-header {
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+    border-bottom: 1px solid $black-border;
+    background-color: $cloud-gray;
+
+    .header-action {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-right: 10px;
+      margin-left: auto;
+
+      button {
+        margin-right: 5px;
+        border-radius: 5px;
+        background-color: $navy-blue;
+        color: $white;
+
+        &:hover {
+          background-color: $primary-blue;
+        }
+      }
+    }
+  }
+
+  .table-wrapper {
+    width: 90%;
+    margin: 15px auto;
+    
+    .table-description {
+      margin-left: 16px;
+      color: $forest-green-light;
+    }
+
+    ::ng-deep .dialog-table {
+      .tr {
+        .th-title {
+          background-color: $panel-gray;
+        }
+      }
+    }
+  }
+
+  &.full-width {
+    padding-bottom: 0;
+    background-image: none;
+  }
+
+  ::ng-deep {
+    .tw-filter .tr.color-bg .th-title {
+      background-color: $panel-gray;
+    }
+
+    .stretch {
+      margin: 0;
+    }
+
+    app-infinite-scroll {
+      background-color: transparent;
+    }
+  }
+}
+
+.has-overlay {
+  ::ng-deep {
+    overlay-scrollbars {
+      height: 375px;
+
+      .rows-container {
+        min-height: 100%;
+      }
+    }
+  }
+}

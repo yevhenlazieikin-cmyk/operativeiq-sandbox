@@ -1,0 +1,42 @@
+@use 'variables' as *;
+
+:host(.grid-cell) {
+  width: 100%;
+}
+
+.row-wrapper {
+  font-family: $font-source-sans-pro !important;
+
+  .main-tr + .sub-trs {
+    display: flex;
+    width: 100%;
+
+    .item-mob {
+      padding-top: 0;
+    }
+  }
+}
+
+.main-tr-link {
+  display: flex;
+  justify-content: left;
+  width: 100%;
+  padding: 5px;
+  background-color: $white;
+
+  .link {
+    display: inline;
+    color: $ocean-blue;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &-reg {
+      font-weight: 400;
+    }
+  }
+}
+
+.extra-top-padding {
+  padding-top: 5px;
+}

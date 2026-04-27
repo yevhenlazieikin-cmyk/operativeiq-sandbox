@@ -1,0 +1,64 @@
+@use 'variables' as *;
+
+.sort-dialog {
+  position: relative;
+  width: 100%;
+  padding: 15px;
+  word-wrap: anywhere;
+
+  section {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+  }
+
+  p {
+    display: inline-block;
+    font-size: $font-base3;
+
+    span {
+      font-weight: $font-extrabold;
+    }
+  }
+
+  .icon-close {
+    position: absolute;
+    top: 2px;
+    right: 5px;
+    width: 28px;
+    height: 28px;
+    margin-left: 5px;
+    border: none;
+    border-radius: 50%;
+    color: $charcoal;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $neutral-gray;
+    }
+  }
+}
+
+.dialog-action {
+  input {
+    width: 58px;
+    height: 24px;
+    margin: 10px;
+    padding: 0 5px;
+    border: 1px solid $cloud-gray;
+    border-radius: 5px;
+    text-align: center;
+  }
+
+  button {
+    width: 58px;
+    height: 24px;
+    border-radius: 5px;
+    background-color: $primary-blue;
+    color: white;
+
+    &:hover {
+      background-color: $navy-blue;
+    }
+  }
+}

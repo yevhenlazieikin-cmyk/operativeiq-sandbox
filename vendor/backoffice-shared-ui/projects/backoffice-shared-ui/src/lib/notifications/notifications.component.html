@@ -1,0 +1,10 @@
+@if (truncatedMessage) {
+  <span class="notification">
+    @for (segment of segments; track $index) {
+      <span [ngClass]="segment.type === 'ERROR' ? 'error' : 'success'">{{ segment.text }}</span>
+    }
+  </span>
+  @if (hasOverflow) {
+    <span id="208c86a850" class="show-all" (click)="showAll()">Show All</span>
+  }
+}

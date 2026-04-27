@@ -1,0 +1,15 @@
+<div id="fa9039e91e" class="avatar-selector-container" (click)="onContainerClick()" [class.disabled]="disabled()">
+  <div class="title">Image</div>
+  <div class="avatar-preview">
+    <img [src]="displayImageSrc()" alt="" class="avatar-image" (error)="onPreviewImageError()" />
+  </div>
+  <input
+    id="d1fcbaf84d"
+    #fileInput
+    type="file"
+    [accept]="accept()"
+    [disabled]="disabled()"
+    class="file-input-hidden"
+    (change)="onFileSelected(fileInput.files?.[0] || null)"
+  />
+</div>

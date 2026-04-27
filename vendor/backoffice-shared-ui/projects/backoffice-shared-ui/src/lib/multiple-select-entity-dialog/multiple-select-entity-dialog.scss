@@ -1,0 +1,156 @@
+@use 'variables' as *;
+
+.dialog-content {
+  padding-bottom: 15px;
+
+  .dialog-header {
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+    border-bottom: 1px solid $black-border;
+    background-color: $cloud-gray;
+
+    .header-action {
+      margin-right: 10px;
+      margin-left: auto;
+
+      button {
+        width: fit-content;
+        height: 32px;
+        margin-right: 5px;
+        padding: 0 10px;
+        border-radius: 5px;
+        color: $white;
+      }
+
+      &.administration button {
+        background-color: $navy-blue;
+
+        &:hover {
+          background-color: $primary-blue;
+        }
+      }
+
+      &.operation button {
+        background-color: $forest-green;
+
+        &:hover {
+          background-color: $forest-green-light;
+        }
+      }
+    }
+  }
+
+  .table-wrapper {
+    .table-description {
+      color: $forest-green-light;
+    }
+
+    .multi-select-details-panel {
+      display: block;
+      box-sizing: border-box;
+      width: 100%;
+      margin: 0 0 20px;
+    }
+
+    .dialog-table {
+      margin: 20px 25px 25px;
+
+      ::ng-deep .tr {
+        .th-title {
+          background-color: $panel-gray;
+        }
+      }
+    }
+  }
+
+  &.full-width {
+    padding-bottom: 0;
+    background-image: none;
+  }
+
+  ::ng-deep {
+    .tw-filter .tr.color-bg .th-title {
+      background-color: $panel-gray;
+    }
+
+    .stretch {
+      margin: 0;
+    }
+
+    app-infinite-scroll {
+      background-color: transparent;
+    }
+
+    .cell-template {
+      .cell-wrapper:first-child {
+        .td {
+          padding: 0;
+        }
+      }
+    }
+
+    .mdc-checkbox {
+      flex: 0 0 16px;
+      width: 16px;
+      height: 16px;
+      padding: 8px;
+    }
+
+    .mdc-checkbox__ripple {
+      display: none;
+    }
+
+    .mdc-checkbox__background {
+      top: unset;
+      left: unset;
+      width: 20px;
+      height: 20px;
+      border: 1px solid $medium-gray;
+      border-radius: 4px;
+      background-color: $white;
+    }
+  }
+
+  .item-mob {
+    background-color: $pale-gray;
+  }
+}
+
+.td {
+  padding: 0 !important;
+}
+
+.cell-placeholder {
+  min-height: 60px;
+  border: dotted 3px $medium-gray;
+  background: $light-gray;
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.header-check-box {
+  position: absolute;
+}
+
+.item-check {
+  position: absolute;
+  top: 3px;
+  left: 50%;
+  height: 24px;
+  transition: 90ms;
+  transform: translateX(-50%);
+}
+
+.has-overlay {
+  ::ng-deep {
+    overlay-scrollbars {
+      max-height: 375px;
+      border: 1px solid $cloud-gray;
+      border-radius: 4px;
+
+      .rows-container {
+        min-height: 100%;
+      }
+    }
+  }
+}

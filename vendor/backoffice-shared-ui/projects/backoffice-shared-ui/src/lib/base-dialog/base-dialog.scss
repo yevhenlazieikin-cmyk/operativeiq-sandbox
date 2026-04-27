@@ -1,0 +1,170 @@
+@use 'variables' as *;
+
+.dialog-content {
+  position: relative;
+  min-width: 350px;
+  max-width: 500px;
+  border-radius: 8px;
+  background: $white;
+
+  .dialog-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 40px;
+    margin: 0;
+    padding-left: 5px;
+    border-bottom: 1px solid $neutral-gray;
+    background-color: $pale-gray;
+    color: $charcoal;
+    font-weight: 600;
+    font-size: $font-base4;
+    line-height: 1.3;
+
+    &.has-top-buttons {
+      padding-right: 10px;
+    }
+
+    .header-action {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+
+      button {
+        width: fit-content;
+        height: 32px;
+        margin-right: 5px;
+        padding: 0 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: $deep-steel-blue; // Default administration color
+        color: $white;
+        font-size: $font-base2;
+        cursor: pointer;
+
+        &:hover:not(:disabled) {
+          background-color: $steel-blue;
+        }
+
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+      }
+
+      &.administration {
+        button {
+          background-color: $deep-steel-blue;
+
+          &:hover:not(:disabled) {
+            background-color: $steel-blue;
+          }
+        }
+      }
+
+      &.operation {
+        button {
+          background-color: $olive-green;
+
+          &:hover:not(:disabled) {
+            background-color: $olive-green-light;
+          }
+        }
+      }
+    }
+  }
+
+  .scrollable-content {
+    overflow-y: auto;
+    max-height: 400px;
+    padding: 16px 24px;
+
+    .inner {
+      p {
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+    }
+
+    mat-progress-bar {
+      height: 4px;
+      margin-bottom: 16px;
+      border-radius: 2px;
+
+      ::ng-deep {
+        .mat-progress-bar-fill:after {
+          background-color: $ocean-blue;
+        }
+
+        .mat-progress-bar-buffer {
+          background-color: $panel-gray;
+        }
+      }
+    }
+  }
+
+  &.modal-no-heading {
+    .scrollable-content {
+      padding-top: 24px;
+    }
+  }
+
+  .bottom {
+    display: flex;
+    justify-content: center;
+    padding: 20px 24px 24px;
+
+    .buttons {
+      display: flex;
+      gap: 60px;
+      justify-content: space-between;
+
+      .button {
+        height: 32px;
+        padding: 5px 10px;
+        border-radius: 6px;
+        outline: 1px solid $soft-gray;
+        font-weight: $font-semibold;
+        font-size: 14px;
+        cursor: pointer;
+
+        &.button-sm {
+          border-color: $silver-gray;
+          background: $platinum-gray;
+          color: $navy-blue;
+          box-shadow: 1px 1px 3px $light-silver;
+          font-weight: $font-bold;
+
+          &:hover:not(.color-2) {
+            outline: 2px solid $light-gray;
+          }
+        }
+      }
+
+      &.equal-size {
+        &.flex-sb {
+          display: grid;
+          grid-auto-columns: 1fr;
+          grid-auto-flow: column;
+
+          .button {
+            flex: 1;
+          }
+        }
+      }
+    }
+  }
+}
+
+::ng-deep {
+  .cdk-overlay-backdrop {
+    background: rgba($black, 0.4);
+  }
+
+  .mat-dialog-container {
+    padding: 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba($black, 0.15);
+  }
+}

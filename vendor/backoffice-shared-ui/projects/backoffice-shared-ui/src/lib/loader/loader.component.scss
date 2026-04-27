@@ -1,0 +1,297 @@
+@use 'variables' as *;
+
+$loader-active-gradient: linear-gradient(
+  to bottom,
+  $loader-green-active 0%,
+  $loader-green-active 50%,
+  $loader-green-active-light 50%,
+  $loader-green-active-light 100%
+);
+$loader-inactive-gradient: linear-gradient(
+  to bottom,
+  $loader-green-inactive 0%,
+  $loader-green-inactive 50%,
+  $loader-green-inactive-light 50%,
+  $loader-green-inactive-light 100%
+);
+
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: $black;
+  opacity: 0.5;
+}
+
+.loader-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader-bars {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  height: 15px;
+}
+
+.bar {
+  width: 7px;
+  height: 15px;
+  border-radius: 3px;
+  animation: load 1.5s linear infinite;
+}
+
+.bar-0 {
+  animation-name: load-0;
+}
+
+.bar-1 {
+  animation-name: load-1;
+}
+
+.bar-2 {
+  animation-name: load-2;
+}
+
+.bar-3 {
+  animation-name: load-3;
+}
+
+.bar-4 {
+  animation-name: load-4;
+}
+
+.bar-5 {
+  animation-name: load-5;
+}
+
+.bar-6 {
+  animation-name: load-6;
+}
+
+.bar-7 {
+  animation-name: load-7;
+}
+
+.bar-8 {
+  animation-name: load-8;
+}
+
+.bar-9 {
+  animation-name: load-9;
+}
+
+.bar-10 {
+  animation-name: load-10;
+}
+
+.bar-11 {
+  animation-name: load-11;
+}
+
+@keyframes load-0 {
+  0%,
+  98% {
+    background: $loader-active-gradient;
+  }
+
+  98.1%,
+  100% {
+    background: $loader-inactive-gradient;
+  }
+}
+
+@keyframes load-1 {
+  0%,
+  8.3% {
+    background: $loader-inactive-gradient;
+  }
+
+  8.4%,
+  98% {
+    background: $loader-active-gradient;
+  }
+
+  98.1%,
+  100% {
+    background: $loader-inactive-gradient;
+  }
+}
+
+@keyframes load-2 {
+  0%,
+  16.6% {
+    background: $loader-inactive-gradient;
+  }
+
+  16.7%,
+  98% {
+    background: $loader-active-gradient;
+  }
+
+  98.1%,
+  100% {
+    background: $loader-inactive-gradient;
+  }
+}
+
+@keyframes load-3 {
+  0%,
+  24.9% {
+    background: $loader-inactive-gradient;
+  }
+
+  25%,
+  98% {
+    background: $loader-active-gradient;
+  }
+
+  98.1%,
+  100% {
+    background: $loader-inactive-gradient;
+  }
+}
+
+@keyframes load-4 {
+  0%,
+  33.2% {
+    background: $loader-inactive-gradient;
+  }
+
+  33.3%,
+  98% {
+    background: $loader-active-gradient;
+  }
+
+  98.1%,
+  100% {
+    background: $loader-inactive-gradient;
+  }
+}
+
+@keyframes load-5 {
+  0%,
+  41.6% {
+    background: $loader-inactive-gradient;
+  }
+
+  41.7%,
+  98% {
+    background: $loader-active-gradient;
+  }
+
+  98.1%,
+  100% {
+    background: $loader-inactive-gradient;
+  }
+}
+
+@keyframes load-6 {
+  0%,
+  49.9% {
+    background: $loader-inactive-gradient;
+  }
+
+  50%,
+  98% {
+    background: $loader-active-gradient;
+  }
+
+  98.1%,
+  100% {
+    background: $loader-inactive-gradient;
+  }
+}
+
+@keyframes load-7 {
+  0%,
+  58.2% {
+    background: $loader-inactive-gradient;
+  }
+
+  58.3%,
+  98% {
+    background: $loader-active-gradient;
+  }
+
+  98.1%,
+  100% {
+    background: $loader-inactive-gradient;
+  }
+}
+
+@keyframes load-8 {
+  0%,
+  66.5% {
+    background: $loader-inactive-gradient;
+  }
+
+  66.6%,
+  98% {
+    background: $loader-active-gradient;
+  }
+
+  98.1%,
+  100% {
+    background: $loader-inactive-gradient;
+  }
+}
+
+@keyframes load-9 {
+  0%,
+  74.9% {
+    background: $loader-inactive-gradient;
+  }
+
+  75%,
+  98% {
+    background: $loader-active-gradient;
+  }
+
+  98.1%,
+  100% {
+    background: $loader-inactive-gradient;
+  }
+}
+
+@keyframes load-10 {
+  0%,
+  83.2% {
+    background: $loader-inactive-gradient;
+  }
+
+  83.3%,
+  98% {
+    background: $loader-active-gradient;
+  }
+
+  98.1%,
+  100% {
+    background: $loader-inactive-gradient;
+  }
+}
+
+@keyframes load-11 {
+  0%,
+  91.5% {
+    background: $loader-inactive-gradient;
+  }
+
+  91.6%,
+  98% {
+    background: $loader-active-gradient;
+  }
+
+  98.1%,
+  100% {
+    background: $loader-inactive-gradient;
+  }
+}

@@ -1,0 +1,29 @@
+<section class="test-page">
+  <bo-action-buttons-panel
+    [title]="'Test Page'"
+    [buttons]="actionButtons"
+    [state]="menuType.operation"
+  />
+
+  <div class="test-page__panels-row">
+    <div class="test-page__panel">
+      <bo-details-panel
+        [form]="operationForm"
+        [fields]="operationFields"
+        title="Operation Details"
+        [userMenu]="menuType.operation"
+      />
+    </div>
+
+    <div class="test-page__panel">
+      <bo-details-panel
+        [form]="assignmentForm"
+        [fields]="assignmentFields"
+        title="Assignment Info"
+        [userMenu]="menuType.operation"
+      />
+    </div>
+  </div>
+
+  <bo-footer />
+</section>

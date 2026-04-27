@@ -1,0 +1,32 @@
+<div class="uploading-info">
+  <div
+    [class.canceled]="uploadAction() === 'Canceled'"
+    [class.failed]="uploadAction() === 'Failed'"
+    [class.successful]="progress() === 100 && uploadAction() !== 'Failed'"
+  >
+    <div class="file-name trunc-ellipsis">{{ publicFile.name }}</div>
+    <div class="message">{{ uploadAction() }}</div>
+  </div>
+  <div class="file-progress">
+    <div class="file-progress-bar-wrapper" [style.--progress]="progress() + '%'">
+      <mat-progress-bar
+        class="file-progress__bar"
+        [class.in-progress]="progress() < 100 && uploadAction() !== 'Failed'"
+        [class.successful]="progress() === 100 && uploadAction() !== 'Failed'"
+        [class.failed]="uploadAction() === 'Failed'"
+        [mode]="mode"
+        [value]="progress()"
+      ></mat-progress-bar>
+
+      <div class="file-progress__percentage-container">
+        <div class="percentage-text percentage-text--base" [class.failed-text]="uploadAction() === 'Failed'">{{ progress() }}%</div>
+        <div class="percentage-text percentage-text--overlay">{{ progress() }}%</div>
+      </div>
+    </div>
+    <div class="file-progress__close-icon">
+      @if (uploadAction() !== 'Canceled' && uploadAction() !== 'Failed' && progress() < 100) {
+        <bo-svg-icon name="iconClose" (click)="onCancel()" />
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+<div class="layout-container">
+  <bo-svg-icon class="main-logo" name="frontLineMainLogo" />
+  <bo-header
+    [toolbarUrl]="headerDataSourceUrl()"
+    [appUrl]="appUrl()"
+    [initialMenuType]="initialMenuType()"
+    [aiAgentEnabled]="aiAgentEnabled()"
+    [headerLinksUrl]="headerLinksSourceUrl()"
+    [featureFlags]="featureFlags()"
+    [handheldExpirationSeconds]="handheldExpirationSeconds()"
+    [siteInfo]="siteInfo()"
+    (profileEditClick)="onProfileEditClick()"
+  />
+
+  <app-notifications class="notifications" />
+  <main class="main-content">
+    <div class="main-content__surface">
+      <ng-content></ng-content>
+    </div>
+  </main>
+
+  <bo-footer [siteInfo]="siteInfo()"></bo-footer>
+</div>

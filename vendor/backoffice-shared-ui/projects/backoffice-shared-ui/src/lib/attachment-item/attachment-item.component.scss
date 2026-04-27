@@ -1,0 +1,51 @@
+@use 'variables' as *;
+
+.attachment-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 30px;
+  background-color: $panel-gray;
+  color: $bright-blue;
+  word-break: break-all;
+  cursor: default;
+
+  span {
+    display: flex;
+    align-items: center;
+  }
+
+  .attachment-link {
+    color: $bright-blue;
+    cursor: pointer;
+
+    &:hover {
+      color: $deep-teal;
+    }
+  }
+
+  .icon-pin {
+    transform: rotate(45deg);
+    scale: 0.8;
+  }
+
+  .delete-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    margin-right: 15px;
+  }
+}
+
+:host ::ng-deep .delete-button .mat-mdc-button-touch-target {
+  width: 20px;
+  height: 20px;
+}
+
+.invalid-attachment {
+  color: $error-red;
+  text-decoration: line-through;
+  text-decoration-color: $error-red;
+}

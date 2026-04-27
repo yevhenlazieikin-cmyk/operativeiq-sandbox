@@ -1,0 +1,13 @@
+{
+  "name": "bo-shared-marketplace",
+  "owner": {
+    "name": "EMS Technology Solutions"
+  },
+  "plugins": [
+    {
+      "name": "bo-skills",
+      "source": "./",
+      "description": "Shared Angular skills for all projects using @backoffice/shared-ui"
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+<div class="header-container-mobile">
+  <h2 class="dialog-title">{{ data.filterHeader }}</h2>
+  <bo-svg-icon name="iconClose" class="icon-close" (click)="onCancel()" />
+</div>
+
+<div mat-dialog-content class="inputs-container">
+  @if (data.sortOptions) {
+    <div class="input-field">
+      <bo-sorting-dropdown [data]="data" [clearSorting]="clearSortingEvent"></bo-sorting-dropdown>
+    </div>
+  }
+
+  <div class="buttons-border top-border"></div>
+
+  @for (input of data.inputs; track $index) {
+    <div class="input-field" [hidden]="input.type === filterFieldType.Default">
+      @switch (input.type) {
+        @case (filterFieldType.Input) {
+          <div class="form-group short">
+            <label class="field-label">{{ input?.label }}</label>
+            <div class="field-wrapper">
+              @if (!input.mask) {
+                <input
+                  id="a28a9b707a"
+                  type="text"
+                  [(ngModel)]="input.value"
+                  (change)="onInputChange(input)"
+                  [placeholder]="input?.placeholder || ' '"
+                />
+              } @else {
+                <input
+                  id="a28a9b707b"
+                  type="text"
+                  [(ngModel)]="input.value"
+                  (change)="onInputChange(input)"
+                  [placeholder]="input?.placeholder || ' '"
+                  [inputMask]="input.mask"
+                />
+              }
+            </div>
+          </div>
+        }
+        @case (filterFieldType.Date) {
+          <div class="form-group short">
+            <label class="field-label">{{ input?.label || 'Date' }}</label>
+            <div class="field-wrapper icon-field-wrapper overflow-visible">
+              <bo-date-picker id="d3bd930add" [(selectValue)]="input.value" placeholder="Date" />
+            </div>
+          </div>
+        }
+        @case (filterFieldType.DateBase) {
+          <div class="form-group short">
+            <label class="field-label">{{ input.label }}</label>
+            <div class="field-wrapper icon-field-wrapper">
+              <bo-search-dropdown
+                id="6461724d9b"
+                placeholder="Select"
+                iconName="database"
+                [options]="input.value"
+                [hasSearch]="false"
+              ></bo-search-dropdown>
+            </div>
+          </div>
+        }
+        @case (filterFieldType.Select) {
+          <div class="form-group short">
+            <label class="field-label">{{ input.label }}</label>
+            <div class="field-wrapper select-field-wrapper">
+              <bo-search-dropdown
+                id="7ed296be56"
+                placeholder="Select"
+                [(selectValue)]="input.value"
+                (selectValueChange)="onSelectionChange($event)"
+                (clearValue)="onClear(input.name)"
+                [options]="input.options!"
+                [hasSearch]="false"
+                [valueProperty]="input.valueProperty || 'id'"
+                [displayProperty]="input.displayProperty || 'value'"
+                [multiple]="input.multiple!"
+                [disabled]="input.disabled"
+              ></bo-search-dropdown>
+            </div>
+          </div>
+        }
+        @case (filterFieldType.MultiSelect) {
+          <div class="form-group short">
+            <label class="field-label">{{ input.label }}</label>
+            <div class="field-wrapper select-field-wrapper">
+              <bo-search-dropdown
+                id="d212ec2073"
+                placeholder="Select"
+                [(selectValue)]="input.value"
+                (selectValueChange)="onSelectionChange($event)"
+                (clearValue)="onClear(input.name)"
+                [options]="input.options!"
+                valueProperty="id"
+                displayProperty="value"
+                multiple
+                [hasSearch]="false"
+              ></bo-search-dropdown>
+            </div>
+          </div>
+        }
+      }
+    </div>
+  }
+</div>
+
+<div class="buttons-border"></div>
+
+<div mat-dialog-actions class="dialog-bottom">
+  <div class="buttons right-align">
+    <button id="010392003a" tabindex="-1" class="button-base" (click)="onCancel()" style="margin-right: auto">Cancel</button>
+    <button id="ac77b9ced0" tabindex="-1" class="button-base" (click)="clearFields()" style="margin-right: 8px">Clear</button>
+    <button id="98748fd8c6" tabindex="-1" class="button-base" (click)="applyFilter()">Apply</button>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+@if (customTemplate()) {
+  <ng-container [ngTemplateOutlet]="customTemplate()" [ngTemplateOutletContext]="{ $implicit: attachment() }"></ng-container>
+} @else {
+  <div class="attachment-item">
+    <span [class.invalid-attachment]="invalid()">
+      <bo-svg-icon name="iconAttach" class="icon-pin" />
+      @if (isMetadata(attachment()) && attachment().downloadUrl) {
+        <a
+          [id]="'attachment_' + getAttachmentName(attachment())"
+          [href]="attachment().downloadUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="attachment-link"
+          (click)="onAttachmentLinkClick($event)"
+        >
+          {{ getAttachmentName(attachment()) }}
+        </a>
+      } @else {
+        {{ getAttachmentName(attachment()) }}
+      }
+    </span>
+    @if ((!readonly() && !isMetadata(attachment())) || (canRemove() && isMetadata(attachment()))) {
+      <button
+        [id]="'attachment_remove' + getAttachmentName(attachment())"
+        (click)="removeAttachment.emit()"
+        mat-icon-button
+        matTooltip="Remove file"
+      >
+        <bo-svg-icon name="iconDelete" class="icon-delete" />
+      </button>
+    }
+  </div>
+}
