@@ -16,6 +16,10 @@ export const PermissionConstants = {
   assetClassesView: { PageCodes: ['oi_asset_class_list'] } as PermissionEntry,
   // needs backend confirmation
   assetClassesManage: { PageCodes: ['oi_asset_class_manage'] } as PermissionEntry,
+  // needs backend confirmation
+  workOrderView: { PageCodes: ['oi_work_order_view'] } as PermissionEntry,
+  // needs backend confirmation
+  workOrderManage: { PageCodes: ['oi_work_order_manage'] } as PermissionEntry,
 } as const;
 
 export type PermissionKey = keyof typeof PermissionConstants;

@@ -56,5 +56,15 @@ export const routes: Routes = [
     title: 'Unit',
     data: { menuType: 'OPERATION' },
   },
+  {
+    path: 'work-order',
+    loadComponent: () =>
+      import('./pages/work-order/work-order.component').then(
+        (m) => m.WorkOrderComponent
+      ),
+    canActivate: [permissionGuard(PermissionConstants.workOrderView, false)],
+    title: 'Work Order',
+    data: { menuType: 'OPERATION' },
+  },
   { path: '**', redirectTo: '' },
 ];

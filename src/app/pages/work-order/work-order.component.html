@@ -1,0 +1,108 @@
+<bo-header
+  toolbarUrl="/mock/api"
+  appUrl="task-list"
+  [initialMenuType]="menuType.operation"
+  [siteInfo]="siteInfo()"
+/>
+
+<section class="work-order">
+  <bo-action-buttons-panel
+    [title]="'Work Order'"
+    [buttons]="actionButtons"
+    [state]="menuType.operation"
+  />
+
+  <div class="work-order__tabs">
+    <bo-tabber [tabs]="tabs()" [typeMenu]="menuType.operation" />
+  </div>
+
+  <ng-template #unitInfoTab>
+    <div class="work-order__panels">
+      <div class="work-order__panel">
+        <bo-details-panel
+          [form]="unitInfoForm"
+          [fields]="unitInfoFields"
+          title="Unit Information"
+          [userMenu]="menuType.operation"
+        />
+      </div>
+
+      <div class="work-order__panel work-order__panel--stack">
+        <bo-details-panel
+          [form]="odometerForm"
+          [fields]="odometerFields"
+          title="Odometer and Hours"
+          [userMenu]="menuType.operation"
+        />
+
+        <div class="work-order__attachments">
+          <header class="work-order__attachments-header">
+            <h3>Unit Attachments</h3>
+            <button type="button" class="work-order__link">View All</button>
+          </header>
+          <table class="work-order__attachments-table">
+            <thead>
+              <tr>
+                <th>Group</th>
+                <th>File Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (file of attachments(); track file.id) {
+                <tr>
+                  <td>{{ file.group }}</td>
+                  <td><a href="#" class="work-order__link">{{ file.fileName }}</a></td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="2" class="work-order__empty">No attachments</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="work-order__panel">
+        <bo-details-panel
+          [form]="telematicsForm"
+          [fields]="telematicsFields"
+          title="Vehicle Telematics"
+          [userMenu]="menuType.operation"
+        />
+      </div>
+    </div>
+
+    <h2 class="work-order__section-title">Maintenance History</h2>
+    <div class="work-order__grid">
+      <bo-grid
+        [gridType]="'CLIENT'"
+        [outerService]="true"
+        [filtersIncluded]="true"
+        [filterData]="maintenanceFilterData"
+        [sortedDataStore]="rawMaintenance()"
+        (sortedDataChange)="onMaintenanceDataChange($event)"
+        [userMenu]="menuType.operation"
+        [scrollWindow]="false"
+        [clientGridPagination]="true"
+        [initialPageSize]="10"
+      >
+        @for (row of displayedMaintenance(); track row.id; let i = $index) {
+          <bo-grid-cell
+            [row]="row"
+            [index]="i"
+            [cellSchema]="maintenanceCellSchema"
+            [filterData]="maintenanceFilterData"
+            [class]="statusRowClass(row)"
+          />
+        }
+      </bo-grid>
+    </div>
+  </ng-template>
+
+  <ng-template #placeholderTab>
+    <div class="work-order__placeholder">Coming soon</div>
+  </ng-template>
+
+  <bo-footer />
+</section>
