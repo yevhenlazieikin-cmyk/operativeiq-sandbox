@@ -1,0 +1,16 @@
+<bo-header
+  toolbarUrl="/mock/api"
+  appUrl="task-list"
+  [initialMenuType]="menuType.operation"
+  [siteInfo]="siteInfo()"
+/>
+
+<section class="unit">
+  <bo-action-buttons-panel
+    [title]="'Unit'"
+    [buttons]="actionButtons"
+    [state]="menuType.operation"
+  />
+
+  <bo-footer />
+</section>

@@ -22,10 +22,6 @@ export const routes: Routes = [
     data: { menuType: 'ADMINISTRATION' },
   },
   {
-    path: 'apps/task-list/asset-classes',
-    redirectTo: 'asset-classes',
-  },
-  {
     path: 'asset-classes',
     loadComponent: () =>
       import('./pages/asset-classes/asset-classes.component').then(
@@ -51,6 +47,13 @@ export const routes: Routes = [
         (m) => m.TestPageComponent
       ),
     title: 'Test Page',
+    data: { menuType: 'OPERATION' },
+  },
+  {
+    path: 'unit',
+    loadComponent: () =>
+      import('./pages/unit/unit.component').then((m) => m.UnitComponent),
+    title: 'Unit',
     data: { menuType: 'OPERATION' },
   },
   { path: '**', redirectTo: '' },
