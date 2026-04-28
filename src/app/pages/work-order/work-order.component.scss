@@ -119,6 +119,70 @@
     font-size: 14px;
   }
 
+  // ── Unit Attachments dialog content ──────────────────────────────────────────
+  &__attach-unit-name {
+    margin: 0 0 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+  }
+
+  &__attach-filters {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  &__attach-filter-col {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__attach-filter-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #374151;
+  }
+
+  &__attach-filter-input {
+    padding: 6px 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: inherit;
+    color: #111827;
+    background: $white;
+
+    &::placeholder { color: #9ca3af; }
+    &:focus { outline: none; border-color: $ocean-blue; box-shadow: 0 0 0 2px rgba($ocean-blue, 0.15); }
+  }
+
+  &__attach-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+
+    th {
+      background: #f3f4f6;
+      color: #374151;
+      font-weight: 600;
+      text-align: left;
+      padding: 8px 12px;
+      border: 1px solid #e5e7eb;
+    }
+
+    td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #f0f0f0;
+      color: #374151;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+    tr:hover td      { background: #f9fafb; }
+  }
+
   // ── Work Order tab — custom panels ────────────────────────────────────────────
   &__custom-panel {
     background: $white;
@@ -263,6 +327,8 @@
   // ── Parts and Labor section ───────────────────────────────────────────────────
   &__parts-labor {
     padding: 0 24px 32px;
+
+    .work-order__section-title { margin-left: 0; margin-right: 0; }
   }
 
   &__section-actions {
@@ -549,4 +615,11 @@
     font-weight: 700;
     color: #111827;
   }
+}
+
+// Lift BaseDialog's 500px cap when opened as the unit-attachments dialog
+::ng-deep .wo-attachments-dialog-panel .dialog-content {
+  max-width: none !important;
+  width: 100% !important;
+  box-sizing: border-box;
 }

@@ -8,13 +8,18 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   ActionButton,
   ActionButtonsPanel,
+  BaseDialog,
+  ConfigurableDialog,
   CustomHeaderButton,
   DetailsPanel,
+  DialogConfig,
+  DialogResult,
   FieldConfig,
   FieldType,
   Footer,
@@ -75,6 +80,36 @@ export class WorkOrderComponent {
   private readonly unitInfoTab = viewChild<TemplateRef<unknown>>('unitInfoTab');
   private readonly workOrderTabTpl = viewChild<TemplateRef<unknown>>('workOrderTab');
   private readonly placeholderTab = viewChild<TemplateRef<unknown>>('placeholderTab');
+  private readonly attachmentsDialogTpl = viewChild<TemplateRef<unknown>>('attachmentsDialogTpl');
+
+  // ─── Unit Attachments dialog ─────────────────────────────────────────────────
+  protected readonly attachmentGroupFilter = signal('');
+  protected readonly attachmentFileFilter = signal('');
+
+  protected readonly filteredAttachments = computed(() => {
+    const g = this.attachmentGroupFilter().toLowerCase();
+    const f = this.attachmentFileFilter().toLowerCase();
+    return this.attachments().filter(
+      a => a.group.toLowerCase().includes(g) && a.fileName.toLowerCase().includes(f)
+    );
+  });
+
+  protected openAttachmentsDialog(): void {
+    const tpl = this.attachmentsDialogTpl();
+    if (!tpl) return;
+    this.attachmentGroupFilter.set('');
+    this.attachmentFileFilter.set('');
+    this.matDialog.open(BaseDialog, {
+      width: '660px',
+      maxWidth: '95vw',
+      panelClass: 'wo-attachments-dialog-panel',
+      data: {
+        header: 'Unit Attachments',
+        template: tpl,
+        userMenu: this.menuType.operation,
+      },
+    });
+  }
 
   // ─── Unit Information tab ────────────────────────────────────────────────────
   protected readonly attachments = signal<UnitAttachment[]>([]);
@@ -374,6 +409,88 @@ export class WorkOrderComponent {
 
   protected serviceLaborTotal(svc: WoServiceItem): number {
     return svc.labor.reduce((sum, l) => sum + l.hours * l.cost, 0);
+  }
+
+  // ─── Add Service dialog ──────────────────────────────────────────────────────
+  private readonly matDialog = inject(MatDialog);
+
+  private readonly reasonForRepairOptions = [
+    { value: '01', label: '01 - Breakdown' },
+    { value: '02', label: '02 - Consumption Fuel' },
+    { value: '03', label: '03 - Defective Part' },
+    { value: '04', label: "04 - Driver's Report" },
+    { value: '05', label: '05 - Inspection, Routine' },
+    { value: '06', label: '06 - Operator Abuse' },
+    { value: '07', label: '07 - Outside Repair' },
+    { value: '08', label: '08 - Preventive Maintenance' },
+    { value: '09', label: '09 - Road Call' },
+    { value: '10', label: '10 - Warranty Work' },
+    { value: '11', label: '11 - Modification' },
+    { value: '12', label: '12 - Safety Inspection' },
+    { value: '13', label: '13 - Other' },
+  ];
+
+  private readonly addServiceFields: FieldConfig[] = [
+    {
+      label: 'Reason for Repair',
+      type: FieldType.Select,
+      formControlName: 'reasonForRepair',
+      required: true,
+      options: this.reasonForRepairOptions,
+      placeholderLabel: 'Select reason for repair...',
+    },
+    {
+      label: 'Service Complaint',
+      type: FieldType.TextArea,
+      formControlName: 'complaint',
+      required: true,
+      placeholderLabel: 'Describe the service complaint...',
+    },
+  ];
+
+  protected openAddServiceDialog(): void {
+    const form = this.fb.group({
+      reasonForRepair: ['', Validators.required],
+      complaint: ['', Validators.required],
+    });
+
+    const ref = this.matDialog.open(ConfigurableDialog, {
+      width: '480px',
+      data: {
+        title: 'Add Service',
+        fields: this.addServiceFields,
+        form,
+        buttons: [
+          { label: 'Cancel', action: 'cancel' },
+          { label: 'Add Service', action: 'save' },
+        ],
+        userMenu: this.menuType.operation,
+      } satisfies DialogConfig,
+    });
+
+    ref.afterClosed().subscribe((result: DialogResult | undefined) => {
+      if (result?.action === 'save' && result.data) {
+        this.addNewService(result.data['reasonForRepair'], result.data['complaint']);
+      }
+    });
+  }
+
+  private addNewService(reasonCode: string, complaint: string): void {
+    const option = this.reasonForRepairOptions.find(o => o.value === reasonCode);
+    const description = option ? option.label.split(' - ').slice(1).join(' - ') : reasonCode;
+    this.woServices.update(items => [
+      ...items,
+      {
+        id: `SRV-${Date.now()}`,
+        reasonForRepair: reasonCode,
+        reasonDescription: description,
+        complaint: complaint.trim(),
+        alerts: [],
+        parts: [],
+        labor: [],
+        notes: '',
+      },
+    ]);
   }
 
   // ─── Tab building ─────────────────────────────────────────────────────────────

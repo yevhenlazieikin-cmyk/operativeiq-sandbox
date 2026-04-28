@@ -39,7 +39,7 @@
         <div class="work-order__attachments">
           <header class="work-order__attachments-header">
             <h3>Unit Attachments</h3>
-            <button type="button" class="work-order__link">View All</button>
+            <button type="button" class="work-order__link" (click)="openAttachmentsDialog()">View All</button>
           </header>
           <table class="work-order__attachments-table">
             <thead>
@@ -124,6 +124,53 @@
         }
       </bo-grid>
     </div>
+  </ng-template>
+
+  <!-- ── Unit Attachments dialog template ─────────────────────────────────── -->
+  <ng-template #attachmentsDialogTpl>
+    <p class="work-order__attach-unit-name">{{ unitInfoForm.get('unit')?.value }}</p>
+
+    <div class="work-order__attach-filters">
+      <div class="work-order__attach-filter-col">
+        <label class="work-order__attach-filter-label">Group</label>
+        <input
+          type="text"
+          class="work-order__attach-filter-input"
+          placeholder="Filter by group..."
+          [value]="attachmentGroupFilter()"
+          (input)="attachmentGroupFilter.set($any($event.target).value)"
+        />
+      </div>
+      <div class="work-order__attach-filter-col">
+        <label class="work-order__attach-filter-label">File Name</label>
+        <input
+          type="text"
+          class="work-order__attach-filter-input"
+          placeholder="Filter by file name..."
+          [value]="attachmentFileFilter()"
+          (input)="attachmentFileFilter.set($any($event.target).value)"
+        />
+      </div>
+    </div>
+
+    <table class="work-order__attach-table">
+      <thead>
+        <tr>
+          <th>Group</th>
+          <th>File Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (file of filteredAttachments(); track file.id) {
+          <tr>
+            <td>{{ file.group }}</td>
+            <td><button type="button" class="work-order__link">{{ file.fileName }}</button></td>
+          </tr>
+        } @empty {
+          <tr><td colspan="2" class="work-order__empty">No attachments found</td></tr>
+        }
+      </tbody>
+    </table>
   </ng-template>
 
   <!-- ── Work Order tab ───────────────────────────────────────────────────── -->
@@ -309,7 +356,7 @@
       <h2 class="work-order__section-title">Parts and Labor</h2>
 
       <div class="work-order__section-actions">
-        <button type="button" class="work-order__action-btn work-order__action-btn--blue">
+        <button type="button" class="work-order__action-btn work-order__action-btn--blue" (click)="openAddServiceDialog()">
           + Add Service
         </button>
         <button type="button" class="work-order__action-btn work-order__action-btn--orange">

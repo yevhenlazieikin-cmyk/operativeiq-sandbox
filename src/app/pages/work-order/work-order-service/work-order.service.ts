@@ -199,6 +199,8 @@ export class WorkOrderService {
       { id: 'UA001', group: '1802', fileName: '3-mb-sample-pdf-file.pdf' },
       { id: 'UA002', group: '1802', fileName: '1.pdf' },
       { id: 'UA003', group: 'A', fileName: 'Admin Room test long name.xlsx' },
+      { id: 'UA004', group: 'A', fileName: '1mb.docx' },
+      { id: 'UA005', group: 'REPORTS', fileName: 'GMR Reporting Draft.xlsx' },
     ]);
   }
 
