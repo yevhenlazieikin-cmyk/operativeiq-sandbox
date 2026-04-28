@@ -65,6 +65,107 @@ export interface MaintenanceHistoryRow {
   statusColor: MaintenanceStatusColor;
 }
 
+// ─── Work Order tab types ────────────────────────────────────────────────────
+
+export interface WorkOrderFormData {
+  unit: string;
+  workOrderNumber: string;
+  date: string;
+  customer: string;
+}
+
+export interface InspectionNotesData {
+  miles: string;
+  fuelCost: string;
+  inspectionStatus: string;
+}
+
+export interface WorkOrderStatusData {
+  workOrderStatus: string;
+  unitServiceStatus: string;
+  serviceStatusUpdated: string;
+}
+
+export interface MaintenanceInfoData {
+  maintenanceSchedule: string;
+  maintenanceForm: string;
+}
+
+export interface NextMaintenanceData {
+  date: string;
+  miles: string;
+  hours: string;
+}
+
+export interface TimeClockData {
+  elapsedTime: string;
+  estimatedCompletionTime: string;
+  timeClockStatus: string;
+}
+
+export interface PurchaseOrder {
+  id: string;
+  purchaseOrderNumber: string;
+  supplier: string;
+  supplyRoom: string;
+  total: number;
+  baswarePO: string;
+  status: string;
+}
+
+export interface WoAlert {
+  id: string;
+  dateReported: string;
+  alertType: string;
+  priority: string;
+  description: string;
+  ticketFaultCode: string;
+}
+
+export interface WoPart {
+  id: string;
+  vmrsCode: string;
+  description: string;
+  partNumber: string;
+  warrantyExpiration: string;
+  manufacturer: string;
+  failureCode: string;
+  quantity: number;
+  cost: number;
+  retail: number;
+  isStock: boolean;
+  poNumber: string;
+}
+
+export interface WoLabor {
+  id: string;
+  laborCode: string;
+  description: string;
+  complaint: string;
+  correction: string;
+  laborDate: string;
+  workAccomplished: string;
+  mechanic: string;
+  hours: number;
+  cost: number;
+}
+
+export interface WoServiceItem {
+  id: string;
+  reasonForRepair: string;
+  reasonDescription: string;
+  complaint: string;
+  alerts: WoAlert[];
+  parts: WoPart[];
+  labor: WoLabor[];
+  notes: string;
+}
+
+export interface WoFileAttachment {
+  id: string;
+  fileName: string;
+}
+
 // TODO: replace stubs with real HTTP calls when /fleet/WorkOrder endpoints are wired up
 @Injectable({ providedIn: 'root' })
 export class WorkOrderService {
@@ -79,10 +180,7 @@ export class WorkOrderService {
   }
 
   getOdometerAndHours(): Observable<OdometerAndHours> {
-    return of({
-      miles: '124,576',
-      hours: '12,170',
-    });
+    return of({ miles: '124,576', hours: '12,170' });
   }
 
   getVehicleTelematics(): Observable<VehicleTelematics> {
@@ -117,11 +215,69 @@ export class WorkOrderService {
 
   getPartHistory(): Observable<PartHistoryRow[]> {
     return of([
-      { id: 'PH1', dateInstalled: '11/19/2024', woNumber: '8001234', partNumber: 'FL-2016',       description: 'Oil Filter - Heavy Duty',  manufacturer: 'Fleetguard', quantity: 1, cost: 45.99,  warrantyExpiration: '05/19/2025', installedBy: 'Gavur Halyna'    },
-      { id: 'PH2', dateInstalled: '11/05/2024', woNumber: '8001185', partNumber: 'AF-25962',      description: 'Air Filter Element',       manufacturer: 'Fleetguard', quantity: 1, cost: 89.50,  warrantyExpiration: '11/05/2025', installedBy: 'John Smith'      },
-      { id: 'PH3', dateInstalled: '10/22/2024', woNumber: '8001102', partNumber: 'BW-5073',       description: 'Coolant Filter',           manufacturer: 'Baldwin',    quantity: 2, cost: 52.25,  warrantyExpiration: '10/22/2025', installedBy: 'Mike Johnson'    },
-      { id: 'PH4', dateInstalled: '10/15/2024', woNumber: '8001089', partNumber: 'DT-466E-BRK',   description: 'Brake Pad Set - Front',    manufacturer: 'Detroit',    quantity: 1, cost: 225.00, warrantyExpiration: '10/15/2025', installedBy: 'Sarah Williams'  },
-      { id: 'PH5', dateInstalled: '09/30/2024', woNumber: '8001022', partNumber: 'GATES-T287',    description: 'Serpentine Belt',          manufacturer: 'Gates',      quantity: 1, cost: 67.50,  warrantyExpiration: '03/30/2025', installedBy: 'David Brown'     },
+      { id: 'PH1', dateInstalled: '11/19/2024', woNumber: '8001234', partNumber: 'FL-2016',     description: 'Oil Filter - Heavy Duty', manufacturer: 'Fleetguard', quantity: 1, cost: 45.99,  warrantyExpiration: '05/19/2025', installedBy: 'Gavur Halyna'   },
+      { id: 'PH2', dateInstalled: '11/05/2024', woNumber: '8001185', partNumber: 'AF-25962',    description: 'Air Filter Element',      manufacturer: 'Fleetguard', quantity: 1, cost: 89.50,  warrantyExpiration: '11/05/2025', installedBy: 'John Smith'     },
+      { id: 'PH3', dateInstalled: '10/22/2024', woNumber: '8001102', partNumber: 'BW-5073',     description: 'Coolant Filter',          manufacturer: 'Baldwin',    quantity: 2, cost: 52.25,  warrantyExpiration: '10/22/2025', installedBy: 'Mike Johnson'   },
+      { id: 'PH4', dateInstalled: '10/15/2024', woNumber: '8001089', partNumber: 'DT-466E-BRK', description: 'Brake Pad Set - Front',   manufacturer: 'Detroit',    quantity: 1, cost: 225.00, warrantyExpiration: '10/15/2025', installedBy: 'Sarah Williams' },
+      { id: 'PH5', dateInstalled: '09/30/2024', woNumber: '8001022', partNumber: 'GATES-T287',  description: 'Serpentine Belt',         manufacturer: 'Gates',      quantity: 1, cost: 67.50,  warrantyExpiration: '03/30/2025', installedBy: 'David Brown'    },
     ]);
+  }
+
+  // ─── Work Order tab mock data ────────────────────────────────────────────────
+
+  getWorkOrderFormData(): Observable<WorkOrderFormData> {
+    return of({ unit: 'Lazierkin unit', workOrderNumber: '87798560', date: '20/05/2024', customer: 'FLEET A - Truck' });
+  }
+
+  getInspectionNotesData(): Observable<InspectionNotesData> {
+    return of({ miles: '', fuelCost: '0.00', inspectionStatus: 'Incomplete' });
+  }
+
+  getWorkOrderStatusData(): Observable<WorkOrderStatusData> {
+    return of({ workOrderStatus: 'Open', unitServiceStatus: 'In Service', serviceStatusUpdated: '04/22/2026 10:30 AM' });
+  }
+
+  getMaintenanceInfoData(): Observable<MaintenanceInfoData> {
+    return of({ maintenanceSchedule: 'PM A - Basic Service', maintenanceForm: '' });
+  }
+
+  getNextMaintenanceData(): Observable<NextMaintenanceData> {
+    return of({ date: '05/15/2026', miles: '50,000', hours: '' });
+  }
+
+  getTimeClockData(): Observable<TimeClockData> {
+    return of({ elapsedTime: '0:00', estimatedCompletionTime: '0:00 - 0:00', timeClockStatus: 'Not Started' });
+  }
+
+  getPurchaseOrders(): Observable<PurchaseOrder[]> {
+    return of([
+      { id: 'PO1', purchaseOrderNumber: '435435926', supplier: 'AM 43453', supplyRoom: 'A Fleet Maintenance Shop', total: 783, baswarePO: '', status: 'Closed' },
+    ]);
+  }
+
+  getWoServices(): Observable<WoServiceItem[]> {
+    return of([
+      {
+        id: 'SRV1',
+        reasonForRepair: '08',
+        reasonDescription: 'Preventive Maintenance',
+        complaint: 'Oil change and filter replacement',
+        alerts: [
+          { id: 'A1', dateReported: '20/04/2026', alertType: 'Inspection', priority: 'Low', description: 'broken smth', ticketFaultCode: '' },
+        ],
+        parts: [
+          { id: 'P1', vmrsCode: '032-001', description: 'Oil Filter - Heavy Duty', partNumber: 'FL-2016',   warrantyExpiration: '05/19/2025', manufacturer: 'Fleetguard', failureCode: '', quantity: 1, cost: 45.99, retail: 68.99,  isStock: true,  poNumber: '' },
+          { id: 'P2', vmrsCode: '031-001', description: 'Air Filter Element',      partNumber: 'AF-25962', warrantyExpiration: '11/05/2025', manufacturer: 'Fleetguard', failureCode: '', quantity: 1, cost: 89.50, retail: 134.25, isStock: true,  poNumber: '' },
+        ],
+        labor: [
+          { id: 'L1', laborCode: '032-001', description: 'Engine - Lube, Oil and Filter System', complaint: 'Scheduled PM', correction: 'Replaced oil and filter', laborDate: '20/04/2026', workAccomplished: 'Completed oil change and filter replacement', mechanic: 'John Smith', hours: 1.5, cost: 100 },
+        ],
+        notes: '',
+      },
+    ]);
+  }
+
+  getWoFileAttachments(): Observable<WoFileAttachment[]> {
+    return of([]);
   }
 }

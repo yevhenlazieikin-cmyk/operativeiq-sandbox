@@ -16,11 +16,16 @@
     padding: 8px 24px 0;
   }
 
+  // ── Unit Information tab ─────────────────────────────────────────────────────
   &__panels {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 16px;
     padding: 16px 24px 0;
+
+    &--wo {
+      align-items: start;
+    }
   }
 
   &__panel--stack {
@@ -103,22 +108,445 @@
     background: $white;
   }
 
-  &__row--gray {
-    background: #e5e7eb;
-  }
-
-  &__row--green {
-    background: #bbf7d0;
-  }
-
-  &__row--red {
-    background: #fecaca;
-  }
+  &__row--gray  { background: #e5e7eb; }
+  &__row--green { background: #bbf7d0; }
+  &__row--red   { background: #fecaca; }
 
   &__placeholder {
     padding: 48px 24px;
     text-align: center;
     color: #6b7280;
     font-size: 14px;
+  }
+
+  // ── Work Order tab — custom panels ────────────────────────────────────────────
+  &__custom-panel {
+    background: $white;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  &__custom-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: #f9fafb;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  &__custom-panel-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+  }
+
+  &__custom-panel-body {
+    padding: 12px 14px;
+
+    &--flush {
+      padding: 0;
+      overflow-x: auto;
+    }
+  }
+
+  &__panel-btn {
+    padding: 4px 12px;
+    border: 0;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    color: $white;
+
+    &--green { background: $forest-green-light; &:hover { filter: brightness(0.9); } }
+    &--red   { background: #dc2626;              &:hover { filter: brightness(0.9); } }
+  }
+
+  &__field-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+    font-size: 13px;
+  }
+
+  &__field-label {
+    flex-shrink: 0;
+    width: 170px;
+    color: #6b7280;
+  }
+
+  &__field-value {
+    color: #111827;
+  }
+
+  // ── Cost Summary panel ────────────────────────────────────────────────────────
+  &__cost-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 0;
+    font-size: 13px;
+
+    &--total {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid #e0e0e0;
+    }
+  }
+
+  &__cost-label {
+    color: #374151;
+
+    &--link { color: $ocean-blue; }
+    &--bold { font-weight: 600; color: #111827; }
+  }
+
+  &__cost-input {
+    width: 80px;
+    padding: 3px 8px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    text-align: right;
+    font-size: 13px;
+
+    &:focus { outline: none; box-shadow: 0 0 0 2px rgba($ocean-blue, 0.3); }
+  }
+
+  // ── Work Order tables (PO, File Attachments) ──────────────────────────────────
+  &__wo-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+
+    th {
+      background: #f9fafb;
+      color: #374151;
+      font-weight: 600;
+      padding: 6px 10px;
+      text-align: left;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    td {
+      padding: 6px 10px;
+      border-bottom: 1px solid #f0f0f0;
+      color: #374151;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+    tr:hover td      { background: #f9fafb; }
+  }
+
+  &__wo-table-link { color: $ocean-blue; cursor: pointer; &:hover { text-decoration: underline; } }
+  &__wo-table-check { width: 36px; text-align: center; }
+
+  &__drop-zone {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 20px;
+    margin-bottom: 10px;
+    border: 2px dashed #d1d5db;
+    border-radius: 6px;
+    background: $white;
+    color: #6b7280;
+    font-size: 13px;
+    text-align: center;
+    justify-content: center;
+
+    svg { flex-shrink: 0; }
+  }
+
+  // ── Parts and Labor section ───────────────────────────────────────────────────
+  &__parts-labor {
+    padding: 0 24px 32px;
+  }
+
+  &__section-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  &__action-btn {
+    padding: 8px 16px;
+    border: 0;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    color: $white;
+
+    &--blue   { background: $ocean-blue;          &:hover { filter: brightness(0.9); } }
+    &--orange { background: $burnt-orange;        &:hover { filter: brightness(0.9); } }
+    &--green  { background: $forest-green-light;  &:hover { filter: brightness(0.9); } }
+
+    &--sm { padding: 4px 10px; font-size: 11px; }
+  }
+
+  &__services-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  // ── Service card ─────────────────────────────────────────────────────────────
+  &__service-card {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  &__service-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    background: $royal-blue;
+    color: $white;
+  }
+
+  &__service-header-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__service-reason {
+    font-size: 11px;
+    opacity: 0.85;
+  }
+
+  &__service-complaint {
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  &__service-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__service-btn {
+    padding: 5px 12px;
+    background: $white;
+    color: $royal-blue;
+    border: 0;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+
+    &:hover { background: #eff6ff; }
+  }
+
+  &__service-remove {
+    background: none;
+    border: 0;
+    color: $white;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    opacity: 0.8;
+    padding: 2px 6px;
+
+    &:hover { opacity: 1; color: #fca5a5; }
+  }
+
+  &__service-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &__service-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__service-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__service-section-title {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+  }
+
+  // ── Inline-editable tables ───────────────────────────────────────────────────
+  &__table-wrap {
+    overflow-x: auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+  }
+
+  &__inline-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+    white-space: nowrap;
+
+    th {
+      background: #f9fafb;
+      color: #374151;
+      font-weight: 600;
+      padding: 6px 8px;
+      text-align: left;
+      border-bottom: 1px solid #e0e0e0;
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 4px 6px;
+      border-bottom: 1px solid #f0f0f0;
+      vertical-align: middle;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+    tr:hover td      { background: #fafafa; }
+  }
+
+  &__cell-input {
+    width: 100%;
+    padding: 2px 4px;
+    border: 0;
+    border-radius: 2px;
+    font-size: 11px;
+    background: transparent;
+
+    &:focus {
+      outline: none;
+      background: $white;
+      box-shadow: 0 0 0 1px $ocean-blue;
+    }
+
+    &--xs { width: 50px; }
+    &--sm { width: 90px; }
+    &--md { width: 120px; }
+  }
+
+  &__cell-select {
+    padding: 2px 4px;
+    border: 0;
+    font-size: 11px;
+    background: transparent;
+    cursor: pointer;
+
+    &:focus { outline: none; background: $white; }
+  }
+
+  &__cell-computed {
+    font-weight: 500;
+    color: #111827;
+    text-align: right;
+    padding-right: 10px !important;
+
+    &--bold { font-weight: 700; }
+  }
+
+  &__part-desc-cell {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 160px;
+  }
+
+  &__badge {
+    flex-shrink: 0;
+    padding: 1px 6px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 600;
+
+    &--green  { background: #dcfce7; color: #166534; }
+    &--red    { background: #fee2e2; color: #991b1b; }
+    &--yellow { background: #fef9c3; color: #854d0e; }
+  }
+
+  &__subtotal-row td {
+    background: #f3f4f6;
+    font-weight: 600;
+    padding: 6px 8px !important;
+  }
+
+  &__subtotal-label {
+    text-align: right;
+    font-size: 11px;
+    color: #374151;
+  }
+
+  &__row-remove {
+    background: none;
+    border: 0;
+    color: #dc2626;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 2px 4px;
+
+    &:hover { opacity: 0.7; }
+  }
+
+  // ── Service Notes textarea ────────────────────────────────────────────────────
+  &__service-notes {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 80px;
+
+    &:focus { outline: none; box-shadow: 0 0 0 2px rgba($ocean-blue, 0.3); border-color: $ocean-blue; }
+  }
+
+  &__no-items {
+    text-align: center;
+    color: #9ca3af;
+    font-size: 13px;
+    padding: 24px 0;
+  }
+
+  &__no-services {
+    padding: 48px 24px;
+    text-align: center;
+    color: #6b7280;
+    font-size: 14px;
+    border: 2px dashed #e5e7eb;
+    border-radius: 6px;
+  }
+
+  // ── Parts and Labor footer ────────────────────────────────────────────────────
+  &__parts-labor-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+    padding: 14px 20px;
+    background: #f3f4f6;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+  }
+
+  &__parts-labor-footer-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+  }
+
+  &__parts-labor-footer-value {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111827;
   }
 }

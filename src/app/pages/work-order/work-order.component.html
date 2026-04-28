@@ -16,6 +16,7 @@
     <bo-tabber [tabs]="tabs()" [typeMenu]="menuType.operation" />
   </div>
 
+  <!-- ── Unit Information tab ─────────────────────────────────────────────── -->
   <ng-template #unitInfoTab>
     <div class="work-order__panels">
       <div class="work-order__panel">
@@ -125,6 +126,421 @@
     </div>
   </ng-template>
 
+  <!-- ── Work Order tab ───────────────────────────────────────────────────── -->
+  <ng-template #workOrderTab>
+    <!-- 3-column header panels -->
+    <div class="work-order__panels work-order__panels--wo">
+      <!-- Column 1: WO info / Inspection Notes / Time Clock -->
+      <div class="work-order__panel work-order__panel--stack">
+        <bo-details-panel
+          title="Work Order"
+          [form]="woInfoForm"
+          [fields]="woInfoFields"
+          [actionButtons]="woInfoButtons"
+          [userMenu]="menuType.operation"
+        />
+
+        <bo-details-panel
+          title="Inspection Notes (System Form Fields)"
+          [form]="woInspNotesForm"
+          [fields]="woInspNotesFields"
+          [userMenu]="menuType.operation"
+        />
+
+        <!-- Time Clock — custom panel (has mixed readonly + action buttons per row) -->
+        <div class="work-order__custom-panel">
+          <div class="work-order__custom-panel-header">
+            <span class="work-order__custom-panel-title">Work Order Time Clock</span>
+            <button type="button" class="work-order__panel-btn work-order__panel-btn--green">Start</button>
+          </div>
+          <div class="work-order__custom-panel-body">
+            <div class="work-order__field-row">
+              <span class="work-order__field-label">Elapsed Time:</span>
+              <span class="work-order__field-value">{{ timeClock().elapsedTime }}</span>
+            </div>
+            <div class="work-order__field-row">
+              <span class="work-order__field-label">Estimated Completion Time:</span>
+              <span class="work-order__field-value">{{ timeClock().estimatedCompletionTime }}</span>
+              <button type="button" class="work-order__link">Edit</button>
+            </div>
+            <div class="work-order__field-row">
+              <span class="work-order__field-label">Time Clock Status:</span>
+              <span class="work-order__field-value">{{ timeClock().timeClockStatus }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Column 2: Status / Maintenance / Next Scheduled Maintenance -->
+      <div class="work-order__panel work-order__panel--stack">
+        <bo-details-panel
+          title="Status"
+          [form]="woStatusForm"
+          [fields]="woStatusFields"
+          [userMenu]="menuType.operation"
+        />
+
+        <bo-details-panel
+          title="Maintenance"
+          [form]="woMaintenanceInfoForm"
+          [fields]="woMaintenanceFields"
+          [userMenu]="menuType.operation"
+        />
+
+        <bo-details-panel
+          title="Next Scheduled Maintenance"
+          [form]="woNextMaintenanceForm"
+          [fields]="woNextMaintenanceFields"
+          [actionButtons]="woRescheduleButtons"
+          [userMenu]="menuType.operation"
+        />
+      </div>
+
+      <!-- Column 3: Total Cost Summary / Purchase Orders / File Attachments -->
+      <div class="work-order__panel work-order__panel--stack">
+        <!-- Total Cost Summary -->
+        <div class="work-order__custom-panel">
+          <div class="work-order__custom-panel-header">
+            <span class="work-order__custom-panel-title">Total Cost Summary</span>
+          </div>
+          <div class="work-order__custom-panel-body">
+            <div class="work-order__cost-row">
+              <span class="work-order__cost-label">Labor Total:</span>
+              <span>${{ laborTotalAmount().toFixed(2) }}</span>
+            </div>
+            <div class="work-order__cost-row">
+              <span class="work-order__cost-label">Fuel Cost:</span>
+              <span>$0.00</span>
+            </div>
+            <div class="work-order__cost-row">
+              <span class="work-order__cost-label">Additional Fees: *</span>
+              <input
+                type="text"
+                [value]="additionalFees()"
+                (input)="onAdditionalFeesChange($any($event.target).value)"
+                class="work-order__cost-input"
+              />
+            </div>
+            <div class="work-order__cost-row">
+              <span class="work-order__cost-label work-order__cost-label--link">Taxes:(0% Labor)</span>
+              <span>$0.00</span>
+            </div>
+            <div class="work-order__cost-row work-order__cost-row--total">
+              <span class="work-order__cost-label work-order__cost-label--bold">Total:</span>
+              <span class="work-order__cost-label--bold">${{ grandTotal().toFixed(2) }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Purchase Orders -->
+        <div class="work-order__custom-panel">
+          <div class="work-order__custom-panel-header">
+            <span class="work-order__custom-panel-title">Purchase Orders</span>
+          </div>
+          <div class="work-order__custom-panel-body work-order__custom-panel-body--flush">
+            <table class="work-order__wo-table">
+              <thead>
+                <tr>
+                  <th>Purchase Order #</th>
+                  <th>Supplier</th>
+                  <th>Supply Room</th>
+                  <th>Total</th>
+                  <th>Basware PO #</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (po of purchaseOrders(); track po.id) {
+                  <tr>
+                    <td class="work-order__wo-table-link">{{ po.purchaseOrderNumber }}</td>
+                    <td>{{ po.supplier }}</td>
+                    <td>{{ po.supplyRoom }}</td>
+                    <td>${{ po.total.toFixed(2) }}</td>
+                    <td>{{ po.baswarePO }}</td>
+                    <td class="work-order__wo-table-link">{{ po.status }}</td>
+                  </tr>
+                } @empty {
+                  <tr><td colspan="6" class="work-order__empty">No purchase orders</td></tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- File Attachments -->
+        <div class="work-order__custom-panel">
+          <div class="work-order__custom-panel-header">
+            <span class="work-order__custom-panel-title">File Attachments</span>
+            <button type="button" class="work-order__panel-btn work-order__panel-btn--red">Delete</button>
+          </div>
+          <div class="work-order__custom-panel-body">
+            <div class="work-order__drop-zone">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+              </svg>
+              <span>Drop files to attach or <button type="button" class="work-order__link">browse</button></span>
+            </div>
+            <table class="work-order__wo-table">
+              <thead>
+                <tr>
+                  <th class="work-order__wo-table-check"><input type="checkbox" /></th>
+                  <th>File Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (file of woFileAttachments(); track file.id) {
+                  <tr>
+                    <td class="work-order__wo-table-check"><input type="checkbox" /></td>
+                    <td>{{ file.fileName }}</td>
+                  </tr>
+                } @empty {
+                  <tr><td colspan="2" class="work-order__empty">No attachments</td></tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Parts and Labor section -->
+    <div class="work-order__parts-labor">
+      <h2 class="work-order__section-title">Parts and Labor</h2>
+
+      <div class="work-order__section-actions">
+        <button type="button" class="work-order__action-btn work-order__action-btn--blue">
+          + Add Service
+        </button>
+        <button type="button" class="work-order__action-btn work-order__action-btn--orange">
+          Order Parts
+        </button>
+        <button type="button" class="work-order__action-btn work-order__action-btn--green">
+          Print Parts List
+        </button>
+      </div>
+
+      <div class="work-order__services-list">
+        @for (svc of woServices(); track svc.id) {
+          <div class="work-order__service-card">
+            <!-- Service header -->
+            <div class="work-order__service-header">
+              <div class="work-order__service-header-info">
+                <div class="work-order__service-reason">{{ svc.reasonDescription }}</div>
+                <div class="work-order__service-complaint">{{ svc.complaint }}</div>
+              </div>
+              <div class="work-order__service-header-actions">
+                <button type="button" class="work-order__service-btn">+ Alerts</button>
+                <button type="button" class="work-order__service-btn">+ Add Part</button>
+                <button type="button" class="work-order__service-btn">+ Add Labor</button>
+                <button
+                  type="button"
+                  class="work-order__service-remove"
+                  title="Remove Service"
+                  (click)="removeWoService(svc.id)"
+                >✕</button>
+              </div>
+            </div>
+
+            <!-- Service body -->
+            <div class="work-order__service-body">
+              <!-- Alerts table -->
+              @if (svc.alerts.length > 0) {
+                <div class="work-order__service-section">
+                  <h4 class="work-order__service-section-title">Alerts</h4>
+                  <div class="work-order__table-wrap">
+                    <table class="work-order__inline-table">
+                      <thead>
+                        <tr>
+                          <th>Reported Date</th>
+                          <th>Alert Type</th>
+                          <th>Priority</th>
+                          <th>Description</th>
+                          <th>Ticket / Fault Code</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @for (alert of svc.alerts; track alert.id) {
+                          <tr>
+                            <td><input type="text" [value]="alert.dateReported" class="work-order__cell-input work-order__cell-input--sm" /></td>
+                            <td>{{ alert.alertType }}</td>
+                            <td>
+                              <select class="work-order__cell-select">
+                                <option [selected]="alert.priority === 'High'">High</option>
+                                <option [selected]="alert.priority === 'Medium'">Medium</option>
+                                <option [selected]="alert.priority === 'Low'">Low</option>
+                              </select>
+                            </td>
+                            <td><input type="text" [value]="alert.description" class="work-order__cell-input" /></td>
+                            <td><input type="text" [value]="alert.ticketFaultCode" class="work-order__cell-input work-order__cell-input--sm" /></td>
+                            <td>
+                              <button type="button" class="work-order__row-remove" (click)="removeWoAlert(svc.id, alert.id)">✕</button>
+                            </td>
+                          </tr>
+                        }
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              }
+
+              <!-- Parts table -->
+              @if (svc.parts.length > 0) {
+                <div class="work-order__service-section">
+                  <div class="work-order__service-section-header">
+                    <h4 class="work-order__service-section-title">Parts</h4>
+                    <button type="button" class="work-order__action-btn work-order__action-btn--green work-order__action-btn--sm">
+                      Save Part List
+                    </button>
+                  </div>
+                  <div class="work-order__table-wrap">
+                    <table class="work-order__inline-table">
+                      <thead>
+                        <tr>
+                          <th>VMRS Code</th>
+                          <th>Part Description</th>
+                          <th>Part #</th>
+                          <th>Warranty</th>
+                          <th>Warranty Exp.</th>
+                          <th>Manufacturer</th>
+                          <th>Failure Code</th>
+                          <th>Qty</th>
+                          <th>Cost</th>
+                          <th>Retail</th>
+                          <th>Total Cost</th>
+                          <th>Total Retail</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @for (part of svc.parts; track part.id) {
+                          <tr>
+                            <td><input type="text" [value]="part.vmrsCode"    class="work-order__cell-input work-order__cell-input--sm" /></td>
+                            <td>
+                              <div class="work-order__part-desc-cell">
+                                <input type="text" [value]="part.description" class="work-order__cell-input" />
+                                @if (part.poNumber) {
+                                  <span class="work-order__badge work-order__badge--yellow">PO# {{ part.poNumber }}</span>
+                                } @else if (part.isStock) {
+                                  <span class="work-order__badge work-order__badge--green">Stock</span>
+                                } @else {
+                                  <span class="work-order__badge work-order__badge--red">Order</span>
+                                }
+                              </div>
+                            </td>
+                            <td><input type="text"   [value]="part.partNumber"        class="work-order__cell-input work-order__cell-input--sm" /></td>
+                            <td>Open Warranty</td>
+                            <td><input type="text"   [value]="part.warrantyExpiration" class="work-order__cell-input work-order__cell-input--sm" /></td>
+                            <td><input type="text"   [value]="part.manufacturer"      class="work-order__cell-input work-order__cell-input--sm" /></td>
+                            <td><input type="text"   [value]="part.failureCode"        class="work-order__cell-input work-order__cell-input--sm" /></td>
+                            <td><input type="number" [value]="part.quantity"           class="work-order__cell-input work-order__cell-input--xs" min="0" step="1" /></td>
+                            <td><input type="number" [value]="part.cost"               class="work-order__cell-input work-order__cell-input--sm" min="0" step="0.01" /></td>
+                            <td><input type="number" [value]="part.retail"             class="work-order__cell-input work-order__cell-input--sm" min="0" step="0.01" /></td>
+                            <td class="work-order__cell-computed">${{ partTotalCost(part.quantity, part.cost).toFixed(2) }}</td>
+                            <td class="work-order__cell-computed">${{ partTotalRetail(part.quantity, part.retail).toFixed(2) }}</td>
+                            <td>
+                              <button type="button" class="work-order__row-remove" (click)="removeWoPart(svc.id, part.id)">✕</button>
+                            </td>
+                          </tr>
+                        }
+                        <tr class="work-order__subtotal-row">
+                          <td colspan="11" class="work-order__subtotal-label">Parts Subtotal:</td>
+                          <td class="work-order__cell-computed work-order__cell-computed--bold">${{ servicePartsSubtotal(svc).toFixed(2) }}</td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              }
+
+              <!-- Labor table -->
+              @if (svc.labor.length > 0) {
+                <div class="work-order__service-section">
+                  <h4 class="work-order__service-section-title">Labor</h4>
+                  <div class="work-order__table-wrap">
+                    <table class="work-order__inline-table">
+                      <thead>
+                        <tr>
+                          <th>Labor Code</th>
+                          <th>Description</th>
+                          <th>Complaint</th>
+                          <th>Correction</th>
+                          <th>Labor Date</th>
+                          <th>Work Accomplished</th>
+                          <th>Mechanic</th>
+                          <th>Hours</th>
+                          <th>Cost</th>
+                          <th>Total</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @for (labor of svc.labor; track labor.id) {
+                          <tr>
+                            <td><input type="text"   [value]="labor.laborCode"       class="work-order__cell-input work-order__cell-input--sm" /></td>
+                            <td><input type="text"   [value]="labor.description"     class="work-order__cell-input" /></td>
+                            <td><input type="text"   [value]="labor.complaint"       class="work-order__cell-input" /></td>
+                            <td><input type="text"   [value]="labor.correction"      class="work-order__cell-input" /></td>
+                            <td><input type="text"   [value]="labor.laborDate"       class="work-order__cell-input work-order__cell-input--sm" /></td>
+                            <td><input type="text"   [value]="labor.workAccomplished" class="work-order__cell-input" /></td>
+                            <td><input type="text"   [value]="labor.mechanic"        class="work-order__cell-input work-order__cell-input--md" /></td>
+                            <td><input type="number" [value]="labor.hours"           class="work-order__cell-input work-order__cell-input--xs" min="0" step="0.5" /></td>
+                            <td><input type="number" [value]="labor.cost"            class="work-order__cell-input work-order__cell-input--sm" min="0" step="0.01" /></td>
+                            <td class="work-order__cell-computed">${{ partTotalCost(labor.hours, labor.cost).toFixed(2) }}</td>
+                            <td>
+                              <button type="button" class="work-order__row-remove" (click)="removeWoLabor(svc.id, labor.id)">✕</button>
+                            </td>
+                          </tr>
+                        }
+                        <tr class="work-order__subtotal-row">
+                          <td colspan="9" class="work-order__subtotal-label">Labor Subtotal:</td>
+                          <td class="work-order__cell-computed work-order__cell-computed--bold">${{ serviceLaborTotal(svc).toFixed(2) }}</td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              }
+
+              @if (svc.parts.length === 0 && svc.labor.length === 0) {
+                <p class="work-order__no-items">
+                  No parts or labor added yet. Click "Add Part" or "Add Labor" above to get started.
+                </p>
+              }
+
+              <!-- Service Notes -->
+              <div class="work-order__service-section">
+                <h4 class="work-order__service-section-title">Service Notes</h4>
+                <textarea
+                  class="work-order__service-notes"
+                  [value]="svc.notes"
+                  (input)="updateServiceNotes(svc.id, $any($event.target).value)"
+                  placeholder="Enter service notes..."
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        } @empty {
+          <div class="work-order__no-services">
+            No services added yet. Click "Add Service" to get started.
+          </div>
+        }
+
+        <!-- Parts and Labor grand subtotal -->
+        @if (woServices().length > 0) {
+          <div class="work-order__parts-labor-footer">
+            <span class="work-order__parts-labor-footer-label">Parts and Labor Subtotal:</span>
+            <strong class="work-order__parts-labor-footer-value">${{ partsLaborSubtotal().toFixed(2) }}</strong>
+          </div>
+        }
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- ── Placeholder tab (Maintenance Form / Assets / Communication) ────── -->
   <ng-template #placeholderTab>
     <div class="work-order__placeholder">Coming soon</div>
   </ng-template>
