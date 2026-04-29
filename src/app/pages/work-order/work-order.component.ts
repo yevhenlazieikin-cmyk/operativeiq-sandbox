@@ -35,6 +35,7 @@ import { MenuService } from '@backoffice/shared-ui/lib/header/menu-service/menu-
 import { SiteInfo } from '@backoffice/shared-ui/lib/header/site-info.interface';
 import { MockMenuService } from './mock-menu.service';
 import {
+  FuelTransactionRow,
   MaintenanceHistoryRow,
   PartHistoryRow,
   PurchaseOrder,
@@ -204,6 +205,38 @@ export class WorkOrderComponent {
     mobSearchPlaceholder: 'Part Number, Description, Manufacturer',
   };
 
+  protected readonly rawFuelTransactions = signal<FuelTransactionRow[]>([]);
+  protected readonly displayedFuelTransactions = signal<FuelTransactionRow[]>([]);
+
+  protected readonly fuelTransactionCellSchema: GridCell = {
+    mainRow: [
+      { type: GridCellType.readonlyText, key: 'date' },
+      { type: GridCellType.readonlyText, key: 'odometer' },
+      { type: GridCellType.readonlyText, key: 'gallons' },
+      { type: GridCellType.readonlyText, key: 'unitCost' },
+      { type: GridCellType.readonlyText, key: 'totalCost' },
+      { type: GridCellType.readonlyText, key: 'location' },
+      { type: GridCellType.readonlyText, key: 'driver' },
+    ],
+  };
+
+  protected readonly fuelTransactionFilterData: FilterData = {
+    filterHeader: 'grid_filter_WorkOrderFuelTransactions',
+    userMenu: menuType.operation,
+    inputs: [
+      { label: 'Date',       type: FilterFieldTypeEnum.Input, name: 'date',      value: '', hasSorting: true, dataType: 'string', customSortDataType: 'string', style: { width: '10%' } },
+      { label: 'Odometer',   type: FilterFieldTypeEnum.Input, name: 'odometer',  value: '', hasSorting: true, dataType: 'string', customSortDataType: 'string', style: { width: '10%' } },
+      { label: 'Gallons',    type: FilterFieldTypeEnum.Input, name: 'gallons',   value: '', hasSorting: true, dataType: 'number', customSortDataType: 'number', style: { width: '9%'  } },
+      { label: 'Unit Cost',  type: FilterFieldTypeEnum.Input, name: 'unitCost',  value: '', hasSorting: true, dataType: 'number', customSortDataType: 'number', style: { width: '9%'  } },
+      { label: 'Total Cost', type: FilterFieldTypeEnum.Input, name: 'totalCost', value: '', hasSorting: true, dataType: 'number', customSortDataType: 'number', style: { width: '9%'  } },
+      { label: 'Location',   type: FilterFieldTypeEnum.Input, name: 'location',  value: '', hasSorting: true, dataType: 'string', customSortDataType: 'string', style: { width: '30%' } },
+      { label: 'Driver',     type: FilterFieldTypeEnum.Input, name: 'driver',    value: '', hasSorting: true, dataType: 'string', customSortDataType: 'string', style: { width: '15%' } },
+    ],
+    sortOptions: { default: { key: 'date', direction: 'desc' } },
+    mobSearch: '',
+    mobSearchPlaceholder: 'Date, Location, Driver',
+  };
+
   private readonly woStatusOptions = [
     { label: 'Open', value: 'Open' },
     { label: 'In Progress', value: 'In Progress' },
@@ -356,6 +389,10 @@ export class WorkOrderComponent {
 
   protected onPartHistoryDataChange(data: PartHistoryRow[]): void {
     this.displayedPartHistory.set(data);
+  }
+
+  protected onFuelTransactionDataChange(data: FuelTransactionRow[]): void {
+    this.displayedFuelTransactions.set(data);
   }
 
   protected statusRowClass(row: MaintenanceHistoryRow): string {
@@ -521,6 +558,10 @@ export class WorkOrderComponent {
     this.service.getPartHistory().pipe(takeUntilDestroyed(this.destroyRef)).subscribe(items => {
       this.rawPartHistory.set(items);
       this.displayedPartHistory.set(items);
+    });
+    this.service.getFuelTransactions().pipe(takeUntilDestroyed(this.destroyRef)).subscribe(items => {
+      this.rawFuelTransactions.set(items);
+      this.displayedFuelTransactions.set(items);
     });
 
     // Work Order tab

@@ -42,6 +42,17 @@ export interface PartHistoryRow {
   installedBy: string;
 }
 
+export interface FuelTransactionRow {
+  id: string;
+  date: string;
+  odometer: string;
+  gallons: number;
+  unitCost: number;
+  totalCost: number;
+  location: string;
+  driver: string;
+}
+
 export type MaintenanceStatusColor = 'gray' | 'green' | 'red';
 
 export interface MaintenanceHistoryRow {
@@ -222,6 +233,18 @@ export class WorkOrderService {
       { id: 'PH3', dateInstalled: '10/22/2024', woNumber: '8001102', partNumber: 'BW-5073',     description: 'Coolant Filter',          manufacturer: 'Baldwin',    quantity: 2, cost: 52.25,  warrantyExpiration: '10/22/2025', installedBy: 'Mike Johnson'   },
       { id: 'PH4', dateInstalled: '10/15/2024', woNumber: '8001089', partNumber: 'DT-466E-BRK', description: 'Brake Pad Set - Front',   manufacturer: 'Detroit',    quantity: 1, cost: 225.00, warrantyExpiration: '10/15/2025', installedBy: 'Sarah Williams' },
       { id: 'PH5', dateInstalled: '09/30/2024', woNumber: '8001022', partNumber: 'GATES-T287',  description: 'Serpentine Belt',         manufacturer: 'Gates',      quantity: 1, cost: 67.50,  warrantyExpiration: '03/30/2025', installedBy: 'David Brown'    },
+    ]);
+  }
+
+  getFuelTransactions(): Observable<FuelTransactionRow[]> {
+    return of([
+      { id: 'FT1', date: '04/15/2026', odometer: '124,210', gallons: 35.4,  unitCost: 3.89, totalCost: 137.71, location: 'Main Depot - Pump 2',      driver: 'John Smith'     },
+      { id: 'FT2', date: '04/01/2026', odometer: '123,540', gallons: 42.1,  unitCost: 3.92, totalCost: 165.03, location: 'Fleet Fuel Station A',      driver: 'Gavur Halyna'   },
+      { id: 'FT3', date: '03/18/2026', odometer: '122,870', gallons: 38.7,  unitCost: 3.85, totalCost: 149.00, location: 'Main Depot - Pump 1',      driver: 'John Smith'     },
+      { id: 'FT4', date: '03/04/2026', odometer: '122,190', gallons: 40.0,  unitCost: 3.78, totalCost: 151.20, location: 'Roadside - Shell Station',  driver: 'Mike Johnson'   },
+      { id: 'FT5', date: '02/18/2026', odometer: '121,490', gallons: 33.9,  unitCost: 3.80, totalCost: 128.82, location: 'Fleet Fuel Station B',      driver: 'Sarah Williams' },
+      { id: 'FT6', date: '02/03/2026', odometer: '120,840', gallons: 44.2,  unitCost: 3.75, totalCost: 165.75, location: 'Main Depot - Pump 2',      driver: 'Gavur Halyna'   },
+      { id: 'FT7', date: '01/20/2026', odometer: '120,110', gallons: 37.6,  unitCost: 3.69, totalCost: 138.74, location: 'Fleet Fuel Station A',      driver: 'David Brown'    },
     ]);
   }
 

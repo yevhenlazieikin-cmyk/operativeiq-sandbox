@@ -124,6 +124,31 @@
         }
       </bo-grid>
     </div>
+
+    <h2 class="work-order__section-title">Fuel Transactions</h2>
+    <div class="work-order__grid">
+      <bo-grid
+        [gridType]="'CLIENT'"
+        [outerService]="true"
+        [filtersIncluded]="true"
+        [filterData]="fuelTransactionFilterData"
+        [sortedDataStore]="rawFuelTransactions()"
+        (sortedDataChange)="onFuelTransactionDataChange($event)"
+        [userMenu]="menuType.operation"
+        [scrollWindow]="false"
+        [clientGridPagination]="true"
+        [initialPageSize]="10"
+      >
+        @for (row of displayedFuelTransactions(); track row.id; let i = $index) {
+          <bo-grid-cell
+            [row]="row"
+            [index]="i"
+            [cellSchema]="fuelTransactionCellSchema"
+            [filterData]="fuelTransactionFilterData"
+          />
+        }
+      </bo-grid>
+    </div>
   </ng-template>
 
   <!-- ── Unit Attachments dialog template ─────────────────────────────────── -->
